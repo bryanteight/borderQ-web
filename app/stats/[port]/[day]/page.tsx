@@ -40,6 +40,10 @@ interface StatsResponse {
         next_holiday: string | null;
         is_raining: boolean;
     };
+    narrative: {
+        intro: string;
+        savings_analysis: string;
+    };
     json_ld: any;
     message?: string;
 }
@@ -175,6 +179,24 @@ export default async function StatsPage({ params }: { params: Promise<{ port: st
                     </div>
                 </div>
 
+                {/* 0. Daily Insight (Narrative) - NEW */}
+                {/* This adds value beyond the raw numbers below */}
+                {data.narrative && (
+                    <div className="bg-indigo-50/50 border border-indigo-100 rounded-[28px] p-6 relative overflow-hidden">
+                        <div className="flex items-start gap-4 relaltive z-10">
+                            <div className="p-3 bg-white rounded-xl shadow-sm border border-indigo-50 text-indigo-600">
+                                <TrendingUp className="w-6 h-6" />
+                            </div>
+                            <div>
+                                <h3 className="text-sm font-[800] text-indigo-900 uppercase tracking-wide mb-2">Daily Insight</h3>
+                                <p className="text-slate-700 leading-relaxed font-medium">
+                                    {data.narrative.intro}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
                 {/* 1. Main Insight Card (Split View) */}
                 <div className="bg-white rounded-[32px] p-8 shadow-[0_2px_20px_rgb(0,0,0,0.04)] ring-1 ring-slate-100 relative overflow-hidden">
                     <div className="flex gap-8 relative z-10">
@@ -206,7 +228,7 @@ export default async function StatsPage({ params }: { params: Promise<{ port: st
 
                 {/* 2. Hourly Trend Chart - Only 6 key hours */}
                 <div className="bg-white rounded-[32px] p-8 shadow-[0_2px_20px_rgb(0,0,0,0.04)] ring-1 ring-slate-100">
-                    <h3 className="text-base font-[800] text-slate-900 mb-6">Typical Hourly Trend</h3>
+                    <h3 className="text-base font-[800] text-slate-900 mb-6">Typical Hourly Trend on {dayName}</h3>
 
                     <div className="flex items-end h-40 mt-8 mb-2">
                         {chartData.map((h, i) => {
