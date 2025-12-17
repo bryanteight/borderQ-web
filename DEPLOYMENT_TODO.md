@@ -34,3 +34,11 @@
 
 ### UX Improvements
 - [ ] Implement smooth transition animations when clicking cards to navigate to new pages
+
+(12/17/2025):
+
+Optimization (Cloudflare + Latency Investigation)
+Analytics & Marketing (GA4)
+Data Ingestion (Vancouver → Seattle)
+UX Improvements (Smooth Transitions)
+Monitoring & Observability (API Monitoring Research) ← NEW

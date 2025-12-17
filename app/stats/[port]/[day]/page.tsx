@@ -63,6 +63,32 @@ async function getStats(portId: string, day: string): Promise<StatsResponse | nu
     }
 }
 
+import { Metadata } from "next";
+
+export async function generateMetadata({ params }: { params: Promise<{ port: string, day: string }> }): Promise<Metadata> {
+    const { port, day } = await params;
+    const dayName = day.charAt(0).toUpperCase() + day.slice(1).replace("-", " ");
+    const portName = PORT_NAMES[port] || port.replace("-", " ").replace(/\b\w/g, c => c.toUpperCase());
+
+    // Only pluralize weekdays (e.g. "Sundays"), not holidays (e.g. "Christmas")
+    const weekdays = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+    const isWeekday = weekdays.includes(day.toLowerCase());
+    const titleDay = isWeekday ? `${dayName}s` : dayName;
+
+    return {
+        title: `${portName} Border Wait Times for ${titleDay} | BorderQ`,
+        description: `Historical border wait time forecasts for ${portName} on ${dayName}. Avoid the rush with our traffic analysis.`,
+        alternates: {
+            canonical: `/stats/${port}/${day}`,
+        },
+        openGraph: {
+            title: `${portName} Traffic: Best Time to Cross on ${titleDay}`,
+            description: `See when to cross ${portName} on ${dayName} to avoid long lines.`,
+            type: 'article',
+        }
+    };
+}
+
 export default async function StatsPage({ params }: { params: Promise<{ port: string, day: string }> }) {
     // Next.js 15+: params is a Promise
     const { port, day } = await params;
