@@ -228,22 +228,22 @@ export default async function StatsPage({ params }: { params: Promise<{ port: st
                 <div className="bg-white rounded-[32px] p-8 shadow-[0_2px_20px_rgb(0,0,0,0.04)] ring-1 ring-slate-100">
                     <h3 className="text-base font-[800] text-slate-900 mb-6">Typical Hourly Trend on {dayName}</h3>
 
-                    <div className="flex items-end h-40 mt-8 mb-2">
+                    <div className="flex items-end h-40 mt-8 mb-2 gap-2">
                         {chartData.map((h, i) => {
                             // Calculate bar height in pixels (max height = 120px)
                             const maxHeight = 120;
-                            const barHeight = h.wait > 0 ? Math.max(4, (h.wait / maxWait) * maxHeight) : 2;
+                            // Ensure tiny bars have at least 4px so they are visible
+                            const maxVal = Math.max(...chartData.map(d => d.wait), 1);
+                            const barHeight = h.wait > 0 ? Math.max(4, (h.wait / maxVal) * maxHeight) : 2;
 
                             return (
                                 <div key={h.hour} className="flex flex-col flex-1 h-full justify-end group relative">
-                                    {/* Tooltip-like Label (Only visible on hover or for peaks) */}
-                                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
-                                        <div className="bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded shadow-lg">
-                                            {h.wait} min
-                                        </div>
+                                    {/* Mins Label: Simple, Always Visible, Above Bar */}
+                                    <div className="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-[800] text-slate-500 mb-1 z-10 w-full text-center">
+                                        {h.wait}m
                                     </div>
 
-                                    {/* Bar area - Softer "Rolling" Style */}
+                                    {/* Vertical Bar */}
                                     <div
                                         className="w-full mx-0.5 bg-indigo-100 group-hover:bg-indigo-200 transition-all relative rounded-t-xl overflow-hidden"
                                         style={{
