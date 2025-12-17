@@ -171,10 +171,7 @@ export default async function StatsPage({ params }: { params: Promise<{ port: st
                     <h1 className="text-3xl font-[800] tracking-tight text-slate-900 leading-tight">
                         {portName} Traffic
                     </h1>
-                    <div className="flex items-center gap-2 text-slate-500 font-medium mt-3 text-sm bg-white border border-slate-100 shadow-sm w-fit px-3 py-1.5 rounded-full">
-                        <Car className="w-4 h-4 text-slate-400" />
-                        <span>Standard Vehicles</span>
-                    </div>
+
                 </div>
 
                 {/* 0. Daily Insight (Narrative) - NEW */}

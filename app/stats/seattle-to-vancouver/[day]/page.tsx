@@ -148,10 +148,7 @@ export default async function RegionalStatsPage({ params }: { params: Promise<{ 
                         Seattle to Vancouver Prediction
                     </h2>
 
-                    <div className="flex items-center gap-2 text-slate-500 font-medium mb-6 text-sm bg-slate-100 w-fit px-3 py-1.5 rounded-full">
-                        <Car className="w-4 h-4" />
-                        <span>Passenger</span>
-                    </div>
+
 
                     {/* Secret Sauce Narrative - Dumb Render */}
                     <div className="prose prose-slate max-w-none text-slate-700 leading-relaxed">
@@ -231,7 +228,7 @@ export default async function RegionalStatsPage({ params }: { params: Promise<{ 
                                         </div>
 
                                         {/* Right: Live Status (Right Aligned) */}
-                                        <div className="text-right pl-4 border-l border-slate-100 flex flex-col items-end">
+                                        <div className="text-left md:text-right pl-4 border-l border-slate-100 flex flex-col items-start md:items-end">
                                             {/* Vehicle Badge (Top Right of Card Content) */}
                                             <div className="flex items-center gap-1 bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded text-[10px] font-medium mb-1">
                                                 <Car className="w-3 h-3" />
