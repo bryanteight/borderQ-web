@@ -145,13 +145,13 @@ export default async function Home() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
         {/* Hero Section */}
-        <section className="flex flex-col items-center text-center gap-8 mb-16">
+        <section className="flex flex-col items-center text-center gap-8 mb-8 md:mb-16">
 
           <div className="space-y-4 max-w-3xl flex flex-col items-center">
-            <h1 className="text-5xl sm:text-6xl md:text-7xl font-[800] tracking-tight text-slate-900 leading-[1.05]">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-[800] tracking-tight text-slate-900 leading-[1.05]">
               Beat the <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600">Border Wait</span>
             </h1>
-            <p className="text-slate-500 text-xl font-medium leading-relaxed max-w-2xl mx-auto">
+            <p className="text-slate-500 text-sm md:text-xl font-medium leading-relaxed max-w-2xl mx-auto whitespace-nowrap tracking-tight">
               Real-time prediction for international crossings.
             </p>
 
