@@ -53,13 +53,27 @@ async function getStats(portId: string, day: string): Promise<StatsResponse | nu
         const cleanUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
         const res = await fetch(`${cleanUrl}/api/v1/stats/${portId}/${day}`, { cache: 'no-store' });
         if (!res.ok) {
-            console.error("Stats API Error:", res.status);
-            return null;
+            return {
+                message: `Connection refused. Is backend running? (HTTP ${res.status})`,
+                stats: null,
+                realtime: null,
+                context: null,
+                narrative: null,
+                title: "Error",
+                json_ld: null
+            } as any;
         }
         return res.json();
-    } catch (e) {
-        console.error("Stats Fetch Error:", e);
-        return null;
+    } catch (e: any) {
+        return {
+            message: e?.message || "Connection refused. Is backend running?",
+            stats: null,
+            realtime: null,
+            context: null,
+            narrative: null,
+            title: "Error",
+            json_ld: null
+        } as any;
     }
 }
 

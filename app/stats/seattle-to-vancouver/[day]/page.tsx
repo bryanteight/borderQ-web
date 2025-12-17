@@ -49,11 +49,28 @@ async function getForecastData(day: string): Promise<ForecastResponse | null> {
         const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
         const cleanUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
         const res = await fetch(`${cleanUrl}/api/v1/forecast/${day}`, { cache: 'no-store' });
-        if (!res.ok) return null;
+        if (!res.ok) {
+            return {
+                day: day,
+                ports: [],
+                best_option: null,
+                narrative: {
+                    intro: `Connection refused. Is backend running? (HTTP ${res.status})`,
+                    savings_analysis: ""
+                }
+            } as any;
+        }
         return res.json();
-    } catch (e) {
-        console.error(`Fetch error for ${day}:`, e);
-        return null;
+    } catch (e: any) {
+        return {
+            day: day,
+            ports: [],
+            best_option: null,
+            narrative: {
+                intro: e?.message || "Connection refused. Is backend running?",
+                savings_analysis: ""
+            }
+        } as any;
     }
 }
 
