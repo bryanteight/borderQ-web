@@ -176,18 +176,19 @@ export default async function Home() {
             </span>
           </div>
 
-          <div className="flex items-center justify-center gap-3 overflow-x-auto pb-4 scrollbar-hide w-full">
+          <div className="flex flex-col md:flex-row w-full max-w-lg md:max-w-none items-center justify-center gap-3 pb-4">
             {regionTabs.map((tab) => (
               <button
                 key={tab.id}
                 disabled={tab.comingSoon}
+                suppressHydrationWarning
                 className={`
-                  relative px-6 py-3 rounded-2xl font-bold text-sm transition-all whitespace-nowrap flex items-center gap-2
+                  relative px-6 py-3 rounded-full text-sm font-bold transition-all w-full md:w-auto
                   ${tab.active
-                    ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20 scale-100 z-10'
-                    : tab.comingSoon
-                      ? 'bg-slate-50 text-slate-400 border border-transparent cursor-not-allowed opacity-70'
-                      : 'bg-white text-slate-500 hover:bg-slate-50 hover:text-slate-700 shadow-sm border border-transparent'}
+                    ? 'bg-white text-slate-900 shadow-md ring-1 ring-slate-100'
+                    : 'bg-white/50 text-slate-400 hover:bg-white hover:text-slate-600'
+                  }
+                  ${tab.comingSoon ? 'opacity-60 cursor-not-allowed' : ''}
                 `}
               >
                 {tab.comingSoon && (
