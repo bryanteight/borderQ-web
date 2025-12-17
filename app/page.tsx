@@ -5,6 +5,7 @@ import { getBorderData } from "@/lib/api";
 import { TrendingUp, TrendingDown, Clock, Sun, ArrowRight, Calendar, Star, Car } from "lucide-react";
 import { WeeklyPatternsCarousel } from "@/components/WeeklyPatternsCarousel";
 import { StatusCardCarousel } from "@/components/StatusCardCarousel";
+import { RegionSelector } from "@/components/RegionSelector";
 
 export default async function Home() {
   const data = await getBorderData();
@@ -153,7 +154,7 @@ export default async function Home() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
         {/* Hero Section */}
-        <section className="flex flex-col items-center text-center gap-8 mb-8 md:mb-16">
+        <section className="flex flex-col items-center text-center gap-4 mb-8 md:mb-10">
 
           <div className="space-y-4 max-w-3xl flex flex-col items-center">
             <h1 className="text-4xl sm:text-6xl md:text-7xl font-[800] tracking-tight text-slate-900 leading-[1.05]">
@@ -163,51 +164,55 @@ export default async function Home() {
               Real-time prediction for international crossings.
             </p>
 
-            {/* Vehicle Type Disclaimer */}
-            <div className="flex items-center gap-2 text-slate-400 font-medium text-sm bg-white border border-slate-100 shadow-sm px-4 py-2 rounded-full mt-2">
-              <Car className="w-4 h-4" />
-              <span>Standard Passenger Vehicles</span>
-            </div>
+
           </div>
 
           {/* Search Removed (Feature Disabled) */}
-          <div className="w-full max-w-2xl h-8" />
-
+          {/* Region / Division Navigation */}
         </section>
 
-        {/* Region / Division Navigation */}
-        <div className="mb-10 flex flex-col items-center">
-          <div className="flex items-center gap-3 mb-6">
-            <h2 className="text-2xl font-[800] text-slate-900 tracking-tight">Select Region</h2>
-            <span className="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 text-[10px] font-bold uppercase tracking-wider">
-              Auto-detected: Seattle
-            </span>
+        {/* Region Selection: Responsive Split */}
+        <div className="mb-6 w-full flex flex-col items-center">
+
+          {/* Mobile: Fancy Dropdown */}
+          <div className="md:hidden w-full">
+            <RegionSelector tabs={regionTabs} />
           </div>
 
-          <div className="flex flex-col md:flex-row w-full max-w-lg md:max-w-none items-center justify-center gap-3 pb-4">
-            {regionTabs.map((tab) => (
-              <button
-                key={tab.id}
-                disabled={tab.comingSoon}
-                suppressHydrationWarning
-                className={`
-                  relative px-6 py-3 rounded-full text-sm font-bold transition-all w-full md:w-auto
-                  ${tab.active
-                    ? 'bg-white text-slate-900 shadow-md ring-1 ring-slate-100'
-                    : 'bg-white/50 text-slate-400 hover:bg-white hover:text-slate-600'
-                  }
-                  ${tab.comingSoon ? 'opacity-60 cursor-not-allowed' : ''}
-                `}
-              >
-                {tab.comingSoon && (
-                  <span className="w-2 h-2 rounded-full bg-slate-300/50" />
-                )}
-                {tab.label}
-                {tab.comingSoon && (
-                  <span className="ml-1 px-1.5 py-0.5 bg-slate-200/50 text-slate-500 text-[9px] uppercase tracking-wider rounded">Soon</span>
-                )}
-              </button>
-            ))}
+          {/* Desktop: Original List (Restored) */}
+          <div className="hidden md:flex flex-col items-center">
+            <div className="flex items-center gap-3 mb-6">
+              <h2 className="text-2xl font-[800] text-slate-900 tracking-tight">Select Region</h2>
+              <span className="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 text-[10px] font-bold uppercase tracking-wider">
+                Auto-detected: Seattle
+              </span>
+            </div>
+
+            <div className="flex flex-row items-center justify-center gap-3">
+              {regionTabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  disabled={tab.comingSoon}
+                  suppressHydrationWarning
+                  className={`
+                              relative px-6 py-3 rounded-full text-sm font-bold transition-all
+                              ${tab.active
+                      ? 'bg-white text-slate-900 shadow-md ring-1 ring-slate-100'
+                      : 'bg-white/50 text-slate-400 hover:bg-white hover:text-slate-600'
+                    }
+                              ${tab.comingSoon ? 'opacity-60 cursor-not-allowed' : ''}
+                            `}
+                >
+                  {tab.comingSoon && (
+                    <span className="w-2 h-2 rounded-full bg-slate-300/50 inline-block mr-2" />
+                  )}
+                  {tab.label}
+                  {tab.comingSoon && (
+                    <span className="ml-1.5 px-1.5 py-0.5 bg-slate-200/50 text-slate-500 text-[9px] uppercase tracking-wider rounded">Soon</span>
+                  )}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 

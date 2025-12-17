@@ -150,7 +150,7 @@ export default async function RegionalStatsPage({ params }: { params: Promise<{ 
 
                     <div className="flex items-center gap-2 text-slate-500 font-medium mb-6 text-sm bg-slate-100 w-fit px-3 py-1.5 rounded-full">
                         <Car className="w-4 h-4" />
-                        <span>Standard Passenger Vehicles</span>
+                        <span>Passenger</span>
                     </div>
 
                     {/* Secret Sauce Narrative - Dumb Render */}
@@ -231,7 +231,13 @@ export default async function RegionalStatsPage({ params }: { params: Promise<{ 
                                         </div>
 
                                         {/* Right: Live Status (Right Aligned) */}
-                                        <div className="text-right pl-4 border-l border-slate-100">
+                                        <div className="text-right pl-4 border-l border-slate-100 flex flex-col items-end">
+                                            {/* Vehicle Badge (Top Right of Card Content) */}
+                                            <div className="flex items-center gap-1 bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded text-[10px] font-medium mb-1">
+                                                <Car className="w-3 h-3" />
+                                                <span>Passenger</span>
+                                            </div>
+
                                             <div className="text-[10px] font-bold text-slate-400 uppercase">Right Now</div>
                                             <div className={`text-lg font-[800] ${live > 30 ? 'text-amber-500' : 'text-emerald-500'}`}>
                                                 {live} min

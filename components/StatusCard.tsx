@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { BorderEvent } from "@/lib/types";
-import { TrendingDown, TrendingUp, Minus, Cloud, Droplets, Sun, Thermometer, ChevronRight } from "lucide-react";
+import { TrendingDown, TrendingUp, Minus, Cloud, Droplets, Sun, Thermometer, ChevronRight, Car } from "lucide-react";
 import { clsx } from "clsx";
 
 interface StatusCardProps {
@@ -49,9 +49,15 @@ export function StatusCard({ event }: { event: BorderEvent }) {
   return (
     <Link href={`/stats/${slug}/${dayName}`} className="block h-full">
       <div className={clsx("relative h-full p-5 md:p-8", cardStyle)}>
-        {/* Hover Affordance (Chevron) */}
-        <div className="absolute top-5 right-5 md:top-8 md:right-8 text-slate-300 group-hover:text-indigo-600 transition-colors group-hover:translate-x-1 duration-300">
+        {/* Hover Affordance (Chevron) - Moved to Bottom Right to make room for Badge */}
+        <div className="absolute bottom-5 right-5 md:bottom-8 md:right-8 text-slate-300 group-hover:text-indigo-600 transition-colors group-hover:translate-x-1 duration-300">
           <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
+        </div>
+
+        {/* Vehicle Badge (Passenger) - Top Right */}
+        <div className="absolute top-5 right-5 md:top-8 md:right-8 flex items-center gap-1 bg-slate-50 text-slate-400 px-2 py-0.5 rounded-md text-[10px] uppercase font-bold tracking-wider border border-slate-100">
+          <Car className="w-3 h-3" />
+          <span>Passenger</span>
         </div>
 
         {/* Smart Wait Badge (Moved to maintain layout balance, if exists) */}
