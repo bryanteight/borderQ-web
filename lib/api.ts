@@ -16,13 +16,11 @@ export async function getBorderData(): Promise<SummaryResponse | null> {
         const res = await fetch(`${baseUrl}/api/v1/summary`, { cache: 'no-store' });
 
         if (!res.ok) {
-            console.error(`API Error: ${res.status} ${res.statusText}`);
-            return { type: "error", data: [], message: `API Error: ${res.status}` };
+            return { type: "error", data: [], message: `API Error: ${res.status} ${res.statusText}` };
         }
 
         return res.json();
     } catch (e: any) {
-        console.error("Fetch Connection Error:", e);
         // Return a structured error that the UI can display
         return {
             type: "error",

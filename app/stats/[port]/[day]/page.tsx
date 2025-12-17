@@ -1,10 +1,9 @@
 import React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, TrendingUp, Car } from "lucide-react";
+import { ArrowLeft, TrendingUp, Navigation, Clock, Car, CloudRain, Sun } from "lucide-react";
 
-// Mapping for slugs to IDs
-// Verified against backend ingest.py
+// Reusing types from the single port schema for consistency
 const PORT_MAP: Record<string, string> = {
     "peace-arch": "02300402",      // ID ending in 402 is Peace Arch
     "pacific-highway": "02300401", // ID ending in 401 is Pacific Hwy
@@ -154,6 +153,7 @@ export default async function StatsPage({ params }: { params: Promise<{ port: st
                     </Link>
 
                     {/* Home Link (Icon) */}
+
                     {/* Home Link (Text Button) */}
                     <Link href="/" className="flex items-center gap-2 px-4 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-full transition-colors">
                         <TrendingUp className="w-4 h-4" />
