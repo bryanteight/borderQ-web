@@ -259,7 +259,7 @@ export default async function RegionalStatsPage({ params }: { params: Promise<{ 
 
                 {/* 3. Action Footer */}
                 <div className="bg-indigo-50 rounded-2xl p-6 text-center">
-                    <p className="text-sm text-indigo-800 font-medium mb-2">Need live navigation?</p>
+                    <p className="text-sm text-indigo-800 font-medium mb-2">Crossing the border now?</p>
                     <Link href="/" className="inline-block bg-indigo-600 text-white font-bold py-3 px-6 rounded-full hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200">
                         View Live Dashboard
                     </Link>
