@@ -141,9 +141,12 @@ export default async function RegionalStatsPage({ params }: { params: Promise<{ 
                         Back to Home
                     </Link>
 
-                    <h1 className="text-3xl sm:text-4xl font-[800] text-slate-900 mb-3 leading-tight">
-                        Best Time to Cross Border: <span className="text-indigo-600 block sm:inline">Seattle to Vancouver</span>
+                    <h1 className="text-2xl sm:text-4xl font-[800] text-slate-900 mb-2 leading-tight">
+                        <span className="text-indigo-600">{dayName}:</span> Best Time to Cross
                     </h1>
+                    <h2 className="text-lg sm:text-xl font-medium text-slate-500 mb-6">
+                        Seattle to Vancouver Prediction
+                    </h2>
 
                     <div className="flex items-center gap-2 text-slate-500 font-medium mb-6 text-sm bg-slate-100 w-fit px-3 py-1.5 rounded-full">
                         <Car className="w-4 h-4" />
@@ -151,25 +154,23 @@ export default async function RegionalStatsPage({ params }: { params: Promise<{ 
                     </div>
 
                     {/* Secret Sauce Narrative - Dumb Render */}
-                    <div className="prose prose-slate prose-lg max-w-none text-slate-600 leading-relaxed">
-                        <p>{narrative.intro}</p>
+                    <div className="prose prose-slate max-w-none text-slate-700 leading-relaxed">
+                        <p className="text-lg sm:text-2xl font-medium">{narrative.intro}</p>
                     </div>
                 </div>
             </div>
 
-            <div className="max-w-xl mx-auto px-6 space-y-8">
+            <div className="max-w-3xl mx-auto px-6 space-y-8">
 
                 {/* 1. SEO Text Block */}
                 <section className="space-y-4">
-                    <h1 className="text-3xl font-[900] tracking-tight text-slate-900 leading-tight">
-                        Best Time to Cross: Seattle to Vancouver on {dayName}s
-                    </h1>
+                    <h2 className="text-xl font-bold tracking-tight text-slate-900 leading-tight">
+                        Detailed Traffic Analysis
+                    </h2>
 
                     <div className="prose prose-slate leading-relaxed text-slate-600">
                         {/* Dynamic Narrative from Backend */}
-                        <p className="font-medium text-lg text-slate-700">
-                            {narrative.intro}
-                        </p>
+
 
                         {/* Lynden Warning Block */}
                         {isLyndenRecommendation && (
@@ -199,7 +200,7 @@ export default async function RegionalStatsPage({ params }: { params: Promise<{ 
                 {/* 2. Comparison Table/Cards (Visuals After Text) */}
                 <section>
                     <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Port Comparison ({dayName})</h2>
-                    <div className="grid gap-4">
+                    <div className="flex flex-col md:grid md:grid-cols-2 gap-3">
                         {ports.map((port) => {
                             const live = port.data?.realtime.wait_time || 0;
 
@@ -207,33 +208,49 @@ export default async function RegionalStatsPage({ params }: { params: Promise<{ 
                                 <Link
                                     key={port.id}
                                     href={`/stats/${port.slug}/${day}`}
-                                    className="block group bg-white rounded-[24px] p-5 shadow-sm ring-1 ring-slate-100 transition-all hover:shadow-md hover:ring-indigo-200"
+                                    className="block group bg-white rounded-2xl p-4 shadow-sm ring-1 ring-slate-100 transition-all hover:shadow-md hover:ring-indigo-200"
                                 >
-                                    <div className="flex justify-between items-center mb-2">
-                                        <div className="flex items-center gap-2">
-                                            <span className="font-bold text-slate-900 text-lg group-hover:text-indigo-600 transition-colors">{port.name}</span>
-                                        </div>
-                                        <ArrowLeft className="w-5 h-5 text-slate-300 rotate-180 group-hover:text-indigo-600 group-hover:translate-x-1 transition-all" />
-                                    </div>
+                                    {/* Mobile: Row Layout / Desktop: Keep flexible */}
+                                    <div className="flex items-center justify-between">
 
-                                    <div className="flex gap-6">
-                                        <div>
-                                            <div className="text-[10px] font-bold text-slate-400 uppercase">Wait Range</div>
-                                            <div className="text-lg font-[800] text-slate-700">
-                                                {port.data?.stats.min_wait}-{port.data?.stats.max_wait} <span className="text-xs font-bold text-slate-400">min</span>
+                                        {/* Left: Name & Wait */}
+                                        <div className="flex items-center gap-4">
+                                            <div className="min-w-[100px]">
+                                                <div className="font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">{port.name}</div>
+                                                <div className="text-xs text-slate-400 font-medium">Wait Range</div>
+                                                <div className="text-sm font-[800] text-slate-700">
+                                                    {port.data?.stats.min_wait}-{port.data?.stats.max_wait} <span className="text-[10px] font-bold text-slate-400">min</span>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div>
+
+                                        {/* Middle: Best Time */}
+                                        <div className="hidden sm:block">
                                             <div className="text-[10px] font-bold text-slate-400 uppercase">Best Time</div>
-                                            <div className="text-base font-bold text-slate-600 mt-1">{port.data?.stats.best_time}</div>
+                                            <div className="text-sm font-bold text-slate-600">{port.data?.stats.best_time}</div>
                                         </div>
-                                        <div className="ml-auto text-right">
+
+                                        {/* Right: Live Status (Right Aligned) */}
+                                        <div className="text-right pl-4 border-l border-slate-100">
                                             <div className="text-[10px] font-bold text-slate-400 uppercase">Right Now</div>
-                                            <div className={`text-xl font-[800] ${live > 30 ? 'text-amber-500' : 'text-emerald-500'}`}>
+                                            <div className={`text-lg font-[800] ${live > 30 ? 'text-amber-500' : 'text-emerald-500'}`}>
                                                 {live} min
                                             </div>
                                         </div>
+
+                                        {/* Mobile Arrow (Visual cue) */}
+                                        <ArrowLeft className="w-4 h-4 text-slate-300 rotate-180 group-hover:text-indigo-600 transition-colors ml-2 sm:hidden" />
                                     </div>
+
+                                    {/* Mobile: Best Time (Row 2 for ultra-compactness if needed, or keep inline? Inline above might be tight on SE) */}
+                                    {/* Let's show Best Time below name on tiny screens if needed, but flex row usually fits if names are short. */}
+                                    {/* Actually, let's keep it simple. Name/Range | Right Now.  Best Time is nice but maybe secondary? */}
+                                    {/* User prompt implied showing Best Time. Let's add it under Name for mobile if hidden above. */}
+                                    <div className="sm:hidden mt-2 pt-2 border-t border-slate-50 flex items-center justify-between text-xs">
+                                        <span className="text-slate-400 font-medium">Best Time:</span>
+                                        <span className="font-bold text-slate-700">{port.data?.stats.best_time}</span>
+                                    </div>
+
                                 </Link>
                             );
                         })}
