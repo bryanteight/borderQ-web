@@ -8,6 +8,9 @@ export function StatusCardCarousel({ events }: { events: BorderEvent[] }) {
     const scrollRef = useRef<HTMLDivElement>(null);
     const [activeIndex, setActiveIndex] = useState(0);
 
+    // Guard against undefined events
+    if (!events) return null;
+
     useEffect(() => {
         const container = scrollRef.current;
         if (!container) return;
@@ -15,6 +18,9 @@ export function StatusCardCarousel({ events }: { events: BorderEvent[] }) {
         const handleScroll = () => {
             // Calculate active index based on scroll position center point
             const scrollCenter = container.scrollLeft + (container.clientWidth / 2);
+            /* Avoid division by zero if events is empty or not rendered */
+            if (events.length === 0) return;
+
             const cardWidth = container.scrollWidth / events.length;
 
             const newIndex = Math.floor(scrollCenter / cardWidth);

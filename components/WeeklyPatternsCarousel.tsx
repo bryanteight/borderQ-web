@@ -3,6 +3,7 @@
 import { ArrowRight } from "lucide-react";
 import { useEffect, useRef } from "react";
 import Link from "next/link";
+import React from 'react';
 
 export interface PatternItem {
     day: string;

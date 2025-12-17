@@ -236,9 +236,15 @@ export default async function RegionalStatsPage({ params }: { params: Promise<{ 
                                             </div>
 
                                             <div className="text-[10px] font-bold text-slate-400 uppercase">Right Now</div>
-                                            <div className={`text-lg font-[800] ${live > 30 ? 'text-amber-500' : 'text-emerald-500'}`}>
-                                                {live} min
-                                            </div>
+                                            {port.data?.realtime.status === "Closed" ? (
+                                                <div className="text-lg font-[800] text-red-500">
+                                                    Closed
+                                                </div>
+                                            ) : (
+                                                <div className={`text-lg font-[800] ${live > 30 ? 'text-amber-500' : 'text-emerald-500'}`}>
+                                                    {live} min
+                                                </div>
+                                            )}
                                         </div>
 
                                         {/* Mobile Arrow (Visual cue) */}

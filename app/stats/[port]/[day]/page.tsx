@@ -199,10 +199,18 @@ export default async function StatsPage({ params }: { params: Promise<{ port: st
                         <div className="flex flex-col border-r border-slate-100 pr-6">
                             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Right Now</span>
                             <div className="flex items-baseline">
-                                <span className={`text-6xl font-[800] tracking-tighter leading-none ${realtime.wait_time > 30 ? 'text-amber-500' : 'text-emerald-500'}`}>
-                                    {realtime.wait_time}
-                                </span>
-                                <span className="text-lg font-bold text-slate-300 ml-1">min</span>
+                                {realtime.status === "Closed" ? (
+                                    <span className="text-4xl font-[800] tracking-tighter text-red-500 leading-none">
+                                        Closed
+                                    </span>
+                                ) : (
+                                    <>
+                                        <span className={`text-6xl font-[800] tracking-tighter leading-none ${realtime.wait_time > 30 ? 'text-amber-500' : 'text-emerald-500'}`}>
+                                            {realtime.wait_time}
+                                        </span>
+                                        <span className="text-lg font-bold text-slate-300 ml-1">min</span>
+                                    </>
+                                )}
                             </div>
                         </div>
 
@@ -215,7 +223,9 @@ export default async function StatsPage({ params }: { params: Promise<{ port: st
                                 <span className="text-sm font-bold text-slate-400 ml-1">min avg</span>
                             </div>
                             <p className="text-xs font-medium text-slate-500 mt-2 leading-tight">
-                                Current wait is <span className="font-bold">{realtime.wait_time < (realtime.official_avg_minutes || stats.avg_wait) ? 'lower' : 'higher'}</span> than usual.
+                                {realtime.status !== "Closed" && (
+                                    <>Current wait is <span className="font-bold">{realtime.wait_time < (realtime.official_avg_minutes || stats.avg_wait) ? 'lower' : 'higher'}</span> than usual.</>
+                                )}
                             </p>
                         </div>
                     </div>
