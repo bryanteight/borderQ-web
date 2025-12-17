@@ -3,6 +3,7 @@ import { StatusCard } from "@/components/StatusCard";
 import { BorderQLogo } from "@/components/BorderQLogo";
 import { getBorderData } from "@/lib/api";
 import { TrendingUp, TrendingDown, Clock, Sun, ArrowRight, Calendar, Star, Car } from "lucide-react";
+import { WeeklyPatternsCarousel } from "@/components/WeeklyPatternsCarousel";
 
 export default async function Home() {
   const data = await getBorderData();
@@ -140,6 +141,12 @@ export default async function Home() {
   // Grid handles it, but let's stick to 4 primarily unless holiday pushes one out.
   // Actually, keeping all is fine, grid will wrap. Let's just sort.
 
+  // Prepare items for Client Component (Pass rendered icon nodes to avoid serialization issues)
+  const carouselItems = sortedInsights.map(item => ({
+    ...item,
+    icon: <item.icon className="w-5 h-5" />
+  }));
+
   return (
     <main className="min-h-screen bg-[#F6F8FA] text-slate-900 pb-20 font-sans">
 
@@ -219,8 +226,8 @@ export default async function Home() {
         </div>
 
         {/* Trending Forecasts (Dynamic) */}
-        <div className="border-t border-slate-200 pt-10 pb-20">
-          <div className="flex items-center justify-between mb-8 px-2">
+        <div className="border-t border-slate-200 pt-6 md:pt-10 pb-20">
+          <div className="flex items-center justify-between mb-6 md:mb-8 px-2">
             <div>
               <h3 className="text-lg font-[800] text-slate-900 tracking-tight">Weekly Traffic Patterns</h3>
               <p className="text-slate-500 text-sm">
@@ -237,32 +244,7 @@ export default async function Home() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {sortedInsights.map((item) => (
-              <a
-                key={item.day}
-                href={`/stats/seattle-to-vancouver/${item.slug}`}
-                className="group bg-white border border-slate-200 p-5 rounded-2xl hover:shadow-md hover:border-indigo-300 transition-all text-left relative overflow-hidden flex flex-col h-full"
-              >
-                <div className="flex justify-between items-start mb-3">
-                  <div className={`p-2 rounded-lg transition-colors bg-${item.color}-50 text-${item.color}-600 group-hover:bg-${item.color}-100`}>
-                    <item.icon className="w-5 h-5" />
-                  </div>
-                  <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full transition-colors bg-slate-100 text-slate-500 group-hover:bg-indigo-50 group-hover:text-indigo-600`}>
-                    {item.badge}
-                  </span>
-                </div>
-
-                <h4 className="font-[800] text-slate-900 mb-1 group-hover:text-indigo-700 transition-colors">{item.title}</h4>
-                <p className="text-xs text-slate-500 leading-relaxed mb-4 flex-grow">{item.description}</p>
-
-                {/* Click Affordance */}
-                <div className="flex items-center text-xs font-bold text-indigo-600 opacity-60 group-hover:opacity-100 transition-opacity mt-auto">
-                  View Analysis <ArrowRight className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </a>
-            ))}
-          </div>
+          <WeeklyPatternsCarousel items={carouselItems} />
         </div>
 
       </div>
