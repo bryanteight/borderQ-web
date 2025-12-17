@@ -68,7 +68,6 @@ export default async function StatsPage({ params }: { params: Promise<{ port: st
     // Next.js 15+: params is a Promise
     const { port, day } = await params;
 
-    console.log(`[StatsPage] Loading: PortSlug=${port}, ID=${PORT_MAP[port]}, Day=${day}`);
 
     const portId = PORT_MAP[port];
 
@@ -119,7 +118,6 @@ export default async function StatsPage({ params }: { params: Promise<{ port: st
     // Find max for scaling
     const maxWait = Math.max(...chartData.map(h => h.wait), 1);
 
-    console.log('[Chart Debug] chartData:', chartData, 'maxWait:', maxWait);
 
     // Helper to format chart labels
     const getLabel = (h: number) => {
