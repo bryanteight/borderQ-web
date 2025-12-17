@@ -48,43 +48,43 @@ export function StatusCard({ event }: { event: BorderEvent }) {
 
   return (
     <Link href={`/stats/${slug}/${dayName}`} className="block h-full">
-      <div className={clsx("relative h-full p-8", cardStyle)}>
+      <div className={clsx("relative h-full p-5 md:p-8", cardStyle)}>
         {/* Hover Affordance (Chevron) */}
-        <div className="absolute top-8 right-8 text-slate-300 group-hover:text-indigo-600 transition-colors group-hover:translate-x-1 duration-300">
-          <ChevronRight className="w-6 h-6" />
+        <div className="absolute top-5 right-5 md:top-8 md:right-8 text-slate-300 group-hover:text-indigo-600 transition-colors group-hover:translate-x-1 duration-300">
+          <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
         </div>
 
         {/* Smart Wait Badge (Moved to maintain layout balance, if exists) */}
         {smartRecommendation && (
-          <span className="absolute top-6 right-16 px-3 py-1 bg-violet-50 text-violet-700 text-[11px] font-bold uppercase tracking-wider rounded-lg flex items-center gap-1.5 border border-violet-100/50">
-            <TrendingDown className="w-3.5 h-3.5" />
+          <span className="absolute top-4 right-12 md:top-6 md:right-16 px-2 py-0.5 md:px-3 md:py-1 bg-violet-50 text-violet-700 text-[10px] md:text-[11px] font-bold uppercase tracking-wider rounded-lg flex items-center gap-1.5 border border-violet-100/50">
+            <TrendingDown className="w-3 h-3 md:w-3.5 md:h-3.5" />
             {smartRecommendation.message.replace("Save", "Save").split(" ")[0] === "Save" ? "Save Time" : "Optimization"}
           </span>
         )}
 
         {/* Header */}
-        <div className="flex flex-col gap-1 mb-8">
-          <h3 className="text-2xl font-[800] text-slate-900 tracking-tight group-hover:text-indigo-600 transition-colors flex items-center gap-2">
+        <div className="flex flex-col gap-1 mb-4 md:mb-8">
+          <h3 className="text-xl md:text-2xl font-[800] text-slate-900 tracking-tight group-hover:text-indigo-600 transition-colors flex items-center gap-2">
             {event.crossing_name}
           </h3>
           {isClosed ? (
-            <span className="text-red-500 font-bold text-sm">Closed</span>
+            <span className="text-red-500 font-bold text-xs md:text-sm">Closed</span>
           ) : (
-            <span className="text-slate-400 font-medium text-sm tracking-wide uppercase">Current Wait</span>
+            <span className="text-slate-400 font-medium text-xs md:text-sm tracking-wide uppercase">Current Wait</span>
           )}
         </div>
 
         {/* Main Wait Time Display & Typical */}
-        <div className="flex items-end gap-6 mb-8">
+        <div className="flex items-end gap-4 md:gap-6 mb-6 md:mb-8">
           {/* Current */}
           <div className="flex items-baseline gap-1">
             <div className={clsx(
-              "text-8xl font-[800] tracking-tighter leading-none transition-colors duration-300",
+              "text-6xl md:text-8xl font-[800] tracking-tighter leading-none transition-colors duration-300",
               trafficColor
             )}>
               {event.wait_time_minutes}
             </div>
-            <div className="text-2xl font-bold text-slate-300 transform -translate-y-2">min</div>
+            <div className="text-xl md:text-2xl font-bold text-slate-300 transform -translate-y-1 md:-translate-y-2">min</div>
           </div>
 
           {/* Typical (Aside) */}

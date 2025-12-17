@@ -203,13 +203,18 @@ export default async function Home() {
           </div>
         </div>
 
-        {/* Status Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-20">
+        <div className="flex overflow-x-auto snap-x snap-mandatory pb-8 -mx-4 px-4 md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible md:pb-0 md:mx-0 md:px-0 gap-4 mb-4 md:mb-12 scrollbar-hide">
           {data.data.map((event) => (
-            <StatusCard
-              key={event.id}
-              event={event}
-            />
+            <div key={event.id} className="min-w-[80vw] sm:min-w-[380px] md:min-w-0 snap-center">
+              <StatusCard event={event} />
+            </div>
+          ))}
+        </div>
+
+        {/* Mobile Carousel Dots (Visual Hint) */}
+        <div className="flex justify-center gap-2 mb-12 md:hidden">
+          {data.data.map((_, i) => (
+            <div key={i} className={`w-1.5 h-1.5 rounded-full ${i === 0 ? 'bg-indigo-600' : 'bg-slate-200'}`} />
           ))}
         </div>
 
