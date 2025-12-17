@@ -20,3 +20,8 @@
 ## Tomorrow (Optimization)
 - [ ] Enable Cloudflare Proxy (Orange Cloud) for `borderq.com`
 - [ ] **CRITICAL:** Set Cloudflare SSL/TLS mode to "Full (Strict)"
+
+## Analytics & Marketing
+- [ ] Create Google Analytics 4 Property
+- [ ] Get Measurement ID (starts with `G-`)
+- [ ] Add `NEXT_PUBLIC_GA_ID` = `G-XXXXXXXXXX` to Railway Frontend Variables
