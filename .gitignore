@@ -40,5 +40,4 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# todo list
-DEPLOYMENT_TODO.md
+

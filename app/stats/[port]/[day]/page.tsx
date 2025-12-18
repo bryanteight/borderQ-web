@@ -23,6 +23,7 @@ interface StatsResponse {
         official_avg_minutes: number;
         weather: string;
         status: string;
+        standard_lanes_open?: number;
     };
     stats: {
         avg_wait: number;
@@ -252,6 +253,12 @@ export default async function StatsPage({ params }: { params: Promise<{ port: st
                                     </>
                                 )}
                             </div>
+                            {realtime.standard_lanes_open !== undefined && realtime.standard_lanes_open !== null && (
+                                <div className="mt-2 flex items-center gap-1.5 px-2 py-0.5 bg-emerald-50 text-emerald-700 text-[10px] font-bold uppercase tracking-tighter rounded-md border border-emerald-100/50 self-start">
+                                    <div className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
+                                    {realtime.standard_lanes_open} {realtime.standard_lanes_open === 1 ? "Lane" : "Lanes"} Open
+                                </div>
+                            )}
                         </div>
 
                         {/* Right: Typical for Today */}

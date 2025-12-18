@@ -7,11 +7,10 @@ import { useEffect, useRef, useState } from "react";
 export function StatusCardCarousel({ events }: { events: BorderEvent[] }) {
     const scrollRef = useRef<HTMLDivElement>(null);
     const [activeIndex, setActiveIndex] = useState(0);
-
-    // Guard against undefined events
-    if (!events) return null;
+    const eventsLength = events?.length || 0;
 
     useEffect(() => {
+        if (!events) return;
         const container = scrollRef.current;
         if (!container) return;
 

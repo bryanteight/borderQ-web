@@ -16,6 +16,16 @@ export interface BorderEvent {
   ai_summary: string;
   prediction?: string;
   vision_insight?: string;
+  standard_lanes_open?: number;
+  nexus_lanes_open?: number;
+  direction?: string;
+  last_sync?: string; // ISO string from backend
+  source_note?: string;
+  smart_insight?: {
+    icon: 'surge' | 'clearing' | 'fast' | 'rising' | 'stable';
+    verdict: string;
+    detail: string;
+  };
 }
 
 export interface SummaryResponse {

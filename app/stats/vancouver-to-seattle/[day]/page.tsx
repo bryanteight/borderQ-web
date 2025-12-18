@@ -10,6 +10,7 @@ interface StatsResponse {
         official_avg_minutes: number;
         weather: string;
         status: string;
+        standard_lanes_open?: number;
     };
     stats: {
         avg_wait: number;
@@ -260,6 +261,11 @@ export default async function RegionalStatsPage({ params }: { params: Promise<{ 
                                             ) : (
                                                 <div className={`text-lg font-[800] ${live > 30 ? 'text-amber-500' : 'text-emerald-500'}`}>
                                                     {live} min
+                                                </div>
+                                            )}
+                                            {port.data?.realtime.standard_lanes_open !== undefined && port.data?.realtime.standard_lanes_open !== null && (
+                                                <div className="text-[10px] font-bold text-emerald-600 uppercase mt-0.5">
+                                                    {port.data?.realtime.standard_lanes_open} {port.data?.realtime.standard_lanes_open === 1 ? 'Lane' : 'Lanes'} Open
                                                 </div>
                                             )}
                                         </div>
