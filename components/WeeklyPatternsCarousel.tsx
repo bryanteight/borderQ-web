@@ -76,7 +76,7 @@ export function WeeklyPatternsCarousel({ items }: { items: PatternItem[] }) {
                 {tripleItems.map((item, index) => (
                     <div key={`${item.day}-${index}`} className="min-w-[75vw] sm:min-w-[280px] snap-center h-full flex-shrink-0">
                         <Link
-                            href={`/stats/seattle-to-vancouver/${item.slug}`}
+                            href={`/stats/vancouver-to-seattle/${item.slug}`}
                             className="group bg-white border border-slate-200 p-5 rounded-2xl hover:shadow-md hover:border-indigo-300 transition-all text-left relative overflow-hidden flex flex-col h-full w-full"
                         >
                             <div className="flex justify-between items-start mb-3">
@@ -105,7 +105,7 @@ export function WeeklyPatternsCarousel({ items }: { items: PatternItem[] }) {
                 {items.map((item) => (
                     <Link
                         key={item.day}
-                        href={`/stats/seattle-to-vancouver/${item.slug}`}
+                        href={`/stats/vancouver-to-seattle/${item.slug}`}
                         className="group bg-white border border-slate-200 p-5 rounded-2xl hover:shadow-md hover:border-indigo-300 transition-all text-left relative overflow-hidden flex flex-col h-full w-full"
                     >
                         <div className="flex justify-between items-start mb-3">

@@ -1,0 +1,32 @@
+
+> frontend@0.3.2 dev
+> next dev
+
+   ▲ Next.js 16.0.10 (Turbopack)
+   - Local:         http://localhost:3000
+   - Network:       http://192.168.86.27:3000
+
+ ✓ Starting...
+ ✓ Ready in 1024ms
+ GET /stats/seattle-to-vancouver/friday 404 in 3.0s (compile: 1916ms, render: 1058ms)
+ GET /stats/bc-to-seattle/Wednesday 404 in 3.2s (compile: 1724ms, render: 1435ms)
+ GET /stats/bc-to-seattle/Wednesday 404 in 925ms (compile: 110ms, render: 815ms)
+ GET / 200 in 1479ms (compile: 743ms, render: 736ms)
+ GET /stats/lynden/Wednesday 200 in 617ms (compile: 23ms, render: 595ms)
+ GET /stats/lynden/Wednesday 200 in 537ms (compile: 3ms, render: 534ms)
+ GET /stats/vancouver-to-seattle/Wednesday 200 in 1351ms (compile: 607ms, render: 744ms)
+ GET / 200 in 642ms (compile: 26ms, render: 616ms)
+ GET /stats/peace-arch/Wednesday 200 in 534ms (compile: 8ms, render: 526ms)
+ GET / 200 in 623ms (compile: 23ms, render: 601ms)
+ ✓ Compiled in 58ms
+ GET /stats/bc-to-seattle/Wednesday 200 in 78ms (compile: 9ms, render: 68ms)
+ GET /stats/seattle-to-vancouver/friday 200 in 83ms (compile: 38ms, render: 46ms)
+ GET / 200 in 216ms (compile: 75ms, render: 141ms)
+ GET /stats/bc-to-seattle/Wednesday 200 in 34ms (compile: 2ms, render: 32ms)
+ GET /stats/seattle-to-vancouver/friday 200 in 35ms (compile: 16ms, render: 18ms)
+ GET / 200 in 102ms (compile: 43ms, render: 58ms)
+ GET /stats/lynden/Wednesday 200 in 688ms (compile: 15ms, render: 673ms)
+ GET / 200 in 337ms (compile: 7ms, render: 330ms)
+ GET /stats/peace-arch/Wednesday 200 in 575ms (compile: 11ms, render: 564ms)
+ GET /stats/vancouver-to-seattle/Wednesday 200 in 974ms (compile: 9ms, render: 964ms)
+ GET / 200 in 678ms (compile: 92ms, render: 586ms)

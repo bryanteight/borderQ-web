@@ -86,14 +86,14 @@ export async function generateMetadata({ params }: { params: Promise<{ day: stri
     const titleDay = isWeekday ? `${dayName}s` : dayName;
 
     return {
-        title: `Best Time to Cross Border: Seattle to Vancouver on ${titleDay} | BorderQ`,
-        description: `Historical border wait time forecasts for ${dayName}. Compare Peace Arch vs Pacific Highway traffic patterns to save time on your trip to Vancouver.`,
+        title: `Best Time to Cross Border: Vancouver (BC) to Seattle (WA) on ${titleDay} | BorderQ`,
+        description: `Historical border wait time forecasts for ${dayName}. Compare Peace Arch vs Pacific Highway traffic patterns for your trip to Seattle (Southbound).`,
         alternates: {
-            canonical: `/stats/seattle-to-vancouver/${day}`,
+            canonical: `/stats/vancouver-to-seattle/${day}`,
         },
         openGraph: {
-            title: `Best Time to Cross: Seattle to Vancouver on ${titleDay}`,
-            description: `Don't get stuck at the border. See historical wait time trends for ${dayName} and choose the best crossing.`,
+            title: `Best Time to Cross: Vancouver (BC) to Seattle (WA) on ${titleDay}`,
+            description: `Don't get stuck at the border. See historical wait time trends for ${dayName} and choose the best crossing to Seattle.`,
             type: 'article',
         }
     };
@@ -162,7 +162,7 @@ export default async function RegionalStatsPage({ params }: { params: Promise<{ 
                         <span className="text-indigo-600">{dayName}:</span> Best Time to Cross
                     </h1>
                     <h2 className="text-lg sm:text-xl font-medium text-slate-500 mb-6">
-                        Seattle to Vancouver Prediction
+                        Vancouver (BC) to Seattle (WA) Prediction (Southbound)
                     </h2>
 
 

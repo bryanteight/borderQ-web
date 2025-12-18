@@ -39,11 +39,11 @@ export async function SiteHeader() {
                     {/* Direction Badge - Made Larger */}
                     <div className="flex items-center gap-2">
                         <span className="px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-slate-100 border border-slate-200 text-xs sm:text-sm font-[800] flex items-center gap-1.5 sm:gap-2 text-slate-700 shadow-sm">
-                            <span className="text-lg sm:text-xl">🇺🇸</span>
-                            <span className="hidden sm:inline">USA</span>
-                            <span className="text-slate-300 mx-0.5 sm:mx-1">➜</span>
                             <span className="text-lg sm:text-xl">🇨🇦</span>
                             <span className="hidden sm:inline">Canada</span>
+                            <span className="text-slate-300 mx-0.5 sm:mx-1">➜</span>
+                            <span className="text-lg sm:text-xl">🇺🇸</span>
+                            <span className="hidden sm:inline">USA</span>
                         </span>
                     </div>
 

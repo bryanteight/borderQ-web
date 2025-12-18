@@ -31,7 +31,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // 2. Aggregate Stats Pages (Regional)
     // /stats/seattle-to-vancouver/[day]
     const aggregateRoutes = days.map((day) => ({
-        url: `${baseUrl}/stats/seattle-to-vancouver/${day}`,
+        url: `${baseUrl}/stats/vancouver-to-seattle/${day}`,
         lastModified: new Date(),
         changeFrequency: 'weekly' as const,
         priority: 0.8,

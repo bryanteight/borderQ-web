@@ -38,7 +38,7 @@ export default async function Home() {
   }
 
   const regionTabs = [
-    { id: 'seattle', label: 'Seattle / BC', active: true, comingSoon: false },
+    { id: 'seattle', label: 'BC / WA', active: true, comingSoon: false },
     { id: 'niagara', label: 'Niagara / NY', active: false, comingSoon: true },
     { id: 'detroit', label: 'Detroit / Windsor', active: false, comingSoon: true },
   ];
@@ -184,7 +184,7 @@ export default async function Home() {
             <div className="flex items-center gap-3 mb-6">
               <h2 className="text-2xl font-[800] text-slate-900 tracking-tight">Select Region</h2>
               <span className="px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 text-[10px] font-bold uppercase tracking-wider">
-                Auto-detected: Seattle
+                Auto-detected: BC / WA
               </span>
             </div>
 
