@@ -30,3 +30,4 @@
  GET /stats/peace-arch/Wednesday 200 in 575ms (compile: 11ms, render: 564ms)
  GET /stats/vancouver-to-seattle/Wednesday 200 in 974ms (compile: 9ms, render: 964ms)
  GET / 200 in 678ms (compile: 92ms, render: 586ms)
+ ✓ Compiled in 42ms
