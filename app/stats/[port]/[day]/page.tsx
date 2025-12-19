@@ -1,7 +1,8 @@
 import React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, TrendingUp, Navigation, Clock, Car, CloudRain, Sun } from "lucide-react";
+import { ArrowLeft, TrendingUp, Navigation, Clock, Car, CloudRain, Sun, Activity, Zap, Minus } from "lucide-react";
+import { clsx } from "clsx";
 
 // Reusing types from the single port schema for consistency
 const PORT_MAP: Record<string, string> = {
@@ -24,6 +25,12 @@ interface StatsResponse {
         weather: string;
         status: string;
         standard_lanes_open?: number;
+        source_note?: string;
+        smart_insight?: {
+            icon: 'surge' | 'clearing' | 'fast' | 'rising' | 'stable';
+            verdict: string;
+            detail: string;
+        };
     };
     stats: {
         avg_wait: number;
@@ -145,6 +152,7 @@ export default async function StatsPage({ params }: { params: Promise<{ port: st
     }
 
     const { stats, json_ld, realtime, context } = data;
+    const isClosed = realtime.status === "Closed";
 
     // Filter to only 6 KEY hours as user requested (not too dense)
     // Key hours: 6am, 9am, 12pm, 3pm, 6pm, 9pm
@@ -215,67 +223,146 @@ export default async function StatsPage({ params }: { params: Promise<{ port: st
 
                 </div>
 
-                {/* 0. Daily Insight (Narrative) - NEW */}
-                {/* This adds value beyond the raw numbers below */}
-                {data.narrative && (
-                    <div className="bg-indigo-50/50 border border-indigo-100 rounded-[28px] p-6 relative overflow-hidden">
-                        <div className="flex items-start gap-4 relaltive z-10">
-                            <div className="p-3 bg-white rounded-xl shadow-sm border border-indigo-50 text-indigo-600">
-                                <TrendingUp className="w-6 h-6" />
+                {/* 0. Daily Insight (Narrative) */}
+                {(data.narrative || realtime.smart_insight) && (
+                    <div className="bg-white border border-slate-100 rounded-[32px] p-6 shadow-[0_2px_20px_rgb(0,0,0,0.04)] relative overflow-hidden group/insight hover:border-indigo-100 transition-colors">
+                        <div className="flex items-start gap-4 relative z-10">
+                            <div className={clsx(
+                                "p-3 rounded-2xl shadow-sm border transition-colors",
+                                realtime.smart_insight
+                                    ? {
+                                        'surge': "bg-red-50 text-red-600 border-red-100",
+                                        'clearing': "bg-orange-50 text-orange-600 border-orange-100",
+                                        'fast': "bg-emerald-50 text-emerald-600 border-emerald-100",
+                                        'rising': "bg-amber-50 text-amber-600 border-amber-100",
+                                        'stable': "bg-slate-50 text-slate-500 border-slate-100"
+                                    }[realtime.smart_insight.icon]
+                                    : "bg-indigo-50 text-indigo-600 border-indigo-100"
+                            )}>
+                                {realtime.smart_insight ? (
+                                    <>
+                                        {realtime.smart_insight.icon === 'surge' && <Activity className="w-6 h-6" />}
+                                        {realtime.smart_insight.icon === 'clearing' && <TrendingUp className="w-6 h-6 rotate-180" />}
+                                        {realtime.smart_insight.icon === 'fast' && <Zap className="w-6 h-6" />}
+                                        {realtime.smart_insight.icon === 'rising' && <TrendingUp className="w-6 h-6" />}
+                                        {realtime.smart_insight.icon === 'stable' && <Minus className="w-6 h-6" />}
+                                    </>
+                                ) : (
+                                    <TrendingUp className="w-6 h-6" />
+                                )}
                             </div>
-                            <div>
-                                <h3 className="text-sm font-[800] text-indigo-900 uppercase tracking-wide mb-2">Daily Insight</h3>
-                                <p className="text-slate-700 leading-relaxed font-medium">
+                            <div className="flex-1">
+                                <h3 className={clsx(
+                                    "text-xs font-black uppercase tracking-[0.2em] mb-2",
+                                    realtime.smart_insight ? "text-slate-400" : "text-indigo-900"
+                                )}>
+                                    {realtime.smart_insight ? "Live Intelligence" : "Daily Analysis"}
+                                </h3>
+
+                                {realtime.smart_insight && (
+                                    <div className="mb-3">
+                                        <div className={clsx(
+                                            "text-lg font-[900] uppercase tracking-tight mb-1",
+                                            {
+                                                'surge': "text-red-700",
+                                                'clearing': "text-orange-700",
+                                                'fast': "text-emerald-700",
+                                                'rising': "text-amber-700",
+                                                'stable': "text-slate-700"
+                                            }[realtime.smart_insight.icon]
+                                        )}>
+                                            {realtime.smart_insight.verdict}
+                                        </div>
+                                        <p className="text-[15px] leading-snug font-bold text-slate-700">
+                                            {realtime.smart_insight.detail}
+                                        </p>
+                                    </div>
+                                )}
+
+                                <p className={clsx(
+                                    "leading-relaxed font-medium",
+                                    realtime.smart_insight ? "text-slate-500 text-sm border-t border-slate-50 pt-3 mt-3" : "text-slate-700 text-[15px]"
+                                )}>
                                     {data.narrative.intro}
                                 </p>
                             </div>
+                        </div>
+                        {/* Subtle background icon for premium feel */}
+                        <div className="absolute -bottom-6 -right-6 opacity-[0.03] transform -rotate-12 pointer-events-none">
+                            <Activity className="w-32 h-32" />
                         </div>
                     </div>
                 )}
 
                 {/* 1. Main Insight Card (Split View) */}
-                <div className="bg-white rounded-[32px] p-8 shadow-[0_2px_20px_rgb(0,0,0,0.04)] ring-1 ring-slate-100 relative overflow-hidden">
-                    <div className="flex gap-8 relative z-10">
-                        {/* Left: Live Status */}
-                        <div className="flex flex-col border-r border-slate-100 pr-6">
-                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Right Now</span>
-                            <div className="flex items-baseline">
-                                {realtime.status === "Closed" ? (
-                                    <span className="text-4xl font-[800] tracking-tighter text-red-500 leading-none">
-                                        Closed
-                                    </span>
-                                ) : (
-                                    <>
-                                        <span className={`text-6xl font-[800] tracking-tighter leading-none ${realtime.wait_time > 30 ? 'text-amber-500' : 'text-emerald-500'}`}>
-                                            {realtime.wait_time}
-                                        </span>
-                                        <span className="text-lg font-bold text-slate-300 ml-1">min</span>
-                                    </>
-                                )}
-                            </div>
-                            {realtime.standard_lanes_open !== undefined && realtime.standard_lanes_open !== null && (
-                                <div className="mt-2 flex items-center gap-1.5 px-2 py-0.5 bg-emerald-50 text-emerald-700 text-[10px] font-bold uppercase tracking-tighter rounded-md border border-emerald-100/50 self-start">
-                                    <div className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
-                                    {realtime.standard_lanes_open} {realtime.standard_lanes_open === 1 ? "Lane" : "Lanes"} Open
-                                </div>
-                            )}
-                        </div>
-
-                        {/* Right: Typical for Today */}
-                        <div className="flex flex-col pt-1">
-                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Typical {dayName}</span>
-                            <div className="flex items-baseline">
-                                <span className={`text-4xl font-[800] tracking-tighter text-slate-900 leading-none`}
-                                >{realtime.official_avg_minutes || stats.avg_wait}</span>
-                                <span className="text-sm font-bold text-slate-400 ml-1">min avg</span>
-                            </div>
-                            <p className="text-xs font-medium text-slate-500 mt-2 leading-tight">
-                                {realtime.status !== "Closed" && (
-                                    <>Current wait is <span className="font-bold">{realtime.wait_time < (realtime.official_avg_minutes || stats.avg_wait) ? 'lower' : 'higher'}</span> than usual.</>
-                                )}
-                            </p>
+                <div className="bg-white rounded-[32px] p-8 shadow-[0_2px_20px_rgb(0,0,0,0.04)] ring-1 ring-slate-100 relative overflow-hidden group/stats">
+                    {/* Header Right Badge (Static Indicator) */}
+                    <div className="absolute top-6 right-6 md:top-8 md:right-8 z-20">
+                        <div className="flex items-center gap-1.5 bg-slate-50 text-slate-400 px-2.5 py-1 rounded-lg text-[10px] uppercase font-black tracking-widest border border-slate-100/50">
+                            <Car className="w-3.5 h-3.5" />
+                            <span>Passenger</span>
                         </div>
                     </div>
+
+                    <div className="flex flex-col gap-6 relative z-10">
+                        {/* Top: Header Badges (Dynamic) */}
+                        {!isClosed && (
+                            <div className="flex flex-wrap items-center gap-2.5 pb-4 border-b border-slate-50 pr-24 md:pr-0">
+                                {realtime.source_note && (
+                                    <div className="relative group/source">
+                                        <span className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 text-white text-[10px] font-black uppercase tracking-tight rounded-xl shadow-lg shadow-indigo-200 transition-transform active:scale-95">
+                                            <Zap className="w-3 h-3 fill-current" />
+                                            Hybrid: CBP + DriveBC
+                                        </span>
+                                    </div>
+                                )}
+                                {realtime.standard_lanes_open !== undefined && realtime.standard_lanes_open !== null && (
+                                    <span className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 text-white text-[10px] font-black uppercase tracking-tight rounded-xl shadow-lg shadow-emerald-200 transition-transform active:scale-95">
+                                        <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                                        {realtime.standard_lanes_open} {realtime.standard_lanes_open === 1 ? "Lane" : "Lanes"} Open
+                                    </span>
+                                )}
+                            </div>
+                        )}
+
+                        <div className="flex gap-8">
+                            {/* Left: Live Status */}
+                            <div className="flex flex-col border-r border-slate-100 pr-6">
+                                <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Right Now</span>
+                                <div className="flex items-baseline">
+                                    {realtime.status === "Closed" ? (
+                                        <span className="text-4xl font-[900] tracking-tighter text-red-500 leading-none">
+                                            Closed
+                                        </span>
+                                    ) : (
+                                        <>
+                                            <span className={`text-6xl font-[900] tracking-tighter leading-none transition-colors duration-500 ${realtime.wait_time > 45 ? 'text-red-500' : realtime.wait_time > 20 ? 'text-amber-500' : 'text-emerald-500'}`}>
+                                                {realtime.wait_time}
+                                            </span>
+                                            <span className="text-lg font-black text-slate-300 ml-1">min</span>
+                                        </>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* Right: Typical for Today */}
+                            <div className="flex flex-col pt-1">
+                                <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Typical {dayName}</span>
+                                <div className="flex items-baseline">
+                                    <span className={`text-4xl font-[900] tracking-tighter text-slate-900 leading-none`}
+                                    >{realtime.official_avg_minutes || stats.avg_wait}</span>
+                                    <span className="text-sm font-black text-slate-400 ml-1">min avg</span>
+                                </div>
+                                <p className="text-[11px] font-bold text-slate-500 mt-2 leading-tight">
+                                    {realtime.status !== "Closed" && (
+                                        <>Current wait is <span className={clsx("font-black uppercase text-[10px]", realtime.wait_time < (realtime.official_avg_minutes || stats.avg_wait) ? 'text-emerald-600' : 'text-amber-600')}>{realtime.wait_time < (realtime.official_avg_minutes || stats.avg_wait) ? 'lower' : 'higher'}</span> than usual.</>
+                                    )}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {/* Background Decor */}
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-slate-50 to-transparent rounded-bl-[100px] pointer-events-none opacity-40 group-hover/stats:bg-indigo-50/30 transition-all" />
                 </div>
 
                 {/* 2. Hourly Trend Chart - Only 6 key hours */}

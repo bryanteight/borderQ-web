@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, TrendingUp, Navigation, Clock, Car } from "lucide-react";
+import { ArrowLeft, TrendingUp, Navigation, Clock, Car, Zap } from "lucide-react";
 
 // Reusing types from the single port schema for consistency
 interface StatsResponse {
@@ -11,6 +11,7 @@ interface StatsResponse {
         weather: string;
         status: string;
         standard_lanes_open?: number;
+        source_note?: string;
     };
     stats: {
         avg_wait: number;
@@ -246,28 +247,41 @@ export default async function RegionalStatsPage({ params }: { params: Promise<{ 
                                         </div>
 
                                         {/* Right: Live Status (Right Aligned) */}
-                                        <div className="text-left md:text-right pl-4 border-l border-slate-100 flex flex-col items-start md:items-end">
-                                            {/* Vehicle Badge (Top Right of Card Content) */}
-                                            <div className="flex items-center gap-1 bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded text-[10px] font-medium mb-1">
-                                                <Car className="w-3 h-3" />
-                                                <span>Passenger</span>
+                                        <div className="text-left md:text-right pl-4 border-l border-slate-100 flex flex-col items-start md:items-end gap-2.5">
+                                            {/* Top Row: Badges */}
+                                            <div className="flex flex-col md:flex-row items-start md:items-center gap-1.5 md:justify-end">
+                                                <div className="flex flex-wrap items-center gap-1.5">
+                                                    {port.data?.realtime.source_note && (
+                                                        <span className="flex items-center gap-1 px-2 py-0.5 bg-indigo-600 text-white text-[9px] font-black uppercase tracking-tight rounded-md shadow-sm shadow-indigo-100">
+                                                            <Zap className="w-2.5 h-2.5 fill-current" />
+                                                            Hybrid
+                                                        </span>
+                                                    )}
+                                                    {port.data?.realtime.standard_lanes_open !== undefined && port.data?.realtime.standard_lanes_open !== null && (
+                                                        <span className="flex items-center gap-1 px-2 py-0.5 bg-emerald-600 text-white text-[9px] font-black uppercase tracking-tight rounded-md shadow-sm shadow-emerald-100">
+                                                            <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                                                            {port.data?.realtime.standard_lanes_open}L
+                                                        </span>
+                                                    )}
+                                                </div>
+                                                <div className="flex items-center gap-1 bg-slate-50 text-slate-400 px-1.5 py-0.5 rounded-md text-[9px] font-black uppercase tracking-widest border border-slate-100/50">
+                                                    <Car className="w-2.5 h-2.5" />
+                                                    <span>Pax</span>
+                                                </div>
                                             </div>
 
-                                            <div className="text-[10px] font-bold text-slate-400 uppercase">Right Now</div>
-                                            {port.data?.realtime.status === "Closed" ? (
-                                                <div className="text-lg font-[800] text-red-500">
-                                                    Closed
-                                                </div>
-                                            ) : (
-                                                <div className={`text-lg font-[800] ${live > 30 ? 'text-amber-500' : 'text-emerald-500'}`}>
-                                                    {live} min
-                                                </div>
-                                            )}
-                                            {port.data?.realtime.standard_lanes_open !== undefined && port.data?.realtime.standard_lanes_open !== null && (
-                                                <div className="text-[10px] font-bold text-emerald-600 uppercase mt-0.5">
-                                                    {port.data?.realtime.standard_lanes_open} {port.data?.realtime.standard_lanes_open === 1 ? 'Lane' : 'Lanes'} Open
-                                                </div>
-                                            )}
+                                            <div className="flex flex-col items-start md:items-end">
+                                                <div className="text-[9px] font-black text-slate-300 uppercase tracking-widest mb-0.5">Right Now</div>
+                                                {port.data?.realtime.status === "Closed" ? (
+                                                    <div className="text-lg font-[900] text-red-500 leading-none">
+                                                        Closed
+                                                    </div>
+                                                ) : (
+                                                    <div className={`text-xl font-[900] leading-none ${live > 45 ? 'text-red-500' : live > 20 ? 'text-amber-500' : 'text-emerald-500'}`}>
+                                                        {live} <span className="text-xs font-black text-slate-300 opacity-80">min</span>
+                                                    </div>
+                                                )}
+                                            </div>
                                         </div>
 
                                         {/* Mobile Arrow (Visual cue) */}
