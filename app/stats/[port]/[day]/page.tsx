@@ -26,6 +26,7 @@ interface StatsResponse {
         status: string;
         standard_lanes_open?: number;
         source_note?: string;
+        last_sync?: string;
         smart_insight?: {
             icon: 'surge' | 'clearing' | 'fast' | 'rising' | 'stable';
             verdict: string;
@@ -152,7 +153,7 @@ export default async function StatsPage({ params }: { params: Promise<{ port: st
     }
 
     const { stats, json_ld, realtime, context } = data;
-    const isClosed = realtime.status === "Closed";
+    const isClosed = realtime?.status === "Closed";
 
     // Filter to only 6 KEY hours as user requested (not too dense)
     // Key hours: 6am, 9am, 12pm, 3pm, 6pm, 9pm
@@ -302,6 +303,18 @@ export default async function StatsPage({ params }: { params: Promise<{ port: st
                             <Car className="w-3.5 h-3.5" />
                             <span>Passenger</span>
                         </div>
+                        {realtime.last_sync && (
+                            <div className="mt-2 text-right">
+                                <span className="text-[9px] font-black text-slate-400 tabular-nums whitespace-nowrap bg-slate-50 px-2 py-1 rounded-md border border-slate-100/50 shadow-sm">
+                                    {(() => {
+                                        const diff = Math.floor((new Date().getTime() - new Date(realtime.last_sync).getTime()) / 60000);
+                                        if (diff <= 0) return "JUST NOW";
+                                        if (diff === 1) return "1 MIN AGO";
+                                        return `${diff} MINS AGO`;
+                                    })()}
+                                </span>
+                            </div>
+                        )}
                     </div>
 
                     <div className="flex flex-col gap-6 relative z-10">

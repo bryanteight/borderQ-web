@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp, Car } from 'lucide-react';
 
 export function SiteFooter() {
     const [isExpanded, setIsExpanded] = useState(false);
@@ -31,6 +31,14 @@ export function SiteFooter() {
                         <p className="text-xs text-slate-400 leading-relaxed">
                             Wait times are predictions and not guaranteed. <span className="text-slate-500 font-bold">Please drive safely and do not use this app while operating a vehicle.</span>
                         </p>
+
+                        {/* PAX Definition Badge */}
+                        <div className="flex items-center justify-center gap-2 mt-4">
+                            <div className="flex items-center gap-1.5 px-2 py-1 bg-white text-slate-400 rounded-lg text-[10px] font-black uppercase tracking-widest border border-slate-100 shadow-sm">
+                                <Car className="w-3 h-3" />
+                                <span>PAX = Passenger Vehicles</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

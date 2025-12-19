@@ -12,6 +12,7 @@ interface StatsResponse {
         status: string;
         standard_lanes_open?: number;
         source_note?: string;
+        last_sync?: string;
     };
     stats: {
         avg_wait: number;
@@ -108,12 +109,12 @@ export default async function RegionalStatsPage({ params }: { params: Promise<{ 
     // 1. Fetch Aggregate Forecast (Single Request)
     const forecast = await getForecastData(day);
 
-    // Handle failure
-    if (!forecast || !forecast.ports || forecast.ports.length === 0) {
+    // Handle complete failure (API unreachable)
+    if (!forecast) {
         notFound();
     }
 
-    const { ports, narrative, best_option } = forecast;
+    const { ports = [], narrative, best_option } = forecast;
 
     // Safety check filtering
     const validPorts = ports.filter(p => p.data?.stats && p.data.stats.sample_size > 0);
@@ -142,9 +143,9 @@ export default async function RegionalStatsPage({ params }: { params: Promise<{ 
         );
     }
 
-    const bestPort = validPorts.find(p => p.name === best_option.name) || validPorts[0];
+    const bestPort = validPorts.find(p => p.name === best_option?.name) || validPorts[0];
     const worstPort = validPorts.reduce((prev, curr) =>
-        (curr.data.stats.avg_wait > prev.data.stats.avg_wait) ? curr : prev
+        (curr.data?.stats?.avg_wait > prev.data?.stats?.avg_wait) ? curr : prev
         , validPorts[0]);
 
     // Lynden Logic: If Lynden is best, apply 20m warning (Client side display logic)
@@ -204,7 +205,7 @@ export default async function RegionalStatsPage({ params }: { params: Promise<{ 
                             {narrative.savings_analysis}
 
                             <br />
-                            The heaviest congestion usually occurs around {worstPort.data?.stats.worst_time}.
+                            The heaviest congestion usually occurs {worstPort.data?.stats.worst_time}.
                         </p>
                         <p>
                             For the fastest crossing, aim to arrive <strong>{bestPort.data?.stats.best_time}</strong>.
@@ -264,9 +265,21 @@ export default async function RegionalStatsPage({ params }: { params: Promise<{ 
                                                         </span>
                                                     )}
                                                 </div>
-                                                <div className="flex items-center gap-1 bg-slate-50 text-slate-400 px-1.5 py-0.5 rounded-md text-[9px] font-black uppercase tracking-widest border border-slate-100/50">
-                                                    <Car className="w-2.5 h-2.5" />
-                                                    <span>Pax</span>
+                                                <div className="flex items-center gap-1.5">
+                                                    {port.data?.realtime.last_sync && (
+                                                        <span className="text-[9px] font-black text-slate-400 tabular-nums whitespace-nowrap bg-slate-50 px-1.5 py-0.5 rounded-md border border-slate-100/50 shadow-sm">
+                                                            {(() => {
+                                                                const diff = Math.floor((new Date().getTime() - new Date(port.data.realtime.last_sync).getTime()) / 60000);
+                                                                if (diff <= 0) return "JUST NOW";
+                                                                if (diff === 1) return "1 MIN AGO";
+                                                                return `${diff} MINS AGO`;
+                                                            })()}
+                                                        </span>
+                                                    )}
+                                                    <div className="flex items-center gap-1 bg-slate-50 text-slate-400 px-1.5 py-0.5 rounded-md text-[9px] font-black uppercase tracking-widest border border-slate-100/50">
+                                                        <Car className="w-2.5 h-2.5" />
+                                                        <span>Pax</span>
+                                                    </div>
                                                 </div>
                                             </div>
 

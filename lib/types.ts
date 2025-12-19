@@ -15,7 +15,6 @@ export interface BorderEvent {
   trend?: TrendData;
   ai_summary: string;
   prediction?: string;
-  vision_insight?: string;
   standard_lanes_open?: number;
   nexus_lanes_open?: number;
   direction?: string;
