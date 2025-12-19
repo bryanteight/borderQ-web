@@ -301,7 +301,7 @@ export default async function StatsPage({ params }: { params: Promise<{ port: st
                     <div className="absolute top-6 right-6 md:top-8 md:right-8 z-20">
                         <div className="flex items-center gap-1.5 bg-slate-50 text-slate-400 px-2.5 py-1 rounded-lg text-[10px] uppercase font-black tracking-widest border border-slate-100/50">
                             <Car className="w-3.5 h-3.5" />
-                            <span>Passenger</span>
+                            <span>PAX</span>
                         </div>
                         {realtime.last_sync && (
                             <div className="mt-2 text-right">

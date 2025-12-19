@@ -12,7 +12,14 @@ export function SiteFooter() {
             <div className="max-w-4xl mx-auto flex flex-col items-center text-center gap-6">
 
                 {/* Disclaimer Block */}
-                <div className="space-y-2 max-w-2xl">
+                <div className="space-y-4 max-w-2xl">
+                    {/* PAX Definition Badge - Always visible at top */}
+                    <div className="flex items-center justify-center gap-2">
+                        <div className="flex items-center gap-1.5 px-3 py-1 bg-white text-slate-400 rounded-lg text-[10px] font-black uppercase tracking-widest border border-slate-100 shadow-sm">
+                            <Car className="w-3.5 h-3.5" />
+                            <span>PAX = Passenger Vehicles</span>
+                        </div>
+                    </div>
 
                     {/* Mobile: Toggle Button */}
                     <button
@@ -31,14 +38,6 @@ export function SiteFooter() {
                         <p className="text-xs text-slate-400 leading-relaxed">
                             Wait times are predictions and not guaranteed. <span className="text-slate-500 font-bold">Please drive safely and do not use this app while operating a vehicle.</span>
                         </p>
-
-                        {/* PAX Definition Badge */}
-                        <div className="flex items-center justify-center gap-2 mt-4">
-                            <div className="flex items-center gap-1.5 px-2 py-1 bg-white text-slate-400 rounded-lg text-[10px] font-black uppercase tracking-widest border border-slate-100 shadow-sm">
-                                <Car className="w-3 h-3" />
-                                <span>PAX = Passenger Vehicles</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
 

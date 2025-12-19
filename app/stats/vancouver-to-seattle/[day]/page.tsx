@@ -278,7 +278,7 @@ export default async function RegionalStatsPage({ params }: { params: Promise<{ 
                                                     )}
                                                     <div className="flex items-center gap-1 bg-slate-50 text-slate-400 px-1.5 py-0.5 rounded-md text-[9px] font-black uppercase tracking-widest border border-slate-100/50">
                                                         <Car className="w-2.5 h-2.5" />
-                                                        <span>Pax</span>
+                                                        <span>PAX</span>
                                                     </div>
                                                 </div>
                                             </div>
