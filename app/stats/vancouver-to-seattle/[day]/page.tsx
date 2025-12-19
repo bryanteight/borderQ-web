@@ -266,16 +266,7 @@ export default async function RegionalStatsPage({ params }: { params: Promise<{ 
                                                     )}
                                                 </div>
                                                 <div className="flex items-center gap-1.5">
-                                                    {port.data?.realtime.last_sync && (
-                                                        <span className="text-[9px] font-black text-slate-400 tabular-nums whitespace-nowrap bg-slate-50 px-1.5 py-0.5 rounded-md border border-slate-100/50 shadow-sm">
-                                                            {(() => {
-                                                                const diff = Math.floor((new Date().getTime() - new Date(port.data.realtime.last_sync).getTime()) / 60000);
-                                                                if (diff <= 0) return "JUST NOW";
-                                                                if (diff === 1) return "1 MIN AGO";
-                                                                return `${diff} MINS AGO`;
-                                                            })()}
-                                                        </span>
-                                                    )}
+
                                                     <div className="flex items-center gap-1 bg-slate-50 text-slate-400 px-1.5 py-0.5 rounded-md text-[9px] font-black uppercase tracking-widest border border-slate-100/50">
                                                         <Car className="w-2.5 h-2.5" />
                                                         <span>PAX</span>

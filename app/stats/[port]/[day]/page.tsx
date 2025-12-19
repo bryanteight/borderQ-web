@@ -303,18 +303,7 @@ export default async function StatsPage({ params }: { params: Promise<{ port: st
                             <Car className="w-3.5 h-3.5" />
                             <span>PAX</span>
                         </div>
-                        {realtime.last_sync && (
-                            <div className="mt-2 text-right">
-                                <span className="text-[9px] font-black text-slate-400 tabular-nums whitespace-nowrap bg-slate-50 px-2 py-1 rounded-md border border-slate-100/50 shadow-sm">
-                                    {(() => {
-                                        const diff = Math.floor((new Date().getTime() - new Date(realtime.last_sync).getTime()) / 60000);
-                                        if (diff <= 0) return "JUST NOW";
-                                        if (diff === 1) return "1 MIN AGO";
-                                        return `${diff} MINS AGO`;
-                                    })()}
-                                </span>
-                            </div>
-                        )}
+
                     </div>
 
                     <div className="flex flex-col gap-6 relative z-10">

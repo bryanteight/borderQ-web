@@ -144,17 +144,7 @@ export function StatusCard({ event }: { event: BorderEvent }) {
               </div>
             )}
 
-            {/* Activity State (Freshness) Badge */}
-            {event.last_sync && (
-              <span className="text-[9px] font-[800] text-slate-400 tabular-nums whitespace-nowrap bg-slate-50/80 px-2 py-1 rounded-full border border-slate-100/80 shadow-sm uppercase tracking-wider">
-                {(() => {
-                  const diff = Math.floor((new Date().getTime() - new Date(event.last_sync).getTime()) / 60000);
-                  if (diff <= 0) return "Just Now";
-                  if (diff === 1) return "1m ago";
-                  return `${diff}m ago`;
-                })()}
-              </span>
-            )}
+
           </div>
 
           <p className="text-[13px] leading-relaxed font-bold text-slate-500 mb-1 whitespace-normal pl-1">
