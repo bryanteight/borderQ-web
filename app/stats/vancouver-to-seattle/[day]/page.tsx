@@ -252,12 +252,7 @@ export default async function RegionalStatsPage({ params }: { params: Promise<{ 
                                             {/* Top Row: Badges */}
                                             <div className="flex flex-col md:flex-row items-start md:items-center gap-1.5 md:justify-end">
                                                 <div className="flex flex-wrap items-center gap-1.5">
-                                                    {port.data?.realtime.source_note && (
-                                                        <span className="flex items-center gap-1 px-2 py-0.5 bg-indigo-600 text-white text-[9px] font-black uppercase tracking-tight rounded-md shadow-sm shadow-indigo-100">
-                                                            <Zap className="w-2.5 h-2.5 fill-current" />
-                                                            Hybrid
-                                                        </span>
-                                                    )}
+
                                                     {port.data?.realtime.standard_lanes_open !== undefined && port.data?.realtime.standard_lanes_open !== null && (
                                                         <span className="flex items-center gap-1 px-2 py-0.5 bg-emerald-600 text-white text-[9px] font-black uppercase tracking-tight rounded-md shadow-sm shadow-emerald-100">
                                                             <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />

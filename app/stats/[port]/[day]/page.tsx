@@ -310,14 +310,7 @@ export default async function StatsPage({ params }: { params: Promise<{ port: st
                         {/* Top: Header Badges (Dynamic) */}
                         {!isClosed && (
                             <div className="flex flex-wrap items-center gap-2.5 pb-4 border-b border-slate-50 pr-24 md:pr-0">
-                                {realtime.source_note && (
-                                    <div className="relative group/source">
-                                        <span className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 text-white text-[10px] font-black uppercase tracking-tight rounded-xl shadow-lg shadow-indigo-200 transition-transform active:scale-95">
-                                            <Zap className="w-3 h-3 fill-current" />
-                                            Hybrid: CBP + DriveBC
-                                        </span>
-                                    </div>
-                                )}
+
                                 {realtime.standard_lanes_open !== undefined && realtime.standard_lanes_open !== null && (
                                     <span className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 text-white text-[10px] font-black uppercase tracking-tight rounded-xl shadow-lg shadow-emerald-200 transition-transform active:scale-95">
                                         <div className="w-2 h-2 rounded-full bg-white animate-pulse" />

@@ -57,25 +57,7 @@ export function StatusCard({ event }: { event: BorderEvent }) {
               </span>
             )}
 
-            {/* Hybrid Badge */}
-            {!isClosed && event.source_note && (
-              <div className="relative group/source">
-                <span className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-[#4f46e5] to-[#7c3aed] text-white text-[9px] font-black uppercase tracking-tight rounded-xl shadow-lg shadow-indigo-200/50 transition-transform hover:scale-105 active:scale-95 cursor-help whitespace-nowrap">
-                  <Zap className="w-3 h-3 fill-current" />
-                  Hybrid: CBP + DriveBC
-                </span>
 
-                {/* Tooltip (Desktop Only) */}
-                <div className="hidden md:block absolute top-full right-0 mt-3 w-64 p-3 bg-slate-900/95 backdrop-blur-md shadow-2xl text-white text-[11px] leading-relaxed rounded-2xl opacity-0 group-hover/source:opacity-100 transition-all pointer-events-none z-50 border border-white/10 text-left">
-                  <div className="font-black mb-1 text-indigo-300 flex items-center gap-1.5">
-                    <Activity className="w-3.5 h-3.5" />
-                    Data Source Fusion
-                  </div>
-                  {event.source_note}
-                  <div className="absolute bottom-full right-4 -mb-1 border-4 border-transparent border-b-slate-900" />
-                </div>
-              </div>
-            )}
           </div>
         </div>
 
@@ -150,6 +132,8 @@ export function StatusCard({ event }: { event: BorderEvent }) {
           <p className="text-[13px] leading-relaxed font-bold text-slate-500 mb-1 whitespace-normal pl-1">
             {event.smart_insight?.detail || "Steady conditions expected."}
           </p>
+
+
         </div>
 
         {/* Background Decor Layer */}
