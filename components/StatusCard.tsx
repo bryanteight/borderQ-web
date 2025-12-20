@@ -102,36 +102,50 @@ export function StatusCard({ event }: { event: BorderEvent }) {
         </div>
 
         {/* Footer: Smart Insight Section */}
-        <div className="pt-6 mt-auto border-t border-slate-50 flex flex-col gap-4 group-hover:border-indigo-100 transition-colors">
-          <div className="flex items-center justify-between">
+        <div className="pt-6 mt-auto border-t border-slate-50 flex flex-col gap-3 group-hover:border-indigo-100 transition-colors">
+          <div className="flex flex-col gap-3">
+            {/* New Header Label */}
+            <span className="text-[10px] font-[900] text-slate-400 uppercase tracking-widest">
+              Next Hour Forecast
+            </span>
+
+            {/* Insight Content */}
             {event.smart_insight && (
-              <div className="flex items-center gap-2 bg-slate-50/50 px-2.5 py-1.5 rounded-full border border-slate-100 shadow-sm backdrop-blur-[2px]">
+              <div className="flex items-start gap-3">
+                {/* Icon Box */}
                 <div className={clsx(
-                  "flex items-center justify-center rounded-full",
-                  event.smart_insight.icon === 'surge' && "text-red-600",
-                  event.smart_insight.icon === 'clearing' && "text-orange-600",
-                  event.smart_insight.icon === 'fast' && "text-emerald-600",
-                  event.smart_insight.icon === 'rising' && "text-amber-600",
-                  event.smart_insight.icon === 'stable' && "text-slate-400",
+                  "p-2 rounded-xl border shadow-sm backdrop-blur-[2px] transition-colors shrink-0",
+                  event.smart_insight.icon === 'surge' && "bg-red-50 text-red-600 border-red-100",
+                  event.smart_insight.icon === 'clearing' && "bg-orange-50 text-orange-600 border-orange-100",
+                  event.smart_insight.icon === 'fast' && "bg-emerald-50 text-emerald-600 border-emerald-100",
+                  event.smart_insight.icon === 'rising' && "bg-amber-50 text-amber-600 border-amber-100",
+                  event.smart_insight.icon === 'stable' && "bg-slate-50 text-slate-400 border-slate-100",
                 )}>
-                  {event.smart_insight.icon === 'surge' && <Activity className="w-3.5 h-3.5" />}
-                  {event.smart_insight.icon === 'clearing' && <TrendingDown className="w-3.5 h-3.5" />}
-                  {event.smart_insight.icon === 'fast' && <Zap className="w-3.5 h-3.5" />}
-                  {event.smart_insight.icon === 'rising' && <TrendingUp className="w-3.5 h-3.5" />}
-                  {event.smart_insight.icon === 'stable' && <Minus className="w-3.5 h-3.5" />}
+                  {event.smart_insight.icon === 'surge' && <Activity className="w-5 h-5" />}
+                  {event.smart_insight.icon === 'clearing' && <TrendingDown className="w-5 h-5" />}
+                  {event.smart_insight.icon === 'fast' && <Zap className="w-5 h-5" />}
+                  {event.smart_insight.icon === 'rising' && <TrendingUp className="w-5 h-5" />}
+                  {event.smart_insight.icon === 'stable' && <Minus className="w-5 h-5" />}
                 </div>
-                <span className="text-[10px] font-[800] uppercase tracking-wide text-slate-600">
-                  {event.smart_insight.verdict}
-                </span>
+
+                <div className="flex flex-col gap-0.5">
+                  <span className={clsx(
+                    "text-xs font-[900] uppercase tracking-wide",
+                    event.smart_insight.icon === 'surge' && "text-red-700",
+                    event.smart_insight.icon === 'clearing' && "text-orange-700",
+                    event.smart_insight.icon === 'fast' && "text-emerald-700",
+                    event.smart_insight.icon === 'rising' && "text-amber-700",
+                    event.smart_insight.icon === 'stable' && "text-slate-600",
+                  )}>
+                    {event.smart_insight.verdict}
+                  </span>
+                  <p className="text-sm font-bold text-slate-500 leading-tight">
+                    {event.smart_insight.detail}
+                  </p>
+                </div>
               </div>
             )}
-
-
           </div>
-
-          <p className="text-[13px] leading-relaxed font-bold text-slate-500 mb-1 whitespace-normal pl-1">
-            {event.smart_insight?.detail || "Steady conditions expected."}
-          </p>
 
 
         </div>
