@@ -1,3 +1,21 @@
+# Release Notes: v0.3.5 - The "Stability & Freshness" Update
+
+## Overview
+This patch release addresses critical data freshness issues caused by upstream API outages and optimizes backend operational costs for long-term sustainability.
+
+## ⚡️ Backend & Data
+*   **Smart Timestamp Fusion**: Implemented logic to check both **CBP (US)** and **DriveBC (Canada)** timestamps. The system now automatically uses the "freshest" source for the "Last Updated" badge.
+    *   *Impact*: Fixes the "500m ago" stale badge issue when one government API freezes.
+*   **Cost Optimization**: Refined the Ingestion Cron Schedule to be "Active" (15m/30m) during the day and "Quiet" (60m) at night.
+    *   *Impact*: Reduces GitHub Actions usage by ~70% (From ~8k mins -> ~2.5k mins/month) to fit within free tier quotas.
+*   **Upstream Resilience**: Added handling for DriveBC GZIP/redirect behaviors to ensure consistent data fetching.
+
+## 🐛 Fixes
+*   **Production Stale Data**: Resolved issue where production deployment was serving cached/stale code.
+*   **Version Bump**: Updated footer version to `v0.3.5`.
+
+---
+
 # Release Notes: v0.3 - The "Mobile Polish" Update
 
 ## Overview
