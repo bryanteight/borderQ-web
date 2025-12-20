@@ -20,17 +20,18 @@
 ## 12/17/2025
 
 ### Optimization
-- [ ] Enable Cloudflare Proxy (Orange Cloud) for `borderq.com`
-- [ ] **CRITICAL:** Set Cloudflare SSL/TLS mode to "Full (Strict)"
-- [ ] Investigate Latency Issue: Slow "Content Download" (~600ms) on `borderq.com`
+- [x] Enable Cloudflare Proxy (Orange Cloud) for `borderq.com`
+- [x] **CRITICAL:** Set Cloudflare SSL/TLS mode to "Full (Strict)"
+- [] Investigate Latency Issue: Slow "Content Download" (~600ms) on `borderq.com`
 
 ### Analytics & Marketing
-- [ ] Create Google Analytics 4 Property
-- [ ] Get Measurement ID (starts with `G-`)
-- [ ] Add `NEXT_PUBLIC_GA_ID` = `G-XXXXXXXXXX` to Railway Frontend Variables
+- [x] Create Google Analytics 4 Property
+- [x] Get Measurement ID (starts with `G-`)
+- [x] Add `NEXT_PUBLIC_GA_ID` = `G-XXXXXXXXXX` to Railway Frontend Variables
 
 ### Data Ingestion
-- [ ] Ingest and store Vancouver to Seattle data to Qdrant DB
+- [x] Ingest and store Vancouver to Seattle data to Qdrant DB
+- [ ] Ingest and store Seattle to Vancouver data to Qdrant DB
 
 ### UX Improvements
 - [ ] Implement smooth transition animations when clicking cards to navigate to new pages
