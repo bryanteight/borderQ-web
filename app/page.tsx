@@ -53,7 +53,6 @@ export default async function Home() {
     const year = todayDate.getFullYear();
     const holidays = [
       { name: 'Christmas', date: new Date(year, 11, 25), icon: Star },       // Dec 25
-      { name: 'New Year\'s Eve', date: new Date(year, 11, 31), icon: Calendar }, // Dec 31
       { name: 'New Year\'s Day', date: new Date(year, 0, 1), icon: Calendar },   // Jan 1 (check year+1 logic below if needed, simplified here)
       { name: 'Victoria Day', date: new Date(year, 4, 20), icon: Star },     // ~May 24 (Fixed for simplicty)
       { name: 'Canada Day', date: new Date(year, 6, 1), icon: Star },        // July 1
@@ -73,7 +72,7 @@ export default async function Home() {
       if (diffDays >= 0 && diffDays <= 30) {
         return {
           day: 'Holiday',
-          slug: h.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'), // url-friendly slug
+          slug: h.name.toLowerCase().replace(/'/g, "").replace(/[^a-z0-9]+/g, '-'), // url-friendly slug
           title: `${h.name} Forecast`,
           description: `Historical trends for ${h.name}. Expect delays.`,
           icon: h.icon,

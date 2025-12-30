@@ -81,7 +81,7 @@ import { Metadata } from "next";
 
 export async function generateMetadata({ params }: { params: Promise<{ day: string }> }): Promise<Metadata> {
     const { day } = await params;
-    const dayName = day.charAt(0).toUpperCase() + day.slice(1).replace("-", " ");
+    const dayName = (day.charAt(0).toUpperCase() + day.slice(1)).replace(/-/g, " ");
 
     // Only pluralize weekdays (e.g. "Sundays"), not holidays (e.g. "Christmas")
     const weekdays = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
@@ -104,7 +104,7 @@ export async function generateMetadata({ params }: { params: Promise<{ day: stri
 
 export default async function RegionalStatsPage({ params }: { params: Promise<{ day: string }> }) {
     const { day } = await params;
-    const dayName = day.charAt(0).toUpperCase() + day.slice(1);
+    const dayName = (day.charAt(0).toUpperCase() + day.slice(1)).replace(/-/g, " ");
 
     // 1. Fetch Aggregate Forecast (Single Request)
     const forecast = await getForecastData(day);

@@ -90,7 +90,7 @@ import { Metadata } from "next";
 
 export async function generateMetadata({ params }: { params: Promise<{ port: string, day: string }> }): Promise<Metadata> {
     const { port, day } = await params;
-    const dayName = day.charAt(0).toUpperCase() + day.slice(1).replace("-", " ");
+    const dayName = (day.charAt(0).toUpperCase() + day.slice(1)).replace(/-/g, " ");
     const portName = PORT_NAMES[port] || port.replace("-", " ").replace(/\b\w/g, c => c.toUpperCase());
 
     // Only pluralize weekdays (e.g. "Sundays"), not holidays (e.g. "Christmas")
@@ -127,7 +127,7 @@ export default async function StatsPage({ params }: { params: Promise<{ port: st
 
     const data = await getStats(portId, day);
     const portName = PORT_NAMES[port] || port;
-    const dayName = day.charAt(0).toUpperCase() + day.slice(1);
+    const dayName = (day.charAt(0).toUpperCase() + day.slice(1)).replace(/-/g, " ");
 
     // 1. Handle Invalid Page (404 from API)
     if (!data) {
