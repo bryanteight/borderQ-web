@@ -12,8 +12,16 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+import { Fredoka } from "next/font/google";
+const fredoka = Fredoka({
+  variable: "--font-fredoka",
+  subsets: ["latin"],
+  weight: ["400", "600"],
+});
+
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import { DirectionProvider } from "@/context/DirectionContext";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://borderq.com"),
@@ -35,11 +43,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${fredoka.variable} antialiased`}
       >
-        <SiteHeader />
-        {children}
-        <SiteFooter />
+        <DirectionProvider>
+          <SiteHeader />
+          {children}
+          <SiteFooter />
+        </DirectionProvider>
       </body>
       <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || ""} />
     </html>

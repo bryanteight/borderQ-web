@@ -17,34 +17,34 @@ export function RegionSelector({ tabs }: { tabs: RegionTab[] }) {
     const activeTab = tabs.find((t) => t.active) || tabs[0];
 
     return (
-        <div className="w-full max-w-3xl mx-auto px-1 relative z-20">
-            <div className="flex items-center justify-between">
-                {/* Left: Static Label */}
-                <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest pl-2">
-                    Select Region
-                </h2>
+        <div className="relative z-20">
+            {/* Trigger Button */}
+            <button
+                onClick={() => setIsOpen(!isOpen)}
+                className={clsx(
+                    "relative flex items-center gap-2 rounded-full transition-all duration-300",
+                    // Mobile: Compact
+                    "px-3 py-1.5 bg-slate-100 border border-slate-200",
+                    // Desktop: Larger, High Contrast, Shadow
+                    "sm:px-5 sm:py-2.5 sm:bg-white sm:border-slate-300 sm:shadow-sm sm:hover:shadow-md sm:hover:border-slate-400",
+                    "active:scale-95"
+                )}
+            >
+                {/* Desktop Label: "Region:" */}
+                <span className="hidden sm:inline text-sm font-bold text-slate-500 mr-1.5">
+                    Region:
+                </span>
 
-                {/* Right: Glassy Trigger */}
-                <button
-                    onClick={() => setIsOpen(!isOpen)}
+                <span className="text-xs sm:text-sm font-[900] text-slate-900 uppercase tracking-wide">
+                    {activeTab.label}
+                </span>
+                <ChevronDown
                     className={clsx(
-                        "relative flex items-center gap-2 px-3 py-1.5 rounded-full transition-all duration-300",
-                        "bg-white/60 backdrop-blur-md border border-white/40 shadow-sm",
-                        "hover:bg-white/80 hover:shadow-md hover:scale-[1.02]",
-                        "active:scale-95"
+                        "w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400 sm:text-slate-600 transition-transform duration-300",
+                        isOpen && "rotate-180"
                     )}
-                >
-                    <span className="text-[11px] font-[800] text-indigo-600 uppercase tracking-wide">
-                        {activeTab.label}
-                    </span>
-                    <ChevronDown
-                        className={clsx(
-                            "w-3.5 h-3.5 text-indigo-400 transition-transform duration-300",
-                            isOpen && "rotate-180"
-                        )}
-                    />
-                </button>
-            </div>
+                />
+            </button>
 
             {/* Dropdown Menu (Absolute) */}
             <AnimatePresence>
@@ -64,10 +64,7 @@ export function RegionSelector({ tabs }: { tabs: RegionTab[] }) {
                                         disabled={tab.comingSoon}
                                         onClick={() => {
                                             if (!tab.comingSoon) setIsOpen(false);
-                                            // Navigation would go here in a real app, 
-                                            // but currently page.tsx handles selection via props/mock state.
-                                            // Since this is just a UI visual for now (based on page.tsx code),
-                                            // we'll just close.
+                                            // Navigation logic would go here
                                         }}
                                         className={clsx(
                                             "flex items-center justify-between w-full px-3 py-2 rounded-xl text-left transition-colors text-xs font-bold",
