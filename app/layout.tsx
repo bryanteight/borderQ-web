@@ -23,13 +23,16 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { DirectionProvider } from "@/context/DirectionContext";
 
+import { InstallPrompt } from "@/components/InstallPrompt";
+
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://borderq.com"),
   title: "BorderQ | US-Canada Border Wait Time Estimation",
   description: "Accurate wait time predictions for US-Canada border crossings. Get real-time data and plan your trip between BC and Washington State.",
+  manifest: "/manifest.json",
   icons: {
-    icon: "/icon.png",
-    apple: "/icon.png",
+    icon: "/icon-v2.png",
+    apple: "/icon-v2.png",
   },
 };
 
@@ -48,6 +51,7 @@ export default function RootLayout({
         <DirectionProvider>
           <SiteHeader />
           {children}
+          <InstallPrompt />
           <SiteFooter />
         </DirectionProvider>
       </body>

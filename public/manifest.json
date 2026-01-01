@@ -1,0 +1,16 @@
+{
+    "name": "BorderQ",
+    "short_name": "BorderQ",
+    "description": "Real-time border wait time prediction for US-Canada crossings.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#4f46e5",
+    "icons": [
+        {
+            "src": "/icon-v2.png",
+            "sizes": "192x192 512x512",
+            "type": "image/png"
+        }
+    ]
+}
