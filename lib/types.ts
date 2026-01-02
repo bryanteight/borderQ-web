@@ -25,6 +25,7 @@ export interface BorderEvent {
     verdict: string;
     detail: string;
   };
+  forecast_points?: number[];
 }
 
 export interface SummaryResponse {
