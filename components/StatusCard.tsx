@@ -120,9 +120,15 @@ export function StatusCard({ event }: { event: BorderEvent }) {
           event.smart_insight ? (
             <div className="pt-6 mt-auto border-t border-slate-50 flex flex-col gap-3 group-hover:border-indigo-100 transition-colors">
               <div className="flex flex-col gap-3">
-                <span className="text-[10px] font-[900] text-slate-400 uppercase tracking-widest">
-                  Next Hour Forecast
-                </span>
+                <div className="flex justify-between items-center">
+                  <span className="text-[10px] font-[900] text-slate-400 uppercase tracking-widest">
+                    Next Hour Forecast
+                  </span>
+                  <div className="flex items-center gap-0.5 text-[10px] font-bold text-indigo-600 opacity-0 group-hover:opacity-100 transition-all transform translate-x-[-10px] group-hover:translate-x-0">
+                    <span>View Details</span>
+                    <ChevronRight className="w-3 h-3" />
+                  </div>
+                </div>
                 <div className="flex items-start gap-3">
                   <div className={clsx(
                     "p-2 rounded-xl border shadow-sm backdrop-blur-[2px] transition-colors shrink-0",
@@ -160,9 +166,16 @@ export function StatusCard({ event }: { event: BorderEvent }) {
             // Placeholder for missing Insight (Northbound Learning Phase)
             <div className="pt-6 mt-auto border-t border-slate-50 flex flex-col gap-3 group-hover:border-indigo-100 transition-colors opacity-70">
               <div className="flex flex-col gap-3">
-                <span className="text-[10px] font-[900] text-slate-400 uppercase tracking-widest">
-                  Next Hour Forecast
-                </span>
+                <div className="flex justify-between items-center">
+                  <span className="text-[10px] font-[900] text-slate-400 uppercase tracking-widest">
+                    Next Hour Forecast
+                  </span>
+                  <div className="flex items-center gap-0.5 text-[10px] font-bold text-indigo-600 opacity-0 group-hover:opacity-100 transition-all transform translate-x-[-10px] group-hover:translate-x-0">
+                    <span>View History</span>
+                    <ChevronRight className="w-3 h-3" />
+                  </div>
+                </div>
+
                 <div className="flex items-center gap-3">
                   <div className="p-2 rounded-xl border border-slate-100 bg-slate-50/50 shadow-sm">
                     <Activity className="w-5 h-5 text-slate-300" />
@@ -184,6 +197,6 @@ export function StatusCard({ event }: { event: BorderEvent }) {
         {/* Background Decor Layer */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-slate-50 to-transparent rounded-bl-[100px] pointer-events-none opacity-40 group-hover:bg-indigo-50/30 transition-all" />
       </div>
-    </Link>
+    </Link >
   );
 }
