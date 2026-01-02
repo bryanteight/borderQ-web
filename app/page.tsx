@@ -42,31 +42,46 @@ export default async function Home() {
     { id: 'detroit', label: 'Detroit / Windsor', active: false, comingSoon: true },
   ];
 
-  // Dynamic Trending Logic
-  const todayDate = new Date();
-  const today = todayDate.toLocaleDateString('en-US', { weekday: 'long' });
-  const dayIndex = todayDate.getDay(); // 0 = Sun, 1 = Mon, ..., 6 = Sat
+  // Dynamic Trending Logic (Force PST/PDT for "Border Time")
+  // Server is likely UTC, so we must shift to get correct day in Vancouver/Blaine
+  const now = new Date();
+  const options = { timeZone: 'America/Vancouver', year: 'numeric', month: 'numeric', day: 'numeric', weekday: 'long' } as const;
+  // Format: "Friday, 1/1/2026"
+  const parts = new Intl.DateTimeFormat('en-US', options).formatToParts(now);
+
+  // Extract parts manually to build a date object for comparison
+  const getPart = (type: string) => parts.find(p => p.type === type)?.value || '';
+  const currentYear = parseInt(getPart('year'));
+  const currentMonth = parseInt(getPart('month')) - 1; // 0-indexed
+  const currentDay = parseInt(getPart('day'));
+  const today = getPart('weekday'); // e.g. "Friday"
+
+  // Create a "Border Date" object (Midnight PST represented in current execution context)
+  // We constructs a Date object that *conceptually* represents the border date
+  const borderDate = new Date(currentYear, currentMonth, currentDay);
+
+  const dayIndex = borderDate.getDay(); // 0 = Sun, ...
 
   // Simple Holiday Check (Next 30 Days)
   const getUpcomingHoliday = () => {
-    const year = todayDate.getFullYear();
+    const year = currentYear;
     const holidays = [
       { name: 'Christmas', date: new Date(year, 11, 25), icon: Star },       // Dec 25
-      { name: 'New Year\'s Day', date: new Date(year, 0, 1), icon: Calendar },   // Jan 1 (check year+1 logic below if needed, simplified here)
-      { name: 'Victoria Day', date: new Date(year, 4, 20), icon: Star },     // ~May 24 (Fixed for simplicty)
+      { name: 'New Year\'s Day', date: new Date(year, 0, 1), icon: Calendar },   // Jan 1
+      { name: 'Victoria Day', date: new Date(year, 4, 18), icon: Star },     // approx May
       { name: 'Canada Day', date: new Date(year, 6, 1), icon: Star },        // July 1
       { name: 'Independence Day', date: new Date(year, 6, 4), icon: Star },  // July 4
-      { name: 'Labor Day', date: new Date(year, 8, 2), icon: Star },         // ~Sept
-      { name: 'Thanksgiving', date: new Date(year, 10, 28), icon: Star },    // ~Nov (US)
+      { name: 'Labor Day', date: new Date(year, 8, 2), icon: Star },         // Sept
+      { name: 'Thanksgiving', date: new Date(year, 10, 28), icon: Star },    // Nov
     ];
 
     // Handle year wrap for early Jan holidays if currently Dec
-    if (todayDate.getMonth() === 11) {
+    if (currentMonth === 11) {
       holidays.push({ name: 'New Year\'s Day', date: new Date(year + 1, 0, 1), icon: Calendar });
     }
 
     for (const h of holidays) {
-      const diffTime = h.date.getTime() - todayDate.getTime();
+      const diffTime = h.date.getTime() - borderDate.getTime();
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       if (diffDays >= 0 && diffDays <= 30) {
         return {
