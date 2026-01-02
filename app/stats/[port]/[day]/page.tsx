@@ -4,13 +4,6 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, TrendingUp, Navigation, Clock, Car, CloudRain, Sun, Activity, Zap, Minus } from "lucide-react";
 import { clsx } from "clsx";
 
-// Reusing types from the single port schema for consistency
-const PORT_MAP: Record<string, string> = {
-    "peace-arch": "02300402",      // ID ending in 402 is Peace Arch
-    "pacific-highway": "02300401", // ID ending in 401 is Pacific Hwy
-    "lynden": "02302301",
-};
-
 const PORT_NAMES: Record<string, string> = {
     "peace-arch": "Peace Arch",
     "pacific-highway": "Pacific Highway",
@@ -88,10 +81,14 @@ async function getStats(portId: string, day: string): Promise<StatsResponse | nu
 
 import { Metadata } from "next";
 
-export async function generateMetadata({ params }: { params: Promise<{ port: string, day: string }> }): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: { params: Promise<{ port: string, day: string }>, searchParams: Promise<{ direction?: string }> }): Promise<Metadata> {
     const { port, day } = await params;
+    const { direction } = await searchParams;
+    const isNorthbound = direction === 'north';
+
     const dayName = (day.charAt(0).toUpperCase() + day.slice(1)).replace(/-/g, " ");
     const portName = PORT_NAMES[port] || port.replace("-", " ").replace(/\b\w/g, c => c.toUpperCase());
+    const dirText = isNorthbound ? "(Northbound)" : "";
 
     // Only pluralize weekdays (e.g. "Sundays"), not holidays (e.g. "Christmas")
     const weekdays = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
@@ -99,33 +96,32 @@ export async function generateMetadata({ params }: { params: Promise<{ port: str
     const titleDay = isWeekday ? `${dayName}s` : dayName;
 
     return {
-        title: `${portName} Border Wait Times for ${titleDay} | BorderQ`,
-        description: `Historical border wait time forecasts for ${portName} on ${dayName}. Avoid the rush with our traffic analysis.`,
+        title: `${portName} ${dirText} Border Wait Times for ${titleDay} | BorderQ`,
+        description: `Historical border wait time forecasts for ${portName} ${dirText} on ${dayName}. Avoid the rush with our traffic analysis.`,
         alternates: {
-            canonical: `/stats/${port}/${day}`,
+            canonical: `/stats/${port}/${day}${isNorthbound ? '?direction=north' : ''}`,
         },
         openGraph: {
-            title: `${portName} Traffic: Best Time to Cross on ${titleDay}`,
-            description: `See when to cross ${portName} on ${dayName} to avoid long lines.`,
+            title: `${portName} ${dirText} Traffic: Best Time to Cross on ${titleDay}`,
+            description: `See when to cross ${portName} ${dirText} on ${dayName} to avoid long lines.`,
             type: 'article',
         }
     };
 }
 
-export default async function StatsPage({ params }: { params: Promise<{ port: string, day: string }> }) {
-    // Next.js 15+: params is a Promise
+export default async function StatsPage({ params, searchParams }: { params: Promise<{ port: string, day: string }>, searchParams: Promise<{ direction?: string }> }) {
+    // Next.js 15+: params and searchParams are Promises
     const { port, day } = await params;
+    const { direction } = await searchParams;
+    const isNorthbound = direction === 'north';
 
+    // Determine API identifier (Slug)
+    // Legacy mapping (PORT_MAP) is removed. We send the slug directly.
+    // Southbound: "peace-arch"
+    // Northbound: "peace-arch-nb" (Backend convention)
+    const apiIdentifier = isNorthbound ? `${port}-nb` : port;
 
-    const portId = PORT_MAP[port];
-
-    // Handle invalid port
-    // Handle invalid port
-    if (!portId) {
-        notFound();
-    }
-
-    const data = await getStats(portId, day);
+    const data = await getStats(apiIdentifier, day);
     const portName = PORT_NAMES[port] || port;
     const dayName = (day.charAt(0).toUpperCase() + day.slice(1)).replace(/-/g, " ");
 
@@ -134,19 +130,81 @@ export default async function StatsPage({ params }: { params: Promise<{ port: st
         notFound();
     }
 
-    // 2. Handle Valid Page but No Data (e.g. Future Holiday)
-    if (!data.stats || data.message) {
-        return (
-            <main className="min-h-screen bg-[#F6F8FA] text-slate-900 font-sans p-6">
-                <Link href="/" className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-900 mb-8 font-bold">
-                    <ArrowLeft className="w-5 h-5" /> Back
+    // Shared Header UI Component
+    const Header = () => (
+        <header className="relative bg-[#F6F8FA] border-b border-white/50 py-4 px-6 mb-6">
+            <div className="max-w-md mx-auto flex items-center justify-between">
+                {/* Back to Regional */}
+                <Link href={`/stats/vancouver-to-seattle/${day}`} className="flex items-center gap-2 group">
+                    <div className="p-2 rounded-full bg-white shadow-sm border border-slate-100 group-hover:bg-slate-50 transition-colors">
+                        <ArrowLeft className="w-4 h-4 text-slate-600" />
+                    </div>
+                    <div className="flex flex-col">
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Back to</span>
+                        <span className="text-sm font-bold text-slate-700 group-hover:text-indigo-600 transition-colors">All Ports ({dayName})</span>
+                    </div>
                 </Link>
-                <div className="max-w-md mx-auto bg-white rounded-[32px] p-8 text-center shadow-sm">
-                    <h1 className="text-xl font-[800] text-slate-900 mb-2">Data Generating...</h1>
-                    <p className="text-slate-500">
-                        We are currently collecting historical data for {portName} on {dayName}s. Please check back later or visit the <Link href="/" className="text-indigo-600 hover:underline">live dashboard</Link>.
-                    </p>
-                    {data?.message && <p className="text-xs text-red-400 mt-4 font-mono">{data.message}</p>}
+
+                {/* Home Link (Text Button) */}
+                <Link href="/" className="flex items-center gap-2 px-4 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-full transition-colors">
+                    <TrendingUp className="w-4 h-4" />
+                    <span className="text-xs font-bold uppercase tracking-wide">Live Dashboard</span>
+                </Link>
+            </div>
+        </header>
+    );
+
+    // Shared Direction Toggle Tab
+    const DirectionToggle = () => (
+        <div className="flex p-1 bg-white rounded-xl border border-slate-200 shadow-sm mb-6 relative">
+            <Link
+                href={`/stats/${port}/${day}`}
+                className={clsx(
+                    "flex-1 py-2 text-center text-xs font-black uppercase tracking-wider rounded-lg transition-all z-10",
+                    !isNorthbound ? "bg-indigo-600 text-white shadow-md" : "text-slate-400 hover:bg-slate-50"
+                )}
+            >
+                Canada → USA
+            </Link>
+            <Link
+                href={`/stats/${port}/${day}?direction=north`}
+                className={clsx(
+                    "flex-1 py-2 text-center text-xs font-black uppercase tracking-wider rounded-lg transition-all z-10",
+                    isNorthbound ? "bg-indigo-600 text-white shadow-md" : "text-slate-400 hover:bg-slate-50"
+                )}
+            >
+                USA → Canada
+            </Link>
+        </div>
+    );
+
+    // 2. Handle Valid Page but No Data (e.g. Future Holiday or New Route)
+    if (!data.stats || data.message || data.stats.sample_size < 10) {
+        return (
+            <main className="min-h-screen bg-[#F6F8FA] text-slate-900 font-sans pb-20">
+                <Header />
+                <div className="max-w-md mx-auto px-6">
+                    <div className="space-y-2 mb-6">
+                        <span className="text-xs font-bold text-indigo-600 uppercase tracking-widest bg-indigo-50 px-3 py-1 rounded-full">
+                            {dayName} Analysis
+                        </span>
+                        <h1 className="text-3xl font-[800] tracking-tight text-slate-900 leading-tight">
+                            {portName} Traffic
+                        </h1>
+                    </div>
+
+                    <DirectionToggle />
+
+                    <div className="bg-white rounded-[32px] p-8 text-center shadow-sm">
+                        <h1 className="text-xl font-[800] text-slate-900 mb-2">Data Generating...</h1>
+                        <p className="text-slate-500 text-sm leading-relaxed mb-4">
+                            We are currently collecting historical data for this direction. Please check back later or visit the live dashboard.
+                        </p>
+                        <Link href="/" className="inline-block px-5 py-2.5 bg-slate-900 text-white text-xs font-bold uppercase tracking-widest rounded-full hover:bg-slate-800 transition-colors">
+                            Return Home
+                        </Link>
+                        {data?.message && <p className="text-[10px] text-red-400 mt-6 font-mono border-t border-slate-50 pt-4">{data.message}</p>}
+                    </div>
                 </div>
             </main>
         );
@@ -187,30 +245,7 @@ export default async function StatsPage({ params }: { params: Promise<{ port: st
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(json_ld) }}
             />
 
-            {/* Header ... */}
-            {/* Header / Nav */}
-            <header className="relative bg-[#F6F8FA] border-b border-white/50 py-4 px-6 mb-6">
-                <div className="max-w-md mx-auto flex items-center justify-between">
-                    {/* Back to Regional */}
-                    <Link href={`/stats/vancouver-to-seattle/${day}`} className="flex items-center gap-2 group">
-                        <div className="p-2 rounded-full bg-white shadow-sm border border-slate-100 group-hover:bg-slate-50 transition-colors">
-                            <ArrowLeft className="w-4 h-4 text-slate-600" />
-                        </div>
-                        <div className="flex flex-col">
-                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Back to</span>
-                            <span className="text-sm font-bold text-slate-700 group-hover:text-indigo-600 transition-colors">All Ports ({dayName})</span>
-                        </div>
-                    </Link>
-
-                    {/* Home Link (Icon) */}
-
-                    {/* Home Link (Text Button) */}
-                    <Link href="/" className="flex items-center gap-2 px-4 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-full transition-colors">
-                        <TrendingUp className="w-4 h-4" />
-                        <span className="text-xs font-bold uppercase tracking-wide">Live Dashboard</span>
-                    </Link>
-                </div>
-            </header>
+            <Header />
 
             <div className="max-w-md mx-auto px-6 space-y-6">
                 {/* Title Group */}
@@ -221,8 +256,9 @@ export default async function StatsPage({ params }: { params: Promise<{ port: st
                     <h1 className="text-3xl font-[800] tracking-tight text-slate-900 leading-tight">
                         {portName} Traffic
                     </h1>
-
                 </div>
+
+                <DirectionToggle />
 
                 {/* 0. Daily Insight (Narrative) */}
                 {(data.narrative || realtime.smart_insight) && (
@@ -439,3 +475,4 @@ export default async function StatsPage({ params }: { params: Promise<{ port: st
         </main>
     )
 }
+

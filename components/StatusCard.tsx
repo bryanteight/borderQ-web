@@ -15,14 +15,18 @@ export function StatusCard({ event }: { event: BorderEvent }) {
         ? "text-amber-500"
         : "text-emerald-500";
 
-  const cardStyle = "bg-white rounded-[32px] shadow-[0_2px_20px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 border border-transparent hover:border-indigo-50 cursor-pointer group";
+  const cardStyle = "bg-white rounded-[32px] shadow-[0_2px_20px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 border border-slate-200 hover:border-indigo-100 cursor-pointer group";
 
   // Navigation details
-  const slug = event.crossing_name.toLowerCase().replace(/\s+/g, '-');
+  // Clean slug: "Peace Arch" for Southbound, "Peace Arch" with query for Northbound
+  const baseSlug = event.crossing_name.replace(/\s*\(Northbound\)/i, '').replace(/\s*\(Southbound\)/i, '').toLowerCase().replace(/\s+/g, '-');
+  const isNorthbound = event.crossing_name.toLowerCase().includes('northbound');
+
   const dayName = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+  const href = `/stats/${baseSlug}/${dayName}${isNorthbound ? '?direction=north' : ''}`;
 
   return (
-    <Link href={`/stats/${slug}/${dayName}`} className="block h-full">
+    <Link href={href} className="block h-full group">
       <div className={clsx("relative h-full p-6 md:p-8 flex flex-col", cardStyle)}>
         {/* Header Section: Title Left, Badges Right */}
         <div className="flex justify-between items-start gap-4 mb-6">
@@ -31,7 +35,7 @@ export function StatusCard({ event }: { event: BorderEvent }) {
               "font-[900] text-[#0f172a] tracking-tight group-hover:text-indigo-600 transition-colors leading-tight flex items-end min-h-[3.5rem] md:min-h-[4rem]",
               event.crossing_name.length > 12 ? "text-xl md:text-2xl" : "text-2xl md:text-3xl"
             )}>
-              {event.crossing_name}
+              {event.crossing_name.replace(/\s*\(Northbound\)/i, '').replace(/\s*\(Southbound\)/i, '')}
             </h3>
 
             {!isClosed && (
@@ -76,41 +80,46 @@ export function StatusCard({ event }: { event: BorderEvent }) {
 
           {!isClosed && (
             <>
-              {/* Vertical Divider */}
-              <div className="h-10 w-px bg-slate-100 rounded-full mx-1 hidden sm:block" />
+              {/* Only show Typical if we have data (Northbound might not) */}
+              {event.official_avg_minutes !== undefined && event.official_avg_minutes !== null && event.official_avg_minutes > 0 && (
+                <>
+                  {/* Vertical Divider */}
+                  <div className="h-10 w-px bg-slate-100 rounded-full mx-1 hidden sm:block" />
 
-              {/* Typical Wait and PAX Badge */}
-              <div className="flex items-end gap-2.5 pb-1">
-                <div className="flex flex-col min-w-[50px]">
-                  <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-0.5 leading-none">Typical</span>
-                  <div className="flex items-baseline gap-0.5">
-                    <span className="text-2xl md:text-3xl font-[900] text-slate-400/80 tracking-tight leading-none">
-                      {event.official_avg_minutes || 0}
-                    </span>
-                    <span className="text-xs font-black text-slate-300">min</span>
+                  {/* Typical Wait and PAX Badge */}
+                  <div className="flex items-end gap-2.5 pb-1">
+                    <div className="flex flex-col min-w-[50px]">
+                      <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-0.5 leading-none">Typical</span>
+                      <div className="flex items-baseline gap-0.5">
+                        <span className="text-2xl md:text-3xl font-[900] text-slate-400/80 tracking-tight leading-none">
+                          {event.official_avg_minutes}
+                        </span>
+                        <span className="text-xs font-black text-slate-300">min</span>
+                      </div>
+                    </div>
+
+                    {/* PAX Badge */}
+                    <div className="flex items-center gap-1 bg-slate-50 text-slate-400 px-2.5 py-1 rounded-full text-[9px] uppercase font-black tracking-widest border border-slate-100/60 shadow-sm mb-0.5">
+                      <Car className="w-3 h-3 opacity-70" />
+                      <span className="opacity-90">PAX</span>
+                    </div>
                   </div>
-                </div>
-
-                {/* PAX Badge */}
-                <div className="flex items-center gap-1 bg-slate-50 text-slate-400 px-2.5 py-1 rounded-full text-[9px] uppercase font-black tracking-widest border border-slate-100/60 shadow-sm mb-0.5">
-                  <Car className="w-3 h-3 opacity-70" />
-                  <span className="opacity-90">PAX</span>
-                </div>
-              </div>
+                </>
+              )}
             </>
           )}
         </div>
 
-        {/* Footer: Smart Insight Section */}
-        <div className="pt-6 mt-auto border-t border-slate-50 flex flex-col gap-3 group-hover:border-indigo-100 transition-colors">
-          <div className="flex flex-col gap-3">
-            {/* New Header Label */}
-            <span className="text-[10px] font-[900] text-slate-400 uppercase tracking-widest">
-              Next Hour Forecast
-            </span>
+        {/* Footer: Smart Insight Section - Hide if no insight */}
+        {event.smart_insight && (
+          <div className="pt-6 mt-auto border-t border-slate-50 flex flex-col gap-3 group-hover:border-indigo-100 transition-colors">
+            <div className="flex flex-col gap-3">
+              {/* New Header Label */}
+              <span className="text-[10px] font-[900] text-slate-400 uppercase tracking-widest">
+                Next Hour Forecast
+              </span>
 
-            {/* Insight Content */}
-            {event.smart_insight && (
+              {/* Insight Content */}
               <div className="flex items-start gap-3">
                 {/* Icon Box */}
                 <div className={clsx(
@@ -144,11 +153,9 @@ export function StatusCard({ event }: { event: BorderEvent }) {
                   </p>
                 </div>
               </div>
-            )}
+            </div>
           </div>
-
-
-        </div>
+        )}
 
         {/* Background Decor Layer */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-slate-50 to-transparent rounded-bl-[100px] pointer-events-none opacity-40 group-hover:bg-indigo-50/30 transition-all" />
