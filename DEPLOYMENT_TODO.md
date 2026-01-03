@@ -34,11 +34,15 @@
 - [ ] Ingest and store Seattle to Vancouver data to Qdrant DB
 - [ ] Refactor `/stats/` pages to properly support Northbound (Seattle -> Vancouver) views. Currently hidden in `RegionalStatsPage`.
 - [ ] Research & Implement Bi-National Holiday Logic:
-    - [ ] Differentiate US Holidays (impacts NB traffic?) vs Canadian Holidays (impacts SB traffic?).
+    - [] Differentiate US Holidays (impacts NB traffic?) vs Canadian Holidays (impacts SB traffic?).
     - [ ] Update `context_enrichment.py` to tag events with country-specific holiday flags.
+- [ ] Improve CBSA Data Quality: Parse the "Updated" timestamp from the live scrape instead of defaulting to "Now".
+- [ ] Forecast Accuracy System: Build an internal tool to compare stored `forecast_points` against real outcomes to tune the Ratio/Decay model.
 
 ### UX Improvements
 - [ ] Implement smooth transition animations when clicking cards to navigate to new pages
+- [ ] Dynamic Teaser Alerts: Update `ForecastTeaser.tsx` to calculate "Wait X minutes" dynamically based on the forecast's lowest point (instead of hardcoded "40 mins").
+- [ ] Weather-Aware Predictions: Adjust the forecasting ratio based on live weather conditions (e.g., higher multiplier during heavy snow).
 
 (12/17/2025):
 
