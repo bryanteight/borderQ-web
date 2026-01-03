@@ -39,6 +39,12 @@
     - [ ] Bi-National Holiday Logic: Differentiate US vs CA holiday impacts (Southbound vs Northbound).
     - [ ] Improve CBSA Data Quality: Parse "Updated" timestamp from live scrape instead of "Now".
     - [ ] **Forecast Accuracy System**: Build tool to compare `forecast_points` vs real outcomes to tune the model.
+- [ ] **Vector Engine (Qdrant) Optimization**
+    - [ ] **Cyclical Time Encoding**: Convert "Hour" and "Day" into Sine/Cosine pairs to fix the "Midnight Paradox."
+    - [ ] **Lag Features (Momentum)**: Store `Wait_Time_1hr_Ago` and `Wait_Time_2hr_Ago` in the vector to capture traffic trends.
+    - [ ] **Event Signals**: Implement an `Is_Major_Event` flag (Blue Jays games, concerts) to account for predictable traffic surges.
+    - [ ] **Economic Signals**: Add `USD_CAD_Rate` to the vector to differentiate shopping traffic based on exchange rates.
+    - [ ] **Weather Filtering**: Update `ingest.py` to only flag **Severe Weather** (Snow/Ice) and discard minor "noise" like light rain.
 - [ ] **UX & AI Intelligence**
     - [ ] **Event-Aware Indicator (小光標)**: Dynamic UI/cursor that reacts to surges or severe weather.
     - [ ] **Dynamic Teaser Alerts**: Update `ForecastTeaser.tsx` to calculate "Wait X mins" from forecast dip.
