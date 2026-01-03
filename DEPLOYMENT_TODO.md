@@ -44,6 +44,7 @@
     - [ ] **Dynamic Teaser Alerts**: Update `ForecastTeaser.tsx` to calculate "Wait X mins" from forecast dip.
     - [ ] **Unified Regional View**: Strategy for NB/SB pages (Separate routes vs. Tabbed toggle).
     - [ ] **AI for Northbound**: Enable LLM-generated insights/advice for return trips.
+    - [ ] **AI RAG Optimization**: Research and evaluate **Hybrid Mode** (Semantic Routing + BM25 + Embedded Cosine Similarity) to improve retrieval precision and context relevance.
 - [ ] **Refinement**
     - [ ] **Threshold Tuning**: Refine Red/Yellow trigger points for Teaser cards (10m rise / 15m savings).
     - [ ] **Weather-Aware Ratios**: Adjust forecasting multiplier based on live weather (e.g., Snow/Ice).
