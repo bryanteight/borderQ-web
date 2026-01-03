@@ -43,6 +43,7 @@
 - [ ] Implement smooth transition animations when clicking cards to navigate to new pages
 - [ ] Dynamic Teaser Alerts: Update `ForecastTeaser.tsx` to calculate "Wait X minutes" dynamically based on the forecast's lowest point (instead of hardcoded "40 mins").
 - [ ] Weather-Aware Predictions: Adjust the forecasting ratio based on live weather conditions (e.g., higher multiplier during heavy snow).
+- [ ] Implement an **Event-Aware Indicator (小光標)**: A dynamic cursor or tooltip that reacts to live events (e.g., pulsing/color-shifting during surges or alerting to severe weather).
 
 (12/17/2025):
 
