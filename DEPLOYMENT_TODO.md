@@ -39,6 +39,11 @@
     - [ ] Bi-National Holiday Logic: Differentiate US vs CA holiday impacts (Southbound vs Northbound).
     - [ ] Improve CBSA Data Quality: Parse "Updated" timestamp from live scrape instead of "Now".
     - [ ] **Forecast Accuracy System**: Build tool to compare `forecast_points` vs real outcomes to tune the model.
+- [ ] **Enhanced Inspection Detection (Anomaly Detection)**
+    - [ ] **Method 1: Crawl Factor**: Research Google Maps Directions API integration to compare "Line Length" (Crawl duration) vs "Official Wait" (Processing duration).
+    - [ ] **Method 2: Qdrant Anomaly**: Implement detection logic for "Inexplicable Delays" (Actual Wait > 3x Expected Wait during non-holiday/non-event times).
+    - [ ] **Method 3: Keyword Listening**: Explore social media scraping for inspection-linked keywords (e.g., "Secondary", "Trunk check", "開後車廂").
+    - [ ] **Schema Update**: Update `Event` and Qdrant payload to track `inspection_level` (Normal/Strict/Severe) and anomaly scores.
 - [ ] **Vector Engine (Qdrant) Optimization**
     - [ ] **Cyclical Time Encoding**: Convert "Hour" and "Day" into Sine/Cosine pairs to fix the "Midnight Paradox."
     - [ ] **Lag Features (Momentum)**: Store `Wait_Time_1hr_Ago` and `Wait_Time_2hr_Ago` in the vector to capture traffic trends.
