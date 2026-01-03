@@ -31,24 +31,25 @@
 
 ### Data Ingestion
 - [x] Ingest and store Vancouver to Seattle data to Qdrant DB
-- [ ] Ingest and store Seattle to Vancouver data to Qdrant DB
-- [ ] Refactor `/stats/` pages to properly support Northbound (Seattle -> Vancouver) views. Currently hidden in `RegionalStatsPage`.
-- [ ] Research & Implement Bi-National Holiday Logic:
-    - [] Differentiate US Holidays (impacts NB traffic?) vs Canadian Holidays (impacts SB traffic?).
-    - [ ] Update `context_enrichment.py` to tag events with country-specific holiday flags.
-- [ ] Improve CBSA Data Quality: Parse the "Updated" timestamp from the live scrape instead of defaulting to "Now".
-- [ ] Forecast Accuracy System: Build an internal tool to compare stored `forecast_points` against real outcomes to tune the Ratio/Decay model.
+## 01/02/2026 (v0.4.0 Smart Forecast Release)
 
-### UX Improvements
-- [ ] Implement smooth transition animations when clicking cards to navigate to new pages
-- [ ] Dynamic Teaser Alerts: Update `ForecastTeaser.tsx` to calculate "Wait X minutes" dynamically based on the forecast's lowest point (instead of hardcoded "40 mins").
-- [ ] Weather-Aware Predictions: Adjust the forecasting ratio based on live weather conditions (e.g., higher multiplier during heavy snow).
-- [ ] Implement an **Event-Aware Indicator (小光標)**: A dynamic cursor or tooltip that reacts to live events (e.g., pulsing/color-shifting during surges or alerting to severe weather).
+### Post-Release Optimization & Roadmap
+- [ ] **Data Ingestion & Accuracy**
+    - [ ] Ingest Seattle to Vancouver (Northbound) data to Qdrant DB.
+    - [ ] Bi-National Holiday Logic: Differentiate US vs CA holiday impacts (Southbound vs Northbound).
+    - [ ] Improve CBSA Data Quality: Parse "Updated" timestamp from live scrape instead of "Now".
+    - [ ] **Forecast Accuracy System**: Build tool to compare `forecast_points` vs real outcomes to tune the model.
+- [ ] **UX & AI Intelligence**
+    - [ ] **Event-Aware Indicator (小光標)**: Dynamic UI/cursor that reacts to surges or severe weather.
+    - [ ] **Dynamic Teaser Alerts**: Update `ForecastTeaser.tsx` to calculate "Wait X mins" from forecast dip.
+    - [ ] **Unified Regional View**: Strategy for NB/SB pages (Separate routes vs. Tabbed toggle).
+    - [ ] **AI for Northbound**: Enable LLM-generated insights/advice for return trips.
+- [ ] **Refinement**
+    - [ ] **Threshold Tuning**: Refine Red/Yellow trigger points for Teaser cards (10m rise / 15m savings).
+    - [ ] **Weather-Aware Ratios**: Adjust forecasting multiplier based on live weather (e.g., Snow/Ice).
+    - [ ] Implement smooth transition animations for card navigation.
 
-(12/17/2025):
+### General Maintenance
+- [ ] Investigate Latency Issue: Slow "Content Download" (~600ms) on `borderq.com`.
+- [ ] Monitoring & Observability: API Monitoring Research.
 
-Optimization (Cloudflare + Latency Investigation)
-Analytics & Marketing (GA4)
-Data Ingestion (Vancouver → Seattle)
-UX Improvements (Smooth Transitions)
-Monitoring & Observability (API Monitoring Research) ← NEW
