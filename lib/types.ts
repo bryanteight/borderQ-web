@@ -26,6 +26,8 @@ export interface BorderEvent {
     detail: string;
   };
   forecast_points?: number[];
+  typical_points?: number[]; // Baseline for comparison
+  timeline_labels?: string[];
 }
 
 export interface SummaryResponse {

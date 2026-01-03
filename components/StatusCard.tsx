@@ -3,6 +3,7 @@ import { BorderEvent } from "@/lib/types";
 import { TrendingDown, TrendingUp, Minus, Activity, Car, Zap, ChevronRight } from "lucide-react";
 import { clsx } from "clsx";
 import { SimpleSparkline } from "./SimpleSparkline";
+import { ForecastTeaser } from "./ForecastTeaser";
 
 export function StatusCard({ event }: { event: BorderEvent }) {
   const isClosed = event.status === "Closed";
@@ -125,27 +126,16 @@ export function StatusCard({ event }: { event: BorderEvent }) {
                   <span className="text-[10px] font-[900] text-slate-400 uppercase tracking-widest">
                     Next Hour Forecast
                   </span>
-                  <div className="flex items-center gap-0.5 text-[10px] font-bold text-indigo-600 opacity-0 group-hover:opacity-100 transition-all transform translate-x-[-10px] group-hover:translate-x-0">
+                  <div className="flex items-center gap-0.5 text-[10px] font-bold text-indigo-600 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all transform translate-x-0 md:translate-x-[-10px] md:group-hover:translate-x-0">
                     <span>View Details</span>
                     <ChevronRight className="w-3 h-3" />
                   </div>
                 </div>
 
                 {event.forecast_points && event.forecast_points.length > 1 ? (
-                  // Sparkline Chart Mode
-                  <div className="flex items-end justify-between gap-4 h-[50px] w-full">
-                    {/* SVG Chart */}
-                    <div className="relative flex-grow h-full w-full">
-                      <SimpleSparkline points={event.forecast_points} />
-                    </div>
-
-                    {/* Next Hour Label */}
-                    <div className="flex flex-col items-end min-w-[60px] pb-1">
-                      <span className="text-[10px] font-bold text-slate-400 leading-none mb-0.5">Next hour</span>
-                      <span className="text-lg font-[900] text-slate-700 leading-none">
-                        {event.forecast_points[1]} <span className="text-[10px] font-bold text-slate-400">min</span>
-                      </span>
-                    </div>
+                  // Sparkline Teaser Mode
+                  <div className="w-full mt-1">
+                    <ForecastTeaser currentWait={event.wait_time_minutes || 0} forecastPoints={event.forecast_points} />
                   </div>
                 ) : (
                   // Text Mode (Fallback)
@@ -213,11 +203,12 @@ export function StatusCard({ event }: { event: BorderEvent }) {
               </div>
             </div>
           )
-        )}
+        )
+        }
 
         {/* Background Decor Layer */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-slate-50 to-transparent rounded-bl-[100px] pointer-events-none opacity-40 group-hover:bg-indigo-50/30 transition-all" />
-      </div>
+      </div >
     </Link >
   );
 }

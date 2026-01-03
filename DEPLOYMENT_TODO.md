@@ -32,6 +32,10 @@
 ### Data Ingestion
 - [x] Ingest and store Vancouver to Seattle data to Qdrant DB
 - [ ] Ingest and store Seattle to Vancouver data to Qdrant DB
+- [ ] Refactor `/stats/` pages to properly support Northbound (Seattle -> Vancouver) views. Currently hidden in `RegionalStatsPage`.
+- [ ] Research & Implement Bi-National Holiday Logic:
+    - [ ] Differentiate US Holidays (impacts NB traffic?) vs Canadian Holidays (impacts SB traffic?).
+    - [ ] Update `context_enrichment.py` to tag events with country-specific holiday flags.
 
 ### UX Improvements
 - [ ] Implement smooth transition animations when clicking cards to navigate to new pages

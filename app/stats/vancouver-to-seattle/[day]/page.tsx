@@ -117,7 +117,14 @@ export default async function RegionalStatsPage({ params }: { params: Promise<{ 
     const { ports = [], narrative, best_option } = forecast;
 
     // Safety check filtering
-    const validPorts = ports.filter(p => p.data?.stats && p.data.stats.sample_size > 0);
+    // TODO: Northbound UI is not ready for specific regional pages yet. 
+    // We explicitly exclude them here for the v0.4.0 release.
+    // Refactor this later to support /stats/seattle-to-vancouver or mixed views.
+    const validPorts = ports.filter(p =>
+        p.data?.stats &&
+        p.data.stats.sample_size > 0 &&
+        !p.name.toLowerCase().includes('northbound')
+    );
 
     // Handle case where NO ports have data (e.g. obscure holiday)
     if (validPorts.length === 0) {
@@ -218,7 +225,7 @@ export default async function RegionalStatsPage({ params }: { params: Promise<{ 
                 <section>
                     <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Port Comparison ({dayName})</h2>
                     <div className="flex flex-col md:grid md:grid-cols-2 gap-3">
-                        {ports.map((port) => {
+                        {validPorts.map((port) => {
                             const live = port.data?.realtime.wait_time || 0;
 
                             return (
