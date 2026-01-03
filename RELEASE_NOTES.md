@@ -13,6 +13,11 @@ We've introduced a new **Adaptive Intelligence Engine** for forecasting wait tim
 - **Color-Coded Advice:** Instantly know if you should "Go Now" (Green), "Wait It Out" (Yellow), or "Detour" (Purple).
 - **Touch-Friendly:** On mobile, the "View Details" button is now always visible, making navigation effortless.
 
+### 🍱 Web App Installation (PWA)
+- You can now **Add BorderQ to your Home Screen** for a faster, app-style experience.
+- **Smart Prompts:** Automatically suggests installation on your second visit.
+- **Icon Support:** High-resolution icons tailored for iOS and Android.
+
 ## 🛠️ Technical Improvements
 - **Ratio-Based Prediction:** Implemented a new algorithm (`Current / Historical * Decay`) for high-accuracy short-term forecasting.
 - **Deduplication Logic:** Fixed a bug where waiting times that didn't change prevented forecast updates.
