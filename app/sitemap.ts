@@ -28,7 +28,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
         'lynden'
     ];
 
-    // 2. Aggregate Stats Pages (Regional)
+    // 2. Crossing Hub Pages (New)
+    // /crossing/[port]
+    const crossingRoutes = ports.map((port) => ({
+        url: `${baseUrl}/crossing/${port}`,
+        lastModified: new Date(),
+        changeFrequency: 'daily' as const,
+        priority: 0.9,
+    }));
+
+    // 3. Aggregate Stats Pages (Regional)
     // /stats/seattle-to-vancouver/[day]
     const aggregateRoutes = days.map((day) => ({
         url: `${baseUrl}/stats/vancouver-to-seattle/${day}`,
@@ -37,7 +46,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: 0.8,
     }));
 
-    // 3. Single Port Stats Pages
+    // 4. Single Port Stats Pages
     // /stats/[port]/[day]
     const portRoutes = ports.flatMap((port) =>
         days.map((day) => ({
@@ -48,5 +57,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
         }))
     );
 
-    return [...staticRoutes, ...aggregateRoutes, ...portRoutes];
+    return [...staticRoutes, ...crossingRoutes, ...aggregateRoutes, ...portRoutes];
 }

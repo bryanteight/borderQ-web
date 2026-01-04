@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, TrendingUp, Navigation, Clock, Car, CloudRain, Sun, Activity, Zap, Minus } from "lucide-react";
 import { clsx } from "clsx";
+import { PORT_METADATA } from "@/lib/port-metadata";
 
 const PORT_NAMES: Record<string, string> = {
     "peace-arch": "Peace Arch",
@@ -95,9 +96,11 @@ export async function generateMetadata({ params, searchParams }: { params: Promi
     const isWeekday = weekdays.includes(day.toLowerCase());
     const titleDay = isWeekday ? `${dayName}s` : dayName;
 
+    const metadata = PORT_METADATA[port];
+
     return {
-        title: `${portName} ${dirText} Border Wait Times for ${titleDay} | BorderQ`,
-        description: `Historical border wait time forecasts for ${portName} ${dirText} on ${dayName}. Avoid the rush with our traffic analysis.`,
+        title: `Current ${portName} Wait Time & History | BorderQ`,
+        description: metadata?.summary || `Historical border wait time forecasts for ${portName} ${dirText} on ${dayName}. Avoid the rush with our traffic analysis.`,
         alternates: {
             canonical: `/stats/${port}/${day}${isNorthbound ? '?direction=north' : ''}`,
         },
@@ -189,14 +192,14 @@ export default async function StatsPage({ params, searchParams }: { params: Prom
                             {dayName} Analysis
                         </span>
                         <h1 className="text-3xl font-[800] tracking-tight text-slate-900 leading-tight">
-                            {portName} Traffic
+                            Border Wait Time on {dayName}
                         </h1>
                     </div>
 
                     <DirectionToggle />
 
                     <div className="bg-white rounded-[32px] p-8 text-center shadow-sm">
-                        <h1 className="text-xl font-[800] text-slate-900 mb-2">Data Generating...</h1>
+                        <div className="text-xl font-[800] text-slate-900 mb-2">Data Generating...</div>
                         <p className="text-slate-500 text-sm leading-relaxed mb-4">
                             We are currently collecting historical data for this direction. Please check back later or visit the live dashboard.
                         </p>
@@ -254,8 +257,13 @@ export default async function StatsPage({ params, searchParams }: { params: Prom
                         {dayName} Analysis
                     </span>
                     <h1 className="text-3xl font-[800] tracking-tight text-slate-900 leading-tight">
-                        {portName} Traffic
+                        Border Wait Time on {dayName}
                     </h1>
+                    {PORT_METADATA[port] && (
+                        <p className="text-sm text-slate-500 leading-relaxed font-medium max-w-md">
+                            {PORT_METADATA[port].summary}
+                        </p>
+                    )}
                 </div>
 
                 <DirectionToggle />
