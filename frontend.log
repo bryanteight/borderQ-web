@@ -38,3 +38,4 @@
  GET / 200 in 161ms (compile: 8ms, render: 153ms)
  GET /stats/pacific-highway/Friday 200 in 1922ms (compile: 1142ms, render: 781ms)
  ✓ Compiled in 47ms
+ ✓ Compiled in 33ms
