@@ -33,3 +33,8 @@
  GET / 200 in 676ms (compile: 26ms, render: 650ms)
  GET / 200 in 506ms (compile: 18ms, render: 488ms)
  ✓ Compiled in 124ms
+ GET / 200 in 590ms (compile: 102ms, render: 487ms)
+ GET /stats/vancouver-to-seattle/friday 200 in 1477ms (compile: 1150ms, render: 327ms)
+ GET / 200 in 161ms (compile: 8ms, render: 153ms)
+ GET /stats/pacific-highway/Friday 200 in 1922ms (compile: 1142ms, render: 781ms)
+ ✓ Compiled in 47ms
