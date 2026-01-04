@@ -46,23 +46,29 @@ export function SimpleSparkline({
 
     const normalizedPoints = points.map((p, i) => normalize(p, i, points.length));
 
-    // Main Line Path
-    const linePath = `M ${normalizedPoints.map(p => `${p.x},${p.y}`).join(' L ')}`;
+    // Smooth Curve Path using Cubic Bezier
+    const getCurvePath = (points: { x: number, y: number }[]) => {
+        if (points.length < 2) return "";
+        let path = `M ${points[0].x},${points[0].y}`;
+
+        for (let i = 0; i < points.length - 1; i++) {
+            const p0 = points[i];
+            const p1 = points[i + 1];
+            // Use a simple control point logic for smooth curves
+            const cp1x = p0.x + (p1.x - p0.x) / 3;
+            const cp2x = p0.x + 2 * (p1.x - p0.x) / 3;
+            path += ` C ${cp1x},${p0.y} ${cp2x},${p1.y} ${p1.x},${p1.y}`;
+        }
+        return path;
+    };
+
+    const linePath = getCurvePath(normalizedPoints);
     const areaPath = `${linePath} L ${normalizedPoints[normalizedPoints.length - 1].x},${padding.top + chartHeight} L ${padding.left},${padding.top + chartHeight} Z`;
 
-    // Typical Line Path (if exists & not minimal)
+    // Typical Line Path (Straight/Dashed)
     let typicalPath = null;
     if (!minimal && typicalPoints && typicalPoints.length === points.length) {
-        const normTypical = typicalPoints.map((p, i) => {
-            let base = normalize(p, i, typicalPoints.length);
-            // OVERLAP FIX: If typical point is very close to forecast point, nudge it up slightly
-            // This ensures the dashed line is visible even if values are identical
-            const forecastPoint = normalizedPoints[i];
-            if (Math.abs(base.y - forecastPoint.y) < 2) {
-                base.y -= 3; // Nudge up 3 pixels
-            }
-            return base;
-        });
+        const normTypical = typicalPoints.map((p, i) => normalize(p, i, typicalPoints.length));
         typicalPath = `M ${normTypical.map(p => `${p.x},${p.y}`).join(' L ')}`;
     }
 
@@ -80,42 +86,15 @@ export function SimpleSparkline({
                 const yPos = padding.top + chartHeight - ((tick - minVal) / (maxVal - minVal)) * chartHeight;
                 return (
                     <g key={i}>
-                        {/* Grid Line */}
-                        <line
-                            x1={padding.left}
-                            y1={yPos}
-                            x2={svgWidth - padding.right}
-                            y2={yPos}
-                            stroke="#e2e8f0"
-                            strokeWidth="1"
-                            strokeDasharray="4 2"
-                        />
-                        {/* Y-Label */}
-                        <text
-                            x={padding.left - 4}
-                            y={yPos + 3}
-                            textAnchor="end"
-                            fontSize="9"
-                            fill="#94a3b8"
-                            className="select-none"
-                        >
-                            {tick}m
-                        </text>
+                        <line x1={padding.left} y1={yPos} x2={svgWidth - padding.right} y2={yPos} stroke="#e2e8f0" strokeWidth="1" strokeDasharray="4 2" />
+                        <text x={padding.left - 4} y={yPos + 3} textAnchor="end" fontSize="9" fill="#94a3b8" className="select-none">{tick}m</text>
                     </g>
                 );
             })}
 
             {/* Typical Line (Dashed) */}
             {!minimal && typicalPath && (
-                <path
-                    d={typicalPath}
-                    fill="none"
-                    stroke="#cbd5e1"
-                    strokeWidth="1.5"
-                    strokeDasharray="4 2"
-                    strokeLinecap="round"
-                    vectorEffect="non-scaling-stroke"
-                />
+                <path d={typicalPath} fill="none" stroke="#cbd5e1" strokeWidth="1.5" strokeDasharray="4 2" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
             )}
 
             {/* Forecast Area */}
@@ -132,36 +111,40 @@ export function SimpleSparkline({
                 vectorEffect="non-scaling-stroke"
             />
 
-            {/* Interactive Points (All) */}
-            {!minimal && normalizedPoints.map((p, i) => (
-                <circle
-                    key={i}
-                    cx={p.x}
-                    cy={p.y}
-                    r={i === normalizedPoints.length - 1 ? 3 : 2}
-                    className={`hover:r-4 transition-all cursor-pointer`}
-                    style={{ fill: theme.fill }}
-                    stroke="transparent"
-                    strokeWidth="4" // Increase hit area
-                    vectorEffect="non-scaling-stroke"
-                >
-                    <title>{`${labels && labels[i] ? labels[i] : 'Forecast'}: ${points[i]} min`}</title>
-                </circle>
+            {/* Points and Micro Labels */}
+            {normalizedPoints.map((p, i) => (
+                <g key={i}>
+                    <circle
+                        cx={p.x}
+                        cy={p.y}
+                        r={minimal ? 2.5 : 3}
+                        style={{ fill: theme.fill }}
+                        stroke="white"
+                        strokeWidth={minimal ? 1 : 0}
+                        vectorEffect="non-scaling-stroke"
+                    />
+                    {/* Minimal Labels for Key Points */}
+                    {minimal && (i === 0 || i === 1 || i === normalizedPoints.length - 1) && (
+                        <text
+                            x={p.x}
+                            y={svgHeight - 2}
+                            textAnchor={i === 0 ? "start" : i === normalizedPoints.length - 1 ? "end" : "middle"}
+                            fontSize="8"
+                            fontWeight="900"
+                            fill={theme.stroke}
+                            className="select-none uppercase tracking-tighter opacity-40"
+                        >
+                            {i === 0 ? "Now" : i === 1 ? "+1h" : "+3h"}
+                        </text>
+                    )}
+                </g>
             ))}
 
-            {/* X-Axis Labels */}
+            {/* X-Axis Labels (Standard Mode) */}
             {!minimal && labels && labels.map((label, i) => {
                 const xPos = padding.left + (i / (labels.length - 1)) * chartWidth;
                 return (
-                    <text
-                        key={i}
-                        x={xPos}
-                        y={svgHeight}
-                        textAnchor="middle"
-                        fontSize="9"
-                        fill="#94a3b8"
-                        className="select-none uppercase"
-                    >
+                    <text key={i} x={xPos} y={svgHeight} textAnchor="middle" fontSize="9" fill="#94a3b8" className="select-none uppercase">
                         {label}
                     </text>
                 );

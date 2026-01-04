@@ -11,8 +11,9 @@ export function ForecastTeaser({ currentWait, forecastPoints }: ForecastTeaserPr
 
     const maxForecast = Math.max(...forecastPoints);
     const minForecast = Math.min(...forecastPoints);
-    // Use last point as "future" proxy or min/max
-    const futureWait = forecastPoints[forecastPoints.length - 1];
+    // [UX FIX] Map display number to +1 Hour prediction (index 1)
+    // forecastPoints is [Now, +1h, +2h, +3h]
+    const futureWait = forecastPoints[1] || forecastPoints[forecastPoints.length - 1];
 
     let theme: "red" | "yellow" | "emerald" | "violet" | "gray" = "gray";
     let title = "Normal Traffic";
@@ -67,8 +68,13 @@ export function ForecastTeaser({ currentWait, forecastPoints }: ForecastTeaserPr
                             {action}
                         </p>
                     </div>
-                    <div className={`text-3xl font-[900] ${s.text} opacity-20`}>
-                        {currentWait}m
+                    <div className="flex flex-col items-end justify-center">
+                        <div className={`text-2xl font-[900] ${s.text} opacity-20 leading-none`}>
+                            {Math.max(0, Math.round(futureWait * 0.9))}~{Math.round(futureWait * 1.1)}m
+                        </div>
+                        <span className={`text-[9px] font-bold uppercase tracking-tighter mt-1 ${s.sub} opacity-40`}>
+                            Expected in 60m
+                        </span>
                     </div>
                 </div>
             </div>

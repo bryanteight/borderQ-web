@@ -39,3 +39,13 @@
  GET /stats/pacific-highway/Friday 200 in 1922ms (compile: 1142ms, render: 781ms)
  ✓ Compiled in 47ms
  ✓ Compiled in 33ms
+ GET / 200 in 637ms (compile: 128ms, render: 509ms)
+ ✓ Compiled in 121ms
+ ✓ Compiled in 41ms
+ ✓ Compiled in 63ms
+ GET / 200 in 1660ms (compile: 99ms, render: 1561ms)
+ GET / 200 in 628ms (compile: 17ms, render: 611ms)
+ ✓ Compiled in 72ms
+ ✓ Compiled in 29ms
+ ✓ Compiled in 326ms
+ ✓ Compiled in 45ms
