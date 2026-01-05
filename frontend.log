@@ -49,3 +49,301 @@
  ✓ Compiled in 29ms
  ✓ Compiled in 326ms
  ✓ Compiled in 45ms
+ GET / 200 in 659ms (compile: 167ms, render: 492ms)
+ GET /stats/pacific-highway/Sunday 200 in 471ms (compile: 113ms, render: 357ms)
+ GET /stats/pacific-highway/Sunday?direction=north 200 in 239ms (compile: 7ms, render: 233ms)
+ ✓ Compiled in 206ms
+ GET / 200 in 257ms (compile: 20ms, render: 237ms)
+ GET / 200 in 251ms (compile: 66ms, render: 185ms)
+ GET /stats/pacific-highway/Sunday?direction=north 200 in 705ms (compile: 134ms, render: 571ms)
+ GET / 200 in 837ms (compile: 21ms, render: 817ms)
+ GET / 200 in 445ms (compile: 22ms, render: 424ms)
+ GET / 200 in 403ms (compile: 22ms, render: 381ms)
+ GET / 200 in 223ms (compile: 16ms, render: 207ms)
+ GET /stats/peace-arch/sunday 200 in 519ms (compile: 30ms, render: 489ms)
+ GET /stats/peace-arch/sunday?direction=north 200 in 363ms (compile: 9ms, render: 354ms)
+ GET /stats/peace-arch/sunday?direction=north 200 in 302ms (compile: 35ms, render: 267ms)
+ GET /stats/peace-arch/sunday 200 in 331ms (compile: 58ms, render: 273ms)
+ GET /stats/peace-arch/sunday?direction=north 200 in 286ms (compile: 8ms, render: 277ms)
+ GET /stats/lynden/Sunday?direction=north 200 in 512ms (compile: 28ms, render: 484ms)
+ GET / 200 in 163ms (compile: 11ms, render: 152ms)
+ GET / 200 in 496ms (compile: 30ms, render: 467ms)
+ GET / 200 in 397ms (compile: 29ms, render: 368ms)
+ GET /?refresh=123 200 in 788ms (compile: 68ms, render: 720ms)
+ GET /stats/pacific-highway/Sunday?direction=north 200 in 418ms (compile: 96ms, render: 322ms)
+ GET / 200 in 475ms (compile: 13ms, render: 462ms)
+ GET / 200 in 564ms (compile: 67ms, render: 497ms)
+ GET / 200 in 585ms (compile: 68ms, render: 518ms)
+ GET / 200 in 534ms (compile: 37ms, render: 497ms)
+ GET /stats/pacific-highway/Sunday 200 in 423ms (compile: 8ms, render: 415ms)
+ GET / 200 in 129ms (compile: 8ms, render: 121ms)
+ GET /stats/pacific-highway/Sunday 200 in 59ms (compile: 7ms, render: 52ms)
+ GET /stats/pacific-highway/Sunday?direction=north 200 in 63ms (compile: 11ms, render: 52ms)
+ GET /stats/pacific-highway/Sunday 200 in 218ms (compile: 74ms, render: 144ms)
+ GET /stats/pacific-highway/Sunday?direction=north 200 in 39ms (compile: 6ms, render: 33ms)
+ GET /stats/pacific-highway/Sunday 200 in 151ms (compile: 52ms, render: 98ms)
+ GET /stats/pacific-highway/Sunday?direction=north 200 in 48ms (compile: 10ms, render: 38ms)
+ GET /stats/pacific-highway/Sunday 200 in 150ms (compile: 78ms, render: 71ms)
+ GET /stats/pacific-highway/Sunday?direction=north 200 in 73ms (compile: 12ms, render: 61ms)
+ GET /stats/pacific-highway/Sunday 200 in 61ms (compile: 11ms, render: 50ms)
+ GET /stats/pacific-highway/Sunday?direction=north 200 in 65ms (compile: 21ms, render: 44ms)
+ GET /stats/pacific-highway/Sunday 200 in 63ms (compile: 13ms, render: 51ms)
+ GET /stats/pacific-highway/Sunday?direction=north 200 in 62ms (compile: 7ms, render: 55ms)
+ GET /stats/pacific-highway/Sunday 200 in 33ms (compile: 7ms, render: 25ms)
+ GET /stats/pacific-highway/Sunday?direction=north 200 in 265ms (compile: 60ms, render: 205ms)
+ GET /stats/pacific-highway/Sunday?direction=north 200 in 103ms (compile: 43ms, render: 60ms)
+ ✓ Compiled in 555ms
+ GET / 200 in 1266ms (compile: 656ms, render: 610ms)
+ GET / 200 in 179ms (compile: 40ms, render: 139ms)
+ GET /stats/vancouver-to-seattle/friday 200 in 787ms (compile: 124ms, render: 664ms)
+ GET /stats/lynden/friday 200 in 257ms (compile: 98ms, render: 158ms)
+ GET /stats/pacific-highway/Sunday?direction=north 200 in 278ms (compile: 17ms, render: 261ms)
+ GET /stats/lynden/friday?direction=north 200 in 150ms (compile: 8ms, render: 142ms)
+ GET /stats/lynden/friday 200 in 275ms (compile: 8ms, render: 267ms)
+ GET /stats/lynden/friday?direction=north 200 in 63ms (compile: 29ms, render: 34ms)
+ GET /stats/vancouver-to-seattle/friday 200 in 355ms (compile: 10ms, render: 345ms)
+ GET /stats/pacific-highway/friday 200 in 194ms (compile: 15ms, render: 179ms)
+ GET /stats/pacific-highway/friday?direction=north 200 in 141ms (compile: 8ms, render: 133ms)
+ GET /stats/vancouver-to-seattle/friday 200 in 132ms (compile: 8ms, render: 124ms)
+ GET / 200 in 148ms (compile: 9ms, render: 139ms)
+ GET /stats/peace-arch/Sunday 200 in 250ms (compile: 14ms, render: 235ms)
+ GET /stats/peace-arch/Sunday?direction=north 200 in 158ms (compile: 10ms, render: 148ms)
+ GET /stats/peace-arch/Sunday?direction=north 200 in 43ms (compile: 6ms, render: 37ms)
+ GET /stats/peace-arch/Sunday 200 in 51ms (compile: 7ms, render: 43ms)
+ GET /stats/peace-arch/Sunday?direction=north 200 in 42ms (compile: 6ms, render: 36ms)
+ GET / 200 in 332ms (compile: 8ms, render: 324ms)
+ GET /stats/vancouver-to-seattle/sunday 200 in 406ms (compile: 7ms, render: 398ms)
+ GET /stats/pacific-highway/sunday 200 in 799ms (compile: 14ms, render: 785ms)
+ GET /stats/pacific-highway/sunday?direction=north 200 in 262ms (compile: 22ms, render: 240ms)
+ GET /stats/pacific-highway/sunday 200 in 80ms (compile: 10ms, render: 70ms)
+ GET /stats/pacific-highway/Sunday?direction=north 200 in 331ms (compile: 60ms, render: 270ms)
+ GET /stats/pacific-highway/sunday?direction=north 200 in 128ms (compile: 53ms, render: 75ms)
+ GET /stats/pacific-highway/sunday 200 in 144ms (compile: 79ms, render: 66ms)
+ GET /stats/pacific-highway/sunday?direction=north 200 in 63ms (compile: 9ms, render: 54ms)
+ GET /stats/pacific-highway/sunday 200 in 111ms (compile: 33ms, render: 78ms)
+ GET /stats/pacific-highway/sunday?direction=north 200 in 176ms (compile: 18ms, render: 158ms)
+ GET /stats/pacific-highway/sunday 200 in 38ms (compile: 6ms, render: 32ms)
+ GET /stats/pacific-highway/sunday?direction=north 200 in 55ms (compile: 13ms, render: 42ms)
+ GET /stats/pacific-highway/sunday?direction=north 200 in 709ms (compile: 112ms, render: 596ms)
+ GET /stats/pacific-highway/sunday 200 in 31ms (compile: 6ms, render: 25ms)
+ GET /stats/pacific-highway/sunday?direction=north 200 in 65ms (compile: 15ms, render: 50ms)
+ GET /stats/pacific-highway/sunday?direction=north 200 in 199ms (compile: 13ms, render: 186ms)
+ GET / 200 in 331ms (compile: 11ms, render: 320ms)
+ GET /stats/vancouver-to-seattle/sunday 200 in 179ms (compile: 30ms, render: 150ms)
+ GET /stats/peace-arch/sunday 200 in 88ms (compile: 13ms, render: 75ms)
+ GET /stats/peace-arch/sunday?direction=north 200 in 62ms (compile: 13ms, render: 49ms)
+ GET /stats/pacific-highway/sunday?direction=north 200 in 300ms (compile: 66ms, render: 233ms)
+ GET /stats/peace-arch/sunday?direction=north 200 in 179ms (compile: 42ms, render: 137ms)
+ GET /stats/peace-arch/sunday 200 in 65ms (compile: 14ms, render: 51ms)
+ GET /stats/peace-arch/sunday?direction=north 200 in 73ms (compile: 31ms, render: 42ms)
+ GET /stats/peace-arch/sunday?direction=north 200 in 345ms (compile: 63ms, render: 282ms)
+ GET / 200 in 619ms (compile: 90ms, render: 530ms)
+ GET / 200 in 611ms (compile: 65ms, render: 546ms)
+ GET / 200 in 1057ms (compile: 93ms, render: 963ms)
+ GET / 200 in 462ms (compile: 75ms, render: 387ms)
+ GET / 200 in 630ms (compile: 69ms, render: 561ms)
+ GET / 200 in 1044ms (compile: 82ms, render: 962ms)
+ ✓ Compiled in 345ms
+ ✓ Compiled in 152ms
+ ✓ Compiled in 126ms
+ ✓ Compiled in 260ms
+ GET / 200 in 806ms (compile: 266ms, render: 540ms)
+ GET / 200 in 552ms (compile: 47ms, render: 505ms)
+ GET / 200 in 552ms (compile: 114ms, render: 438ms)
+ GET / 200 in 550ms (compile: 36ms, render: 515ms)
+ GET / 200 in 532ms (compile: 43ms, render: 489ms)
+ GET /stats/pacific-highway/Sunday?direction=north 200 in 1100ms (compile: 15ms, render: 1085ms)
+ GET /stats/pacific-highway/Sunday?direction=north 200 in 1104ms (compile: 85ms, render: 1019ms)
+ GET /stats/pacific-highway/sunday?direction=north 200 in 1058ms (compile: 92ms, render: 967ms)
+ GET /stats/peace-arch/sunday?direction=north 200 in 949ms (compile: 15ms, render: 934ms)
+ GET /stats/peace-arch/Sunday 200 in 130ms (compile: 42ms, render: 89ms)
+ GET / 200 in 122ms (compile: 6ms, render: 116ms)
+ ✓ Compiled in 135ms
+ GET / 200 in 909ms (compile: 139ms, render: 771ms)
+ ✓ Compiled in 135ms
+ ✓ Compiled in 142ms
+ ✓ Compiled in 134ms
+ ✓ Compiled in 156ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ⨯ Error: useDirection must be used within a DirectionProvider
+    at useDirection (context/DirectionContext.tsx:40:15)
+    at StatusCardCarousel (components/StatusCardCarousel.tsx:11:39)
+  38 |     const context = useContext(DirectionContext);
+  39 |     if (context === undefined) {
+> 40 |         throw new Error('useDirection must be used within a DirectionProvider');
+     |               ^
+  41 |     }
+  42 |     return context;
+  43 | } {
+  digest: '1641004742'
+}
+ GET / 200 in 2.4s (compile: 437ms, render: 1952ms)
+ GET / 200 in 1364ms (compile: 30ms, render: 1334ms)
+ GET /stats/pacific-highway/sunday?direction=north 200 in 2.4s (compile: 289ms, render: 2.1s)
+ GET /stats/pacific-highway/Sunday?direction=north 200 in 2.4s (compile: 241ms, render: 2.2s)
+ GET / 500 in 3.0s (compile: 561ms, render: 2.4s)
+ GET /stats/pacific-highway/Sunday?direction=north 200 in 1710ms (compile: 83ms, render: 1627ms)
+ GET /stats/peace-arch/sunday?direction=north 200 in 2.3s (compile: 388ms, render: 1905ms)
+ GET / 200 in 1649ms (compile: 27ms, render: 1621ms)
+ GET / 200 in 1073ms (compile: 23ms, render: 1049ms)
+ GET / 200 in 466ms (compile: 26ms, render: 440ms)
+ GET / 200 in 827ms (compile: 33ms, render: 794ms)
+ GET / 200 in 646ms (compile: 44ms, render: 602ms)
+ GET / 200 in 603ms (compile: 37ms, render: 566ms)
+ GET / 200 in 565ms (compile: 42ms, render: 523ms)
+ GET / 200 in 277ms (compile: 34ms, render: 243ms)
+ GET / 200 in 298ms (compile: 41ms, render: 257ms)
+ GET / 200 in 360ms (compile: 30ms, render: 330ms)
+ GET / 200 in 752ms (compile: 53ms, render: 699ms)
+ GET / 200 in 502ms (compile: 41ms, render: 461ms)
+ GET / 200 in 778ms (compile: 83ms, render: 695ms)
+ GET / 200 in 432ms (compile: 34ms, render: 398ms)
+ GET / 200 in 551ms (compile: 95ms, render: 455ms)
+ GET / 200 in 492ms (compile: 72ms, render: 420ms)
+ GET / 200 in 535ms (compile: 45ms, render: 490ms)
+ GET / 200 in 498ms (compile: 51ms, render: 447ms)
+ GET / 200 in 613ms (compile: 58ms, render: 555ms)
+ GET /stats/pacific-highway/Sunday 200 in 259ms (compile: 96ms, render: 163ms)
+ GET / 200 in 498ms (compile: 97ms, render: 401ms)
+ GET / 200 in 1295ms (compile: 75ms, render: 1220ms)
+ GET / 200 in 726ms (compile: 57ms, render: 669ms)
+ ✓ Compiled in 1661ms
+ GET / 200 in 957ms (compile: 271ms, render: 686ms)
+ GET / 200 in 700ms (compile: 101ms, render: 599ms)
+ ✓ Compiled in 226ms
+ GET / 200 in 1017ms (compile: 253ms, render: 764ms)
+ ✓ Compiled in 347ms
+ ⨯ ./components/ForecastTeaser.tsx:57:11
+Ecmascript file had an error
+[0m [90m 55 |[39m     [36mconst[39m s [33m=[39m styles[theme][33m;[39m
+ [90m 56 |[39m
+[31m[1m>[22m[39m[90m 57 |[39m     [36mconst[39m s [33m=[39m styles[theme][33m;[39m
+ [90m    |[39m           [31m[1m^[22m[39m
+ [90m 58 |[39m
+ [90m 59 |[39m     [90m// Static Label as requested by user[39m
+ [90m 60 |[39m     [36mconst[39m labelText [33m=[39m [32m"Next Hour Forecast"[39m[33m;[39m[0m
+
+the name `s` is defined multiple times
+
+Import traces:
+  Client Component Browser:
+    ./components/ForecastTeaser.tsx [Client Component Browser]
+    ./components/StatusCard.tsx [Client Component Browser]
+    ./components/StatusCardCarousel.tsx [Client Component Browser]
+    ./components/StatusCardCarousel.tsx [Server Component]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/ForecastTeaser.tsx [Client Component SSR]
+    ./components/StatusCard.tsx [Client Component SSR]
+    ./components/StatusCardCarousel.tsx [Client Component SSR]
+    ./components/StatusCardCarousel.tsx [Server Component]
+    ./app/page.tsx [Server Component]
+
+
+ ✓ Compiled in 27ms
+ ⨯ ./components/ForecastTeaser.tsx:57:11
+Ecmascript file had an error
+[0m [90m 55 |[39m     [36mconst[39m s [33m=[39m styles[theme][33m;[39m
+ [90m 56 |[39m
+[31m[1m>[22m[39m[90m 57 |[39m     [36mconst[39m s [33m=[39m styles[theme][33m;[39m
+ [90m    |[39m           [31m[1m^[22m[39m
+ [90m 58 |[39m
+ [90m 59 |[39m     [90m// Static Label as requested by user[39m
+ [90m 60 |[39m     [36mconst[39m labelText [33m=[39m [32m"Next Hour Forecast"[39m[33m;[39m[0m
+
+the name `s` is defined multiple times
+
+Import traces:
+  Client Component Browser:
+    ./components/ForecastTeaser.tsx [Client Component Browser]
+    ./components/StatusCard.tsx [Client Component Browser]
+    ./components/StatusCardCarousel.tsx [Client Component Browser]
+    ./components/StatusCardCarousel.tsx [Server Component]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/ForecastTeaser.tsx [Client Component SSR]
+    ./components/StatusCard.tsx [Client Component SSR]
+    ./components/StatusCardCarousel.tsx [Client Component SSR]
+    ./components/StatusCardCarousel.tsx [Server Component]
+    ./app/page.tsx [Server Component]
+
+
+ GET /stats/pacific-highway/Sunday?direction=north 200 in 2.4s (compile: 248ms, render: 2.2s)
+ ○ Compiling /_error ...
+ GET / 500 in 7.1s (compile: 6.7s, render: 437ms)
+ GET / 500 in 7.3s (compile: 7.1s, render: 219ms)
+ ⨯ ./components/ForecastTeaser.tsx:57:11
+Ecmascript file had an error
+[0m [90m 55 |[39m     [36mconst[39m s [33m=[39m styles[theme][33m;[39m
+ [90m 56 |[39m
+[31m[1m>[22m[39m[90m 57 |[39m     [36mconst[39m s [33m=[39m styles[theme][33m;[39m
+ [90m    |[39m           [31m[1m^[22m[39m
+ [90m 58 |[39m
+ [90m 59 |[39m     [90m// Static Label as requested by user[39m
+ [90m 60 |[39m     [36mconst[39m labelText [33m=[39m [32m"Next Hour Forecast"[39m[33m;[39m[0m
+
+the name `s` is defined multiple times
+
+Import traces:
+  Client Component Browser:
+    ./components/ForecastTeaser.tsx [Client Component Browser]
+    ./components/StatusCard.tsx [Client Component Browser]
+    ./components/StatusCardCarousel.tsx [Client Component Browser]
+    ./components/StatusCardCarousel.tsx [Server Component]
+    ./app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/ForecastTeaser.tsx [Client Component SSR]
+    ./components/StatusCard.tsx [Client Component SSR]
+    ./components/StatusCardCarousel.tsx [Client Component SSR]
+    ./components/StatusCardCarousel.tsx [Server Component]
+    ./app/page.tsx [Server Component]
+
+
+ GET / 500 in 577ms (compile: 530ms, render: 46ms)
+ ✓ Compiled in 2.3s
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ GET / 200 in 5.0s (compile: 388ms, render: 4.6s)
+ GET / 200 in 2.6s (compile: 441ms, render: 2.1s)
+ GET /stats/pacific-highway/Sunday?direction=north 200 in 2.5s (compile: 723ms, render: 1770ms)
+ GET / 200 in 1528ms (compile: 302ms, render: 1225ms)
+ GET /stats/pacific-highway/Sunday?direction=north 200 in 1512ms (compile: 161ms, render: 1352ms)
+ GET / 200 in 8.1s (compile: 919ms, render: 7.2s)
+ GET / 200 in 6.1s (compile: 897ms, render: 5.2s)
+ GET /stats/pacific-highway/sunday?direction=north 200 in 2.9s (compile: 464ms, render: 2.4s)
+ GET /stats/pacific-highway/Sunday 200 in 3.5s (compile: 574ms, render: 2.9s)
+ GET /stats/peace-arch/sunday?direction=north 200 in 2.6s (compile: 177ms, render: 2.4s)
+ GET / 200 in 765ms (compile: 68ms, render: 697ms)
+ GET / 200 in 1896ms (compile: 149ms, render: 1747ms)
+ GET / 200 in 619ms (compile: 68ms, render: 551ms)
+ GET / 200 in 785ms (compile: 19ms, render: 766ms)
+ GET / 200 in 848ms (compile: 15ms, render: 833ms)
+ GET / 200 in 809ms (compile: 25ms, render: 784ms)
+ GET / 200 in 673ms (compile: 22ms, render: 651ms)
+ ✓ Compiled in 237ms
+ ✓ Compiled in 57ms
+ GET / 200 in 1313ms (compile: 234ms, render: 1080ms)
+ ✓ Compiled in 216ms
+ GET / 200 in 961ms (compile: 229ms, render: 732ms)
+ ✓ Compiled in 353ms
+ GET / 200 in 1100ms (compile: 289ms, render: 810ms)
+ GET / 200 in 922ms (compile: 102ms, render: 820ms)
+ GET / 200 in 1846ms (compile: 309ms, render: 1537ms)
+ ✓ Compiled in 396ms
+ GET / 200 in 1350ms (compile: 366ms, render: 984ms)
+ GET / 200 in 2.1s (compile: 233ms, render: 1846ms)
+ GET /stats/pacific-highway/Sunday 200 in 351ms (compile: 95ms, render: 255ms)
+ GET / 200 in 484ms (compile: 54ms, render: 430ms)
+ ✓ Compiled in 407ms
+ GET / 200 in 1358ms (compile: 243ms, render: 1115ms)
+ GET / 200 in 398ms (compile: 82ms, render: 317ms)
+ ✓ Compiled in 154ms
+ GET / 200 in 1850ms (compile: 747ms, render: 1102ms)
+ GET /stats/pacific-highway/Sunday 200 in 108ms (compile: 41ms, render: 67ms)
+ ✓ Compiled in 91ms
+ GET / 200 in 959ms (compile: 174ms, render: 784ms)

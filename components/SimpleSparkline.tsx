@@ -134,7 +134,7 @@ export function SimpleSparkline({
                             fill={theme.stroke}
                             className="select-none uppercase tracking-tighter opacity-40"
                         >
-                            {i === 0 ? "Now" : i === 1 ? "+1h" : "+3h"}
+                            {labels ? labels[i] : (i === 0 ? "Now" : i === 1 ? "+1h" : "+3h")}
                         </text>
                     )}
                 </g>

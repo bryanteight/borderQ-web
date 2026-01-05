@@ -54,7 +54,9 @@ async function getStats(portId: string, day: string): Promise<StatsResponse | nu
     try {
         const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
         const cleanUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
-        const res = await fetch(`${cleanUrl}/api/v1/stats/${portId}/${day}`, { cache: 'no-store' });
+        const res = await fetch(`${cleanUrl}/api/v1/stats/${portId}/${day}`, {
+            next: { revalidate: 300 }
+        });
         if (!res.ok) {
             return {
                 message: `Connection refused. Is backend running? (HTTP ${res.status})`,
