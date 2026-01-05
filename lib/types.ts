@@ -12,6 +12,7 @@ export interface BorderEvent {
   status: "Fastest" | "Moderate" | "Heavy Traffic" | "Closed" | "Report";
   weather_condition: string;
   temperature: number; // In Fahrenheit
+  slug?: string; // New: SEO-friendly slug (e.g., "peace-arch")
   trend?: TrendData;
   ai_summary: string;
   prediction?: string;

@@ -6,9 +6,9 @@ import { clsx } from "clsx";
 import { PORT_METADATA } from "@/lib/port-metadata";
 
 const PORT_NAMES: Record<string, string> = {
-    "peace-arch": "Peace Arch",
+    "peace-arch": "Peace Arch / Douglas",
     "pacific-highway": "Pacific Highway",
-    "lynden": "Lynden",
+    "lynden": "Lynden / Aldergrove",
 };
 
 interface StatsResponse {
@@ -255,20 +255,56 @@ export default async function StatsPage({ params, searchParams }: { params: Prom
             <div className="max-w-md mx-auto px-6 space-y-6">
                 {/* Title Group */}
                 <div className="space-y-2">
-                    <span className="text-xs font-bold text-indigo-600 uppercase tracking-widest bg-indigo-50 px-3 py-1 rounded-full">
-                        {dayName} Analysis
-                    </span>
+                    {/* Badge Removed */}
                     <h1 className="text-3xl font-[800] tracking-tight text-slate-900 leading-tight">
-                        Border Wait Time on {dayName}
+                        {portName} Border Wait Time on {dayName}
                     </h1>
-                    {PORT_METADATA[port] && (
-                        <p className="text-sm text-slate-500 leading-relaxed font-medium max-w-md">
-                            {PORT_METADATA[port].summary}
-                        </p>
-                    )}
                 </div>
 
                 <DirectionToggle />
+
+                {/* 2. Hourly Trend Chart - Only 6 key hours (Moved to Top) */}
+                <div className="bg-white rounded-[32px] p-8 shadow-[0_2px_20px_rgb(0,0,0,0.04)] ring-1 ring-slate-100">
+                    <h3 className="text-base font-[800] text-slate-900 mb-6">Typical Hourly Trend on {dayName}</h3>
+
+                    <div className="flex items-end h-40 mt-8 mb-2 gap-2">
+                        {chartData.map((h, i) => {
+                            // Calculate bar height in pixels (max height = 120px)
+                            const maxHeight = 120;
+                            // Ensure tiny bars have at least 4px so they are visible
+                            const maxVal = Math.max(...chartData.map(d => d.wait), 1);
+                            const barHeight = h.wait > 0 ? Math.max(4, (h.wait / maxVal) * maxHeight) : 2;
+
+                            return (
+                                <div key={h.hour} className="flex flex-col flex-1 h-full justify-end group relative">
+                                    {/* Mins Label: Simple, Always Visible, Above Bar */}
+                                    <div className="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-[800] text-slate-500 mb-1 z-10 w-full text-center">
+                                        {h.wait}m
+                                    </div>
+
+                                    {/* Vertical Bar */}
+                                    <div
+                                        className="w-full mx-0.5 bg-indigo-100 group-hover:bg-indigo-200 transition-all relative rounded-t-xl overflow-hidden"
+                                        style={{
+                                            height: `${barHeight}px`,
+                                        }}
+                                    >
+                                        {/* Soft Gradient Overlay */}
+                                        <div className="absolute inset-x-0 top-0 h-full bg-gradient-to-b from-indigo-300/50 to-transparent" />
+
+                                        {/* Top Cap Line */}
+                                        <div className="absolute top-0 left-0 right-0 h-1.5 bg-indigo-400 group-hover:bg-indigo-500 rounded-full mx-1 mt-1 opacity-50" />
+                                    </div>
+
+                                    {/* Hour label */}
+                                    <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] font-bold text-slate-400">
+                                        {getLabel(h.hour)}
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
 
                 {/* 0. Daily Insight (Narrative) */}
                 {(data.narrative || realtime.smart_insight) && (
@@ -406,48 +442,7 @@ export default async function StatsPage({ params, searchParams }: { params: Prom
                     <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-slate-50 to-transparent rounded-bl-[100px] pointer-events-none opacity-40 group-hover/stats:bg-indigo-50/30 transition-all" />
                 </div>
 
-                {/* 2. Hourly Trend Chart - Only 6 key hours */}
-                <div className="bg-white rounded-[32px] p-8 shadow-[0_2px_20px_rgb(0,0,0,0.04)] ring-1 ring-slate-100">
-                    <h3 className="text-base font-[800] text-slate-900 mb-6">Typical Hourly Trend on {dayName}</h3>
 
-                    <div className="flex items-end h-40 mt-8 mb-2 gap-2">
-                        {chartData.map((h, i) => {
-                            // Calculate bar height in pixels (max height = 120px)
-                            const maxHeight = 120;
-                            // Ensure tiny bars have at least 4px so they are visible
-                            const maxVal = Math.max(...chartData.map(d => d.wait), 1);
-                            const barHeight = h.wait > 0 ? Math.max(4, (h.wait / maxVal) * maxHeight) : 2;
-
-                            return (
-                                <div key={h.hour} className="flex flex-col flex-1 h-full justify-end group relative">
-                                    {/* Mins Label: Simple, Always Visible, Above Bar */}
-                                    <div className="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-[800] text-slate-500 mb-1 z-10 w-full text-center">
-                                        {h.wait}m
-                                    </div>
-
-                                    {/* Vertical Bar */}
-                                    <div
-                                        className="w-full mx-0.5 bg-indigo-100 group-hover:bg-indigo-200 transition-all relative rounded-t-xl overflow-hidden"
-                                        style={{
-                                            height: `${barHeight}px`,
-                                        }}
-                                    >
-                                        {/* Soft Gradient Overlay */}
-                                        <div className="absolute inset-x-0 top-0 h-full bg-gradient-to-b from-indigo-300/50 to-transparent" />
-
-                                        {/* Top Cap Line */}
-                                        <div className="absolute top-0 left-0 right-0 h-1.5 bg-indigo-400 group-hover:bg-indigo-500 rounded-full mx-1 mt-1 opacity-50" />
-                                    </div>
-
-                                    {/* Hour label */}
-                                    <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] font-bold text-slate-400">
-                                        {getLabel(h.hour)}
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
-                </div>
 
                 {/* 3. Grid Widgets */}
                 <div className="grid grid-cols-2 gap-4">

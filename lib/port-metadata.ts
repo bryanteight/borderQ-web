@@ -10,7 +10,7 @@ export interface PortMetadata {
 export const PORT_METADATA: Record<string, PortMetadata> = {
     "peace-arch": {
         id: "peace-arch",
-        name: "Peace Arch",
+        name: "Peace Arch / Douglas",
         summary: "The Peace Arch border crossing is the primary gateway for travelers moving between Seattle and Vancouver. Located on I-5 (USA) and Highway 99 (Canada), it is the most popular choice for families and tourists visiting the Pacific Northwest. Plan your Seattle to Vancouver border crossing with our live AI wait time predictions.",
         uniqueness: "Peace Arch is unique for its dedicated park spanning the international boundary. It is a 24/7 port of entry and offers both NEXUS and standard passenger lanes. Note: Commercial trucks are not permitted at this crossing and must use Pacific Highway instead.",
         typicalWait: "Typical wait times at Peace Arch range from 15 to 45 minutes on weekdays, but can surge to over 90 minutes during summer weekends and holidays. The best time to cross is usually before 8:00 AM or after 8:00 PM.",
@@ -48,7 +48,7 @@ export const PORT_METADATA: Record<string, PortMetadata> = {
     },
     "lynden": {
         id: "lynden",
-        name: "Lynden",
+        name: "Lynden / Aldergrove",
         summary: "The Lynden (Alder Grove) crossing provides a more rural and often quieter alternative for travelers heading toward the Fraser Valley or eastern Vancouver suburbs. It's an excellent choice for avoiding the congestion of the main I-5 corridors.",
         uniqueness: "Lynden connects WA-539 to BC-13. It has specific operating hours (8:00 AM to midnight) and is perfect for travelers who prefer scenic routes over highway congestion.",
         typicalWait: "Wait times are generally much shorter here, often under 10 minutes. However, because it has fewer lanes, any surge in traffic can cause quick delays.",

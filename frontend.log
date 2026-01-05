@@ -347,3 +347,21 @@ Import traces:
  GET /stats/pacific-highway/Sunday 200 in 108ms (compile: 41ms, render: 67ms)
  ✓ Compiled in 91ms
  GET / 200 in 959ms (compile: 174ms, render: 784ms)
+ GET / 200 in 469ms (compile: 32ms, render: 436ms)
+ GET /stats/pacific-highway/Sunday 200 in 101ms (compile: 38ms, render: 63ms)
+ ✓ Compiled in 74ms
+ GET / 200 in 327ms (compile: 15ms, render: 312ms)
+ GET /stats/pacific-highway/Sunday?direction=north 200 in 125ms (compile: 6ms, render: 120ms)
+ GET / 200 in 104ms (compile: 6ms, render: 98ms)
+ GET / 200 in 105ms (compile: 3ms, render: 101ms)
+ GET /stats/pacific-highway/Sunday 200 in 451ms (compile: 198ms, render: 253ms)
+ ✓ Compiled in 115ms
+ GET / 200 in 417ms (compile: 8ms, render: 409ms)
+ GET / 200 in 418ms (compile: 40ms, render: 377ms)
+ GET / 200 in 434ms (compile: 2ms, render: 431ms)
+ GET /stats/pacific-highway/Sunday?direction=north 200 in 452ms (compile: 157ms, render: 295ms)
+ GET / 200 in 260ms (compile: 14ms, render: 246ms)
+ GET / 200 in 532ms (compile: 34ms, render: 498ms)
+ GET /stats/pacific-highway/Sunday 200 in 98ms (compile: 32ms, render: 66ms)
+ GET /stats/vancouver-to-seattle/Sunday 200 in 630ms (compile: 54ms, render: 577ms)
+ GET / 200 in 319ms (compile: 8ms, render: 310ms)

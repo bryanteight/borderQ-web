@@ -84,7 +84,7 @@ export function SiteFooter() {
                 {/* Version & Copyright */}
                 <div className="flex flex-col items-center gap-1">
                     <p className="text-[10px] text-slate-300 font-mono opacity-40 hover:opacity-100 transition-opacity cursor-default select-none">
-                        v0.4.7
+                        v0.4.8
                     </p>
                     <p className="text-[10px] text-slate-300">
                         © {new Date().getFullYear()} BorderQ

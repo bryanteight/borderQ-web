@@ -19,8 +19,15 @@ export function StatusCard({ event }: { event: BorderEvent }) {
   const cardStyle = "bg-white rounded-[32px] shadow-[0_2px_20px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 border border-slate-200 hover:border-indigo-100 cursor-pointer group";
 
   // Navigation details
-  const baseSlug = event.crossing_name.replace(/\s*\(Northbound\)/i, '').replace(/\s*\(Southbound\)/i, '').toLowerCase().replace(/\s+/g, '-');
-  const isNorthbound = event.crossing_name.toLowerCase().includes('northbound');
+  // [Refactor] Use backend provided slug, fallback to ID map only for legacy cached data
+  const slugMap: Record<string, string> = {
+    "02300402": "peace-arch", "NB_02300402": "peace-arch",
+    "02300401": "pacific-highway", "NB_02300401": "pacific-highway",
+    "02302301": "lynden", "NB_02302301": "lynden",
+  };
+
+  const baseSlug = event.slug || slugMap[event.id] || "unknown-port";
+  const isNorthbound = event.id.startsWith("NB_");
 
   const dayName = new Date().toLocaleDateString('en-US', { weekday: 'long' });
   const href = `/stats/${baseSlug}/${dayName}${isNorthbound ? '?direction=north' : ''}`;
@@ -31,12 +38,20 @@ export function StatusCard({ event }: { event: BorderEvent }) {
         {/* Header Section: Title Left, Badges Right */}
         <div className="flex justify-between items-start gap-4 mb-6">
           <div className="flex flex-col gap-1">
-            <h3 className={clsx(
-              "font-[900] text-[#0f172a] tracking-tight group-hover:text-indigo-600 transition-colors leading-tight flex items-end min-h-[3.5rem] md:min-h-[4rem]",
-              event.crossing_name.length > 12 ? "text-xl md:text-2xl" : "text-2xl md:text-3xl"
-            )}>
-              {event.crossing_name.replace(/\s*\(Northbound\)/i, '').replace(/\s*\(Southbound\)/i, '')}
-            </h3>
+            {/* Dynamic Font Size based on Display Name Length to prevent wrapping */}
+            {(() => {
+              const displayName = event.crossing_name.replace(/\s*\(Northbound\)/i, '').replace(/\s*\(Southbound\)/i, '');
+              const isLongName = displayName.length > 16; // e.g. "Peace Arch / Douglas" is 20 chars
+
+              return (
+                <h3 className={clsx(
+                  "font-[900] text-[#0f172a] tracking-tight group-hover:text-indigo-600 transition-colors leading-tight flex items-end min-h-[3.5rem] md:min-h-[4rem]",
+                  isLongName ? "text-lg md:text-2xl" : "text-2xl md:text-3xl"
+                )}>
+                  {displayName}
+                </h3>
+              );
+            })()}
 
             {!isClosed && (
               <span className="text-[#94a3b8] font-black text-[10px] uppercase tracking-[0.2em] whitespace-nowrap mt-1">
