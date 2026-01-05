@@ -60,13 +60,10 @@ export function ForecastTeaser({ currentWait, forecastPoints }: ForecastTeaserPr
     return (
         <div className={`relative w-full rounded-2xl border ${s.border} ${s.bg} shadow-sm overflow-hidden transition-all hover:shadow-lg hover:-translate-y-0.5 cursor-pointer`}>
             {/* Content Layer */}
-            <div className="relative z-10 p-4 pb-0 flex justify-between items-center">
+            <div className="relative z-10 p-4 pb-2 flex justify-between items-center">
                 {/* Left: Label */}
                 <div className="flex flex-col">
-                    <span className={`text-[10px] font-black uppercase tracking-[0.2em] ${s.sub} opacity-70`}>
-                        Forecast
-                    </span>
-                    <span className={`text-xs font-bold ${s.text} mt-0.5`}>
+                    <span className={`text-xs font-bold ${s.text}`}>
                         {labelText}
                     </span>
                 </div>
@@ -80,7 +77,7 @@ export function ForecastTeaser({ currentWait, forecastPoints }: ForecastTeaserPr
             </div>
 
             {/* Sparkline Layer (Bottom) */}
-            <div className="relative h-14 w-full -mt-2 opacity-90 px-0">
+            <div className="relative h-14 w-full opacity-90 px-0">
                 <SimpleSparkline
                     points={forecastPoints}
                     minimal={true}
