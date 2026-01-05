@@ -1,3 +1,30 @@
+# Release Notes - v0.4.8 (Detail Page Refinement)
+
+**Date:** January 5, 2026
+**Versions:** Frontend v0.4.8 | Backend v0.4.8
+
+This release brings significant improvements to the detail page user experience, solidifies the backend data pipeline, and refines the visual presentation of wait time forecasts.
+
+## 🚀 Key Features
+
+### 🖥️ Frontend (Web)
+*   **Detail Page UX Overhaul**:
+    *   **Dual Port Names**: Page titles now correctly reflect both US and Canadian designations (e.g., "Peace Arch / Douglas").
+    *   **Prioritized Trends**: The "Typical Hourly Trend" chart has been promoted to the top of the page for instant visibility.
+    *   **Cleaner Layout**: Removed generic analysis badges and static summaries to reduce clutter.
+*   **Absolute Time Labels**: Forecast cards (sparklines) now display real-world timestamps (e.g., "10PM") instead of relative offsets.
+*   **Northbound Clean State**: Explicitly hid misleading forecast sections for Northbound ports.
+
+### ⚙️ Backend (API & Data)
+*   **Robust Routing (Slug Refactor)**:
+    *   Moved slug generation logic from the frontend to the backend for SEO-friendly URLs.
+*   **Data Integrity**:
+    *   **Chart Synchronization**: Fixed visual bugs in forecast charts.
+    *   **Enhanced Deduplication**: Better detection of metadata changes.
+*   **Stability**: Patched cronjob failures for empty batches.
+
+---
+
 # Release Notes - v0.4.0 (Smart Forecast)
 
 ## 🌟 Highlights
