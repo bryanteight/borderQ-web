@@ -21,10 +21,14 @@ export function InstallPrompt() {
         console.log("InstallPrompt: Event listener attached");
 
         // 2. Setup Auto-Show Timer (Only if NOT standalone)
-        if (isStandalone) return;
+        // 2. Check Permanent Dismissal (Installed)
+        const isPermanentlyDismissed = localStorage.getItem('pwa_installed') === 'true';
+
+        // 3. Setup Auto-Show Timer (Only if NOT standalone AND NOT permanently dismissed)
+        if (isStandalone || isPermanentlyDismissed) return;
 
         const lastDismissal = localStorage.getItem('installPromptDismissed');
-        const isDismissedRecently = lastDismissal && Date.now() - parseInt(lastDismissal) < 7 * 24 * 60 * 60 * 1000;
+        const isDismissedRecently = lastDismissal && Date.now() - parseInt(lastDismissal) < 30 * 24 * 60 * 60 * 1000;
 
         let timer: NodeJS.Timeout;
 
@@ -44,9 +48,18 @@ export function InstallPrompt() {
             setIsIOS(/iphone|ipad|ipod/.test(userAgent));
         }
 
+        // 4. Listen for successful installation to permanently silence
+        const handleAppInstalled = () => {
+            console.log("InstallPrompt: App allowed/installed");
+            localStorage.setItem('pwa_installed', 'true');
+            setShowPrompt(false);
+        };
+        window.addEventListener('appinstalled', handleAppInstalled);
+
         return () => {
             if (timer) clearTimeout(timer);
             window.removeEventListener('borderq-install-intent', handleManualTrigger);
+            window.removeEventListener('appinstalled', handleAppInstalled);
         };
     }, []);
 

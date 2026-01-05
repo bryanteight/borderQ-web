@@ -4,6 +4,8 @@ import { TrendingDown, TrendingUp, Minus, Activity, Car, Zap, ChevronRight } fro
 import { clsx } from "clsx";
 import { ForecastTeaser } from "./ForecastTeaser";
 
+import { getSlugFromEvent } from "@/lib/utils";
+
 export function StatusCard({ event }: { event: BorderEvent }) {
   const isClosed = event.status === "Closed";
 
@@ -19,14 +21,7 @@ export function StatusCard({ event }: { event: BorderEvent }) {
   const cardStyle = "bg-white rounded-[32px] shadow-[0_2px_20px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 border border-slate-200 hover:border-indigo-100 cursor-pointer group";
 
   // Navigation details
-  // [Refactor] Use backend provided slug, fallback to ID map only for legacy cached data
-  const slugMap: Record<string, string> = {
-    "02300402": "peace-arch", "NB_02300402": "peace-arch",
-    "02300401": "pacific-highway", "NB_02300401": "pacific-highway",
-    "02302301": "lynden", "NB_02302301": "lynden",
-  };
-
-  const baseSlug = event.slug || slugMap[event.id] || "unknown-port";
+  const baseSlug = getSlugFromEvent(event);
   const isNorthbound = event.id.startsWith("NB_");
 
   const dayName = new Date().toLocaleDateString('en-US', { weekday: 'long' });
