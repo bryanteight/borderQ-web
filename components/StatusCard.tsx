@@ -3,11 +3,10 @@ import { BorderEvent } from "@/lib/types";
 import { TrendingDown, TrendingUp, Minus, Activity, Car, Zap, ChevronRight } from "lucide-react";
 import { clsx } from "clsx";
 import { ForecastTeaser } from "./ForecastTeaser";
-
-import { getSlugFromEvent } from "@/lib/utils";
+import { getSlugFromEvent, isEventClosed } from "@/lib/utils";
 
 export function StatusCard({ event }: { event: BorderEvent }) {
-  const isClosed = event.status === "Closed";
+  const isClosed = isEventClosed(event);
 
   // Traffic Color Logic
   const trafficColor = isClosed
