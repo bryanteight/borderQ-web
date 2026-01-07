@@ -36,3 +36,15 @@ export interface SummaryResponse {
   data: BorderEvent[];
   message: string;
 }
+
+export interface EventAlert {
+  level: 'CRITICAL' | 'WARNING' | 'ADVISORY' | 'INFO';
+  name: string;
+  venue: string;
+  type: string;
+  starts_at: string;
+  hours_until: number;
+  hours_until_end: number;
+  expected_attendance: number;
+  url?: string;
+}

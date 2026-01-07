@@ -1,10 +1,28 @@
 import { Search } from "@/components/Search";
 import { StatusCard } from "@/components/StatusCard";
 import { BorderQLogo } from "@/components/BorderQLogo";
+import { EventBanner } from "@/components/EventBanner";
 import { getBorderData } from "@/lib/api";
 import { TrendingUp, TrendingDown, Clock, Sun, ArrowRight, Calendar, Star, Car } from "lucide-react";
 import { WeeklyPatternsCarousel } from "@/components/WeeklyPatternsCarousel";
 import { StatusCardCarousel } from "@/components/StatusCardCarousel";
+import { EventAlert } from "@/lib/types";
+
+// Mock event data for testing (will be replaced with API data)
+const MOCK_EVENT: EventAlert | null = {
+  level: "WARNING",
+  name: "Canada vs Qatar (World Cup)",
+  venue: "BC Place",
+  type: "World Cup",
+  starts_at: "2026-06-18T15:00:00-07:00",
+  hours_until: 5.5,
+  hours_until_end: 8.5,
+  expected_attendance: 55000,
+  url: "https://bcplace.com/fifa-world-cup-2026"
+};
+
+// Set to null to hide banner (will be replaced with API data when available)
+const EVENT_ALERT: EventAlert | null = null;
 
 export default async function Home() {
   const data = await getBorderData();
@@ -166,6 +184,13 @@ export default async function Home() {
     <main className="min-h-screen bg-[#F6F8FA] text-slate-900 pb-20 font-sans">
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 md:py-10">
+        {/* Event Alert Banner (Phase 3) */}
+        {EVENT_ALERT && (
+          <div className="mb-4 md:mb-6">
+            <EventBanner event={EVENT_ALERT} />
+          </div>
+        )}
+
         {/* Hero Section - Slogan visible on Mobile, Title hidden */}
         <section className="flex flex-col items-center text-center gap-1 md:gap-4 mb-2 md:mb-10">
 
