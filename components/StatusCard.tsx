@@ -28,7 +28,7 @@ export function StatusCard({ event }: { event: BorderEvent }) {
   const href = `/stats/${baseSlug}/${dayName}${isNorthbound ? '?direction=north' : ''}`;
 
   return (
-    <Link href={href} className="block h-full group">
+    <Link href={href} className="block h-full group" prefetch={false}>
       <div className={clsx("relative h-full p-6 md:p-8 flex flex-col", cardStyle)}>
         {/* Header Section: Title Left, Badges Right */}
         <div className="flex justify-between items-start gap-4 mb-6">
