@@ -217,6 +217,7 @@ export default async function StatsPage({ params, searchParams }: { params: Prom
 
     const { stats, json_ld, realtime, context } = data;
     const isClosed = realtime?.status === "Closed";
+    const isNoData = realtime?.wait_time === -1;
 
     // Filter to only 6 KEY hours as user requested (not too dense)
     // Key hours: 6am, 9am, 12pm, 3pm, 6pm, 9pm
@@ -411,6 +412,10 @@ export default async function StatsPage({ params, searchParams }: { params: Prom
                                         <span className="text-4xl font-[900] tracking-tighter text-red-500 leading-none">
                                             Closed
                                         </span>
+                                    ) : isNoData ? (
+                                        <span className="text-3xl font-[900] tracking-tight text-gray-300 leading-none">
+                                            No data yet
+                                        </span>
                                     ) : (
                                         <>
                                             <span className={`text-6xl font-[900] tracking-tighter leading-none transition-colors duration-500 ${realtime.wait_time > 45 ? 'text-red-500' : realtime.wait_time > 20 ? 'text-amber-500' : 'text-emerald-500'}`}>
@@ -427,13 +432,17 @@ export default async function StatsPage({ params, searchParams }: { params: Prom
                                 <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Typical {dayName}</span>
                                 <div className="flex items-baseline">
                                     <span className={`text-4xl font-[900] tracking-tighter text-slate-900 leading-none`}
-                                    >{realtime.official_avg_minutes || stats.avg_wait}</span>
+                                    >{realtime.official_avg_minutes > 0 ? realtime.official_avg_minutes : stats.avg_wait}</span>
                                     <span className="text-sm font-black text-slate-400 ml-1">min avg</span>
                                 </div>
                                 <p className="text-[11px] font-bold text-slate-500 mt-2 leading-tight">
-                                    {realtime.status !== "Closed" && (
-                                        <>Current wait is <span className={clsx("font-black uppercase text-[10px]", realtime.wait_time < (realtime.official_avg_minutes || stats.avg_wait) ? 'text-emerald-600' : 'text-amber-600')}>{realtime.wait_time < (realtime.official_avg_minutes || stats.avg_wait) ? 'lower' : 'higher'}</span> than usual.</>
-                                    )}
+                                    {realtime.status !== "Closed" && !isNoData && (() => {
+                                        const typical = realtime.official_avg_minutes > 0 ? realtime.official_avg_minutes : stats.avg_wait;
+                                        const isLower = realtime.wait_time < typical;
+                                        return (
+                                            <>Current wait is <span className={clsx("font-black uppercase text-[10px]", isLower ? 'text-emerald-600' : 'text-amber-600')}>{isLower ? 'lower' : 'higher'}</span> than usual.</>
+                                        );
+                                    })()}
                                 </p>
                             </div>
                         </div>

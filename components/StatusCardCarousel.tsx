@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useDirection } from "@/context/DirectionContext";
 import { DirectionTabs } from "@/components/DirectionTabs";
+import { ExchangeRateBadge } from "@/components/ExchangeRateBadge";
 
 export function StatusCardCarousel({ events }: { events: BorderEvent[] }) {
     const { direction } = useDirection();
@@ -46,10 +47,18 @@ export function StatusCardCarousel({ events }: { events: BorderEvent[] }) {
             <DirectionTabs />
 
             {/* Context Header: Simplified Direction Title */}
-            <div className="flex justify-center items-center -mt-2">
+            <div className="relative flex justify-center items-center -mt-2 pb-2 md:pb-0">
                 <h2 className="text-xl md:text-2xl font-[900] text-slate-900 tracking-tight text-center">
                     {direction === "SOUTHBOUND" ? "Southbound Traffic" : "Northbound Traffic"}
                 </h2>
+                <div className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2">
+                    <ExchangeRateBadge />
+                </div>
+            </div>
+
+            {/* Mobile-only badge placement */}
+            <div className="flex md:hidden justify-center -mt-2 mb-2">
+                <ExchangeRateBadge />
             </div>
 
             {/* Mobile: Carousel / Desktop: Grid */}

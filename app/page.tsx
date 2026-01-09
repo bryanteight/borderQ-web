@@ -2,6 +2,7 @@ import { Search } from "@/components/Search";
 import { StatusCard } from "@/components/StatusCard";
 import { BorderQLogo } from "@/components/BorderQLogo";
 import { EventBanner } from "@/components/EventBanner";
+import { ExchangeRateBadge } from "@/components/ExchangeRateBadge";
 import { getBorderData } from "@/lib/api";
 import { TrendingUp, TrendingDown, Clock, Sun, ArrowRight, Calendar, Star, Car } from "lucide-react";
 import { WeeklyPatternsCarousel } from "@/components/WeeklyPatternsCarousel";

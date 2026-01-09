@@ -7,9 +7,10 @@ import { getSlugFromEvent, isEventClosed } from "@/lib/utils";
 
 export function StatusCard({ event }: { event: BorderEvent }) {
   const isClosed = isEventClosed(event);
+  const isNoData = event.wait_time_minutes === -1;
 
   // Traffic Color Logic
-  const trafficColor = isClosed
+  const trafficColor = isClosed || isNoData
     ? "text-gray-300"
     : event.wait_time_minutes > 45
       ? "text-red-500"
@@ -47,7 +48,7 @@ export function StatusCard({ event }: { event: BorderEvent }) {
               );
             })()}
 
-            {!isClosed && (
+            {!isClosed && !isNoData && (
               <span className="text-[#94a3b8] font-black text-[10px] uppercase tracking-[0.2em] whitespace-nowrap mt-1">
                 Current Wait
               </span>
@@ -79,16 +80,24 @@ export function StatusCard({ event }: { event: BorderEvent }) {
         {/* Hero Wait Time Row */}
         <div className="flex items-end gap-3 mb-8 relative">
           <div className="flex items-baseline gap-1">
-            <span className={clsx(
-              "text-6xl md:text-7xl font-[900] tracking-tighter leading-none transition-colors duration-500",
-              trafficColor
-            )}>
-              {event.wait_time_minutes}
-            </span>
-            <span className="text-lg md:text-xl font-black text-slate-300 transform -translate-y-1">min</span>
+            {isNoData ? (
+              <span className="text-3xl md:text-4xl font-[900] tracking-tight leading-none text-gray-300">
+                No data yet
+              </span>
+            ) : (
+              <>
+                <span className={clsx(
+                  "text-6xl md:text-7xl font-[900] tracking-tighter leading-none transition-colors duration-500",
+                  trafficColor
+                )}>
+                  {event.wait_time_minutes}
+                </span>
+                <span className="text-lg md:text-xl font-black text-slate-300 transform -translate-y-1">min</span>
+              </>
+            )}
           </div>
 
-          {!isClosed && (
+          {!isClosed && !isNoData && (
             <>
               <div className="h-10 w-px bg-slate-100 rounded-full mx-1 hidden sm:block" />
               <div className="flex items-end gap-2.5 pb-1">
@@ -112,8 +121,8 @@ export function StatusCard({ event }: { event: BorderEvent }) {
           )}
         </div>
 
-        {/* Footer: Smart Insight OR Placeholder (Hidden if both missing) */}
-        {!isClosed && (event.smart_insight || (event.forecast_points && event.forecast_points.length > 1)) && (
+        {/* Footer: Smart Insight OR Placeholder (Hidden if both missing or no data) */}
+        {!isClosed && !isNoData && (event.smart_insight || (event.forecast_points && event.forecast_points.length > 1)) && (
           // Reduced padding (pt-6 -> pt-3) to close the gap
           <div className="pt-3 mt-auto border-t border-slate-50 flex flex-col gap-3 group-hover:border-indigo-100 transition-colors relative">
             <div className="flex flex-col gap-3">
@@ -121,7 +130,7 @@ export function StatusCard({ event }: { event: BorderEvent }) {
 
               {event.forecast_points && event.forecast_points.length > 1 ? (
                 <div className="w-full mt-1">
-                  <ForecastTeaser currentWait={event.wait_time_minutes || 0} forecastPoints={event.forecast_points} />
+                  <ForecastTeaser currentWait={Math.max(0, event.wait_time_minutes)} forecastPoints={event.forecast_points} />
                 </div>
               ) : event.smart_insight ? (
                 <div className="flex items-start gap-3">

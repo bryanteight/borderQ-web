@@ -226,7 +226,8 @@ export default async function RegionalStatsPage({ params }: { params: Promise<{ 
                     <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Port Comparison ({dayName})</h2>
                     <div className="flex flex-col md:grid md:grid-cols-2 gap-3">
                         {validPorts.map((port) => {
-                            const live = port.data?.realtime.wait_time || 0;
+                            const live = port.data?.realtime.wait_time;
+                            const isNoData = live === -1;
 
                             return (
                                 <Link
@@ -282,8 +283,12 @@ export default async function RegionalStatsPage({ params }: { params: Promise<{ 
                                                     <div className="text-lg font-[900] text-red-500 leading-none">
                                                         Closed
                                                     </div>
+                                                ) : isNoData ? (
+                                                    <div className="text-sm font-[900] text-gray-300 leading-none">
+                                                        No data
+                                                    </div>
                                                 ) : (
-                                                    <div className={`text-xl font-[900] leading-none ${live > 45 ? 'text-red-500' : live > 20 ? 'text-amber-500' : 'text-emerald-500'}`}>
+                                                    <div className={`text-xl font-[900] leading-none ${(live || 0) > 45 ? 'text-red-500' : (live || 0) > 20 ? 'text-amber-500' : 'text-emerald-500'}`}>
                                                         {live} <span className="text-xs font-black text-slate-300 opacity-80">min</span>
                                                     </div>
                                                 )}

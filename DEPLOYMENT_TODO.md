@@ -35,8 +35,8 @@
 
 ### Post-Release Optimization & Roadmap
 - [ ] **Data Ingestion & Accuracy**
-    - [ ] Ingest Seattle to Vancouver (Northbound) data to Qdrant DB.
-    - [ ] Bi-National Holiday Logic: Differentiate US vs CA holiday impacts (Southbound vs Northbound).
+    - [x] Ingest Seattle to Vancouver (Northbound) data to Qdrant DB.
+    - [x] Bi-National Holiday Logic: Differentiate US vs CA holiday impacts (Southbound vs Northbound).
     - [ ] Improve CBSA Data Quality: Parse "Updated" timestamp from live scrape instead of "Now".
     - [ ] **Forecast Accuracy System**: Build tool to compare `forecast_points` vs real outcomes to tune the model.
 - [ ] **Enhanced Inspection Detection (Anomaly Detection)**
@@ -44,10 +44,10 @@
     - [ ] **Method 2: Qdrant Anomaly**: Implement detection logic for "Inexplicable Delays" (Actual Wait > 3x Expected Wait during non-holiday/non-event times).
     - [ ] **Method 3: Keyword Listening**: Explore social media scraping for inspection-linked keywords (e.g., "Secondary", "Trunk check", "開後車廂").
     - [ ] **Schema Update**: Update `Event` and Qdrant payload to track `inspection_level` (Normal/Strict/Severe) and anomaly scores.
-- [ ] **Vector Engine (Qdrant) Optimization**
-    - [ ] **Cyclical Time Encoding**: Convert "Hour" and "Day" into Sine/Cosine pairs to fix the "Midnight Paradox."
-    - [ ] **Lag Features (Momentum)**: Store `Wait_Time_1hr_Ago` and `Wait_Time_2hr_Ago` in the vector to capture traffic trends.
-    - [ ] **Event Signals**: Implement an `Is_Major_Event` flag (Blue Jays games, concerts) to account for predictable traffic surges.
+- [x] **Vector Engine (Qdrant) Optimization**
+    - [x] **Cyclical Time Encoding**: Convert "Hour" and "Day" into Sine/Cosine pairs to fix the "Midnight Paradox."
+    - [x] **Lag Features (Momentum)**: Store `Wait_Time_1hr_Ago` and `Wait_Time_2hr_Ago` in the vector to capture traffic trends.
+    - [x] **Event Signals**: Implement an `Is_Major_Event` flag (Blue Jays games, concerts) to account for predictable traffic surges.
     - [ ] **Economic Signals**: Add `USD_CAD_Rate` to the vector to differentiate shopping traffic based on exchange rates.
     - [ ] **Weather Filtering**: Update `ingest.py` to only flag **Severe Weather** (Snow/Ice) and discard minor "noise" like light rain.
 - [ ] **UX & AI Intelligence**
