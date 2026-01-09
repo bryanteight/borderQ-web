@@ -244,7 +244,7 @@ export default async function RegionalStatsPage({ params }: { params: Promise<{ 
                                                 <div className="font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">{port.name}</div>
                                                 <div className="text-xs text-slate-400 font-medium">Wait Range</div>
                                                 <div className="text-sm font-[800] text-slate-700">
-                                                    {port.data?.stats.min_wait}-{port.data?.stats.max_wait} <span className="text-[10px] font-bold text-slate-400">min</span>
+                                                    {Math.round(port.data?.stats.min_wait ?? 0)}-{Math.round(port.data?.stats.max_wait ?? 0)} <span className="text-[10px] font-bold text-slate-400">min</span>
                                                 </div>
                                             </div>
                                         </div>
