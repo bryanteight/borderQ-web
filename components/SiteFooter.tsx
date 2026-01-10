@@ -83,7 +83,7 @@ export function SiteFooter() {
 
                 {/* Version & Copyright */}
                 <div className="flex flex-col items-center gap-1">
-                    <p className="text-xs text-slate-400">BorderQ AI v0.5.8 &copy; {new Date().getFullYear()}</p>
+                    <p className="text-xs text-slate-400">BorderQ AI v0.5.9 &copy; {new Date().getFullYear()}</p>
                 </div>
             </div>
         </footer>

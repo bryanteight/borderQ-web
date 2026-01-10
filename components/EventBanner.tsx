@@ -66,34 +66,48 @@ export function EventBanner({ event }: EventBannerProps) {
     const content = (
         <div
             className={clsx(
-                "flex items-center justify-center gap-3 px-4 py-3 rounded-xl border shadow-sm",
+                "relative flex items-start gap-3 md:gap-4 px-4 py-3 rounded-xl border shadow-sm text-left",
                 "transition-all duration-200 hover:shadow-md",
                 styles.bg,
                 styles.border
             )}
         >
-            {/* Pulsing dot for CRITICAL/WARNING */}
-            {(event.level === "CRITICAL" || event.level === "WARNING") && (
-                <div className={clsx("w-2 h-2 rounded-full animate-pulse", styles.dot)} />
-            )}
+            {/* Icon Container with Badge */}
+            <div className="relative shrink-0 mt-0.5">
+                <span className="text-xl md:text-2xl leading-none block">{styles.icon}</span>
 
-            {/* Icon */}
-            <span className="text-lg">{styles.icon}</span>
-
-            {/* Event Info */}
-            <div className="flex items-center gap-2 flex-wrap justify-center">
-                <span className={clsx("font-bold text-sm", styles.text)}>
-                    {event.name}
-                </span>
-                <span className="text-slate-400 text-sm">·</span>
-                <span className="text-slate-600 text-sm font-medium">
-                    Ends in {timeUntilEnd}
-                </span>
+                {/* Pulsing Badge */}
+                {(event.level === "CRITICAL" || event.level === "WARNING") && (
+                    <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                        <span className={clsx("animate-ping absolute inline-flex h-full w-full rounded-full opacity-75", styles.dot)}></span>
+                        <span className={clsx("relative inline-flex rounded-full h-3 w-3 border-2 border-white", styles.dot)}></span>
+                    </span>
+                )}
             </div>
 
-            {/* External link icon if URL available */}
+            {/* Content Column */}
+            <div className="flex-1 min-w-0">
+                <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-2">
+                    <h3 className={clsx("font-bold text-sm md:text-base leading-tight pr-6 md:pr-0", styles.text)}>
+                        {event.name}
+                    </h3>
+
+                    {/* Desktop Timer (Inline) */}
+                    <span className="hidden md:inline-flex items-center gap-2 text-slate-500 text-sm">
+                        <span>·</span>
+                        Ends in {timeUntilEnd}
+                    </span>
+                </div>
+
+                {/* Mobile Timer (Below Title) */}
+                <div className="md:hidden text-xs font-medium text-slate-500 mt-1">
+                    Ends in {timeUntilEnd}
+                </div>
+            </div>
+
+            {/* External Icon (Top Right absolute on mobile, inline on desktop handled by layout) */}
             {event.url && (
-                <ExternalLink className={clsx("w-4 h-4 opacity-60", styles.text)} />
+                <ExternalLink className={clsx("absolute top-3 right-3 md:static md:opacity-60 w-4 h-4", styles.text)} />
             )}
         </div>
     );

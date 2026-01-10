@@ -29,6 +29,7 @@ export interface BorderEvent {
   forecast_points?: number[];
   typical_points?: number[]; // Baseline for comparison
   timeline_labels?: string[];
+  event_alert?: EventAlert; // Event alert data from backend
 }
 
 export interface SummaryResponse {
