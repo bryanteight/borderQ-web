@@ -1,26 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { ExchangeRate } from "@/lib/api";
+import { useExchangeRate } from "@/context/ExchangeRateContext";
 
 export function ExchangeRateBadge() {
-    const [rate, setRate] = useState<ExchangeRate | null>(null);
+    const { rate, isLoading } = useExchangeRate();
 
-    useEffect(() => {
-        async function fetchRate() {
-            try {
-                const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
-                const res = await fetch(`${baseUrl}/api/v1/exchange-rate`);
-                if (res.ok) {
-                    setRate(await res.json());
-                }
-            } catch {
-                // Silent fail - rate is optional
-            }
-        }
-        fetchRate();
-    }, []);
-
+    // Render nothing during SSR and initial load to prevent hydration mismatch
+    if (isLoading) return null;
     if (!rate) return null;
 
     return (
@@ -32,3 +18,4 @@ export function ExchangeRateBadge() {
         </div>
     );
 }
+

@@ -38,6 +38,8 @@ export const metadata: Metadata = {
 
 import { GoogleAnalytics } from '@next/third-parties/google'
 
+import { ExchangeRateProvider } from "@/context/ExchangeRateContext";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -49,10 +51,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${fredoka.variable} antialiased`}
       >
         <DirectionProvider>
-          <SiteHeader />
-          {children}
-          <InstallPrompt />
-          <SiteFooter />
+          <ExchangeRateProvider>
+            <SiteHeader />
+            {children}
+            <InstallPrompt />
+            <SiteFooter />
+          </ExchangeRateProvider>
         </DirectionProvider>
       </body>
       <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || ""} />
