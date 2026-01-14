@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, TrendingUp, Navigation, Clock, Car, Zap } from "lucide-react";
+import { ComparisonChartWrapper } from "@/components/ComparisonChartWrapper";
 
 // Reusing types from the single port schema for consistency
 interface StatsResponse {
@@ -186,40 +187,11 @@ export default async function RegionalStatsPage({ params }: { params: Promise<{ 
 
             <div className="max-w-3xl mx-auto px-6 space-y-8">
 
-                {/* 1. SEO Text Block */}
-                <section className="space-y-4">
-                    <h2 className="text-xl font-bold tracking-tight text-slate-900 leading-tight">
-                        Detailed Traffic Analysis
-                    </h2>
-
-                    <div className="prose prose-slate leading-relaxed text-slate-600">
-                        {/* Dynamic Narrative from Backend */}
-
-
-                        {/* Lynden Warning Block */}
-                        {isLyndenRecommendation && (
-                            <div className="bg-amber-50 border-l-4 border-amber-400 p-4 my-4 text-amber-800 text-sm">
-                                <p className="font-bold mb-1">⚠️ Important Detour Note</p>
-                                <p>
-                                    Lynden (Aldergrove) is a smaller crossing with <strong>no direct highway access</strong>.
-                                    Please add roughly <strong>20 minutes</strong> to your total drive time compared to I-5 (Peace Arch/Pacific Hwy).
-                                    Only choose Lynden if the border wait savings exceed 20 minutes.
-                                </p>
-                            </div>
-                        )}
-
-                        <p>
-                            {narrative.savings_analysis}
-
-                            <br />
-                            The heaviest congestion usually occurs {worstPort.data?.stats.worst_time}.
-                        </p>
-                        <p>
-                            For the fastest crossing, aim to arrive <strong>{bestPort.data?.stats.best_time}</strong>.
-                            Avoid the peak rush at {worstPort.name} if possible.
-                        </p>
-                    </div>
+                {/* 3-Port Comparison Chart & AI Insight */}
+                <section className="-mt-4">
+                    <ComparisonChartWrapper day={day} />
                 </section>
+
 
                 {/* 2. Comparison Table/Cards (Visuals After Text) */}
                 <section>
