@@ -36,7 +36,7 @@ export default function AccuracyChart({ data }: AccuracyChartProps) {
                     itemStyle={{ color: '#60a5fa', fontWeight: 'bold' }}
                     labelStyle={{ color: '#94a3b8', marginBottom: '0.25rem', fontSize: '12px' }}
                     cursor={{ stroke: '#94a3b8', strokeWidth: 1, strokeDasharray: '4 4' }}
-                    formatter={(value: number) => [`${value} min`, "MAE"]}
+                    formatter={(value: any) => [`${value} min`, "MAE"]}
                     labelFormatter={(label) => `Week ${label}`}
                 />
                 <Area
