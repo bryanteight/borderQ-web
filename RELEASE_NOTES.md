@@ -1,3 +1,31 @@
+# Release Notes - v0.6.0 (Trip Planner & Accuracy Intelligence)
+
+**Date:** January 14, 2026
+**Versions:** Frontend v0.6.0 | Backend v0.6.0
+
+This release introduces a major upgrade to the Trip Planner's forecasting engine, adding a dual-tier prediction system and a comprehensive accuracy tracking dashboard.
+
+## 🚀 Key Features
+
+### 📅 Trip Planner 2.0
+*   **Tiered Forecasting Engine**:
+    *   **Tier 1 (Smart Similarity)**: Finds past days with similar weather, events, and seasonality for highly context-aware predictions.
+    *   **Tier 3 (Historical Baseline)**: Falls back to long-term averages when specific matches aren't found.
+*   **Forecast Integrity**: Resolved discrepancies between the main stats page and the trip planner by aligning holiday filtering logic.
+*   **Strict Weekend Filtering**: Forecasts for weekdays no longer accidentally include weekend data in their similarity search.
+
+### 📊 Admin Accuracy Dashboard
+*   **New Dashboard**: `/admin/accuracy-dashboard` provides weekly metrics on forecast performance (MAE, MAPE).
+*   **Tier Definitions**: Integrated documentation within the dashboard explaining exactly how predictions are made.
+*   **Live Tracking**: Real-time stats on how well the model is performing against actual wait times.
+
+### 🛠️ Backend Improvements
+*   **Centralized Logic**: Refactored holiday filtering into a single source of truth to prevent future logic drift.
+*   **Data Quality**: Enhanced strict filtering for "Regular Days" vs "Holidays" in vector search.
+*   **Robust Vector Search**: Increased weighting for "Day of Week" to ensure stricter temporal matching.
+
+---
+
 # Release Notes - v0.4.8 (Detail Page Refinement)
 
 **Date:** January 5, 2026

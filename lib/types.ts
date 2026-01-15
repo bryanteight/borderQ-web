@@ -32,12 +32,6 @@ export interface BorderEvent {
   event_alert?: EventAlert; // Event alert data from backend
 }
 
-export interface SummaryResponse {
-  type: string;
-  data: BorderEvent[];
-  message: string;
-}
-
 export interface EventAlert {
   level: 'CRITICAL' | 'WARNING' | 'ADVISORY' | 'INFO';
   name: string;
@@ -48,4 +42,27 @@ export interface EventAlert {
   hours_until_end: number;
   expected_attendance: number;
   url?: string;
+}
+
+export interface PlanningData {
+  date: string;
+  dayName: string;
+  dayLabel: string;
+  status: 'green' | 'yellow' | 'red';
+  worstTime: string;
+  impactBadge?: string;
+  impactType?: string;
+  slug: string;
+  avgWait: number;
+}
+
+export interface SummaryResponse {
+  timestamp?: string;
+  type: string;
+  data: BorderEvent[];
+  planning?: {
+    SOUTHBOUND: PlanningData[];
+    NORTHBOUND: PlanningData[];
+  };
+  message: string;
 }

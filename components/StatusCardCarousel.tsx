@@ -5,10 +5,9 @@ import { BorderEvent } from "@/lib/types";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useDirection } from "@/context/DirectionContext";
-import { DirectionTabs } from "@/components/DirectionTabs";
 import { ExchangeRateBadge } from "@/components/ExchangeRateBadge";
 
-export function StatusCardCarousel({ events }: { events: BorderEvent[] }) {
+export function StatusCardCarousel({ events, updatedAt }: { events: BorderEvent[], updatedAt?: string }) {
     const { direction } = useDirection();
     const [activeIndex, setActiveIndex] = useState(0);
 
@@ -21,6 +20,19 @@ export function StatusCardCarousel({ events }: { events: BorderEvent[] }) {
     // Sort to ensure consistent order (e.g. PA, PH, Lyn)
     // We can sort by id or title to prevent jumping
     const sortedEvents = [...filteredEvents].sort((a, b) => a.id.localeCompare(b.id));
+
+    // Format timestamp
+    const formatTime = (isoString?: string) => {
+        if (!isoString) return "";
+        try {
+            const date = new Date(isoString);
+            return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+        } catch {
+            return "";
+        }
+    };
+
+    const timeStr = formatTime(updatedAt);
 
     const containerRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
@@ -43,14 +55,16 @@ export function StatusCardCarousel({ events }: { events: BorderEvent[] }) {
 
     return (
         <div className="flex flex-col gap-2 md:gap-6">
-            {/* Inline Direction Tabs (Option 2) */}
-            <DirectionTabs />
-
             {/* Context Header: Simplified Direction Title */}
-            <div className="relative flex justify-center items-center -mt-2 pb-2 md:pb-0">
+            <div className="relative flex flex-col justify-center items-center -mt-2 pb-2 md:pb-0">
                 <h2 className="text-xl md:text-2xl font-[900] text-slate-900 tracking-tight text-center">
-                    {direction === "SOUTHBOUND" ? "Southbound Traffic" : "Northbound Traffic"}
+                    {direction === "SOUTHBOUND" ? "Southbound Live Traffic" : "Northbound Live Traffic"}
                 </h2>
+                {timeStr && (
+                    <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">
+                        Updated at {timeStr}
+                    </span>
+                )}
                 <div className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2">
                     <ExchangeRateBadge />
                 </div>

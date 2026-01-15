@@ -5,8 +5,9 @@ import { EventBanner } from "@/components/EventBanner";
 import { ExchangeRateBadge } from "@/components/ExchangeRateBadge";
 import { getBorderData } from "@/lib/api";
 import { TrendingUp, TrendingDown, Clock, Sun, ArrowRight, Calendar, Star, Car } from "lucide-react";
-import { WeeklyPatternsCarousel } from "@/components/WeeklyPatternsCarousel";
+import { PlanAheadWidget } from "@/components/PlanAheadWidget"; // [NEW]
 import { StatusCardCarousel } from "@/components/StatusCardCarousel";
+import { DirectionTabs } from "@/components/DirectionTabs";
 import { EventAlert } from "@/lib/types";
 
 export default async function Home() {
@@ -39,131 +40,8 @@ export default async function Home() {
     );
   }
 
-  const regionTabs = [
-    { id: 'seattle', label: 'BC / WA', active: true, comingSoon: false },
-    { id: 'niagara', label: 'Niagara / NY', active: false, comingSoon: true },
-    { id: 'detroit', label: 'Detroit / Windsor', active: false, comingSoon: true },
-  ];
-
-  // Dynamic Trending Logic (Force PST/PDT for "Border Time")
-  // Server is likely UTC, so we must shift to get correct day in Vancouver/Blaine
-  const now = new Date();
-  const options = { timeZone: 'America/Vancouver', year: 'numeric', month: 'numeric', day: 'numeric', weekday: 'long' } as const;
-  // Format: "Friday, 1/1/2026"
-  const parts = new Intl.DateTimeFormat('en-US', options).formatToParts(now);
-
-  // Extract parts manually to build a date object for comparison
-  const getPart = (type: string) => parts.find(p => p.type === type)?.value || '';
-  const currentYear = parseInt(getPart('year'));
-  const currentMonth = parseInt(getPart('month')) - 1; // 0-indexed
-  const currentDay = parseInt(getPart('day'));
-  const today = getPart('weekday'); // e.g. "Friday"
-
-  // Create a "Border Date" object (Midnight PST represented in current execution context)
-  // We constructs a Date object that *conceptually* represents the border date
-  const borderDate = new Date(currentYear, currentMonth, currentDay);
-
-  const dayIndex = borderDate.getDay(); // 0 = Sun, ...
-
-  // Simple Holiday Check (Next 30 Days)
-  const getUpcomingHoliday = () => {
-    const year = currentYear;
-    const holidays = [
-      { name: 'Christmas', date: new Date(year, 11, 25), icon: Star },       // Dec 25
-      { name: 'New Year\'s Day', date: new Date(year, 0, 1), icon: Calendar },   // Jan 1
-      { name: 'Victoria Day', date: new Date(year, 4, 18), icon: Star },     // approx May
-      { name: 'Canada Day', date: new Date(year, 6, 1), icon: Star },        // July 1
-      { name: 'Independence Day', date: new Date(year, 6, 4), icon: Star },  // July 4
-      { name: 'Labor Day', date: new Date(year, 8, 2), icon: Star },         // Sept
-      { name: 'Thanksgiving', date: new Date(year, 10, 28), icon: Star },    // Nov
-    ];
-
-    // Handle year wrap for early Jan holidays if currently Dec
-    if (currentMonth === 11) {
-      holidays.push({ name: 'New Year\'s Day', date: new Date(year + 1, 0, 1), icon: Calendar });
-    }
-
-    for (const h of holidays) {
-      const diffTime = h.date.getTime() - borderDate.getTime();
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      if (diffDays >= 0 && diffDays <= 30) {
-        return {
-          day: 'Holiday',
-          slug: h.name.toLowerCase().replace(/'/g, "").replace(/[^a-z0-9]+/g, '-'), // url-friendly slug
-          title: `${h.name} Forecast`,
-          description: `Historical trends for ${h.name}. Expect delays.`,
-          icon: h.icon,
-          color: 'violet',
-          badge: 'Special Event',
-          priority: true // Always top priority
-        };
-      }
-    }
-    return null;
-  };
-
-  const holidayInsight = getUpcomingHoliday();
-
-  // Define curated insights
-  const insights = [
-    {
-      day: 'Friday',
-      slug: 'friday',
-      title: 'Friday Getaway',
-      description: 'Heavy outbound traffic. Plan ahead.',
-      icon: TrendingUp,
-      color: 'rose',
-      badge: 'Busiest',
-      priority: dayIndex === 5 || dayIndex === 4
-    },
-    {
-      day: 'Sunday',
-      slug: 'sunday',
-      title: 'Sunday Traffic',
-      description: 'Expect heavier volumes in afternoon.',
-      icon: Clock,
-      color: 'amber',
-      badge: 'Delays',
-      priority: dayIndex === 0
-    },
-    {
-      day: 'Saturday',
-      slug: 'saturday',
-      title: 'Saturday Trip',
-      description: 'Best for day trips before 8 AM.',
-      icon: Sun,
-      color: 'emerald',
-      badge: 'Moderate',
-      priority: dayIndex === 6
-    },
-    {
-      day: 'Tuesday',
-      slug: 'tuesday',
-      title: 'Mid-Week Value',
-      description: 'Historical data shows shortest waits.',
-      icon: TrendingDown,
-      color: 'sky',
-      badge: 'Best Value',
-      priority: dayIndex >= 1 && dayIndex <= 3
-    }
-  ];
-
-  // Merge Holiday if exists
-  if (holidayInsight) {
-    insights.push(holidayInsight);
-  }
-
-  // Sort insights: Priority first
-  const sortedInsights = [...insights].sort((a, b) => (b.priority ? 1 : 0) - (a.priority ? 1 : 0));
-  // If we have a holiday (5 items), slice to top 4 to keep grid clean, or allow 5? 
-  // Grid handles it, but let's stick to 4 primarily unless holiday pushes one out.
-  // Actually, keeping all is fine, grid will wrap. Let's just sort.
-
-  // Prepare items for Client Component (Pass rendered icon nodes to avoid serialization issues)
-  const carouselItems = sortedInsights.map(item => ({
-    ...item,
-    icon: <item.icon className="w-5 h-5" />
-  }));
+  // Use planning data from backend, or default empty structure
+  const planningData = data.planning || { SOUTHBOUND: [], NORTHBOUND: [] };
 
   return (
     <main className="min-h-screen bg-[#F6F8FA] text-slate-900 pb-20 font-sans">
@@ -185,42 +63,28 @@ export default async function Home() {
 
           <div className="space-y-4 max-w-3xl flex flex-col items-center">
             <h1 className="hidden md:block text-4xl sm:text-6xl md:text-7xl font-[800] tracking-tight text-slate-900 leading-[1.05]">
-              Beat the <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600">Border Wait</span>
+              Plan Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600">Crossing</span>
             </h1>
             <p className="text-slate-500 text-xs sm:text-sm md:text-xl font-medium leading-relaxed max-w-2xl mx-auto whitespace-nowrap tracking-tight">
               Real-time prediction for international crossings.
             </p>
           </div>
         </section>   {/* Search Removed (Feature Disabled) */}
+
         {/* Region / Division Navigation */}
 
+        {/* Direction Switcher (Global Context) */}
+        <DirectionTabs />
 
-
-
-        <StatusCardCarousel events={data.data} />
-
-        {/* Trending Forecasts (Dynamic) */}
-        <div className="border-t border-slate-200 pt-4 md:pt-10 pb-20">
-          <div className="flex items-center justify-between mb-6 md:mb-8 px-2">
-            <div>
-              <h3 className="text-lg font-[800] text-slate-900 tracking-tight">Weekly Traffic Patterns</h3>
-              <p className="text-slate-500 text-sm">
-                Typical wait time trends
-              </p>
-            </div>
-            {/* Visual Flair: "Live" dot */}
-            <div className="flex items-center gap-2">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
-              </span>
-              <span className="text-xs font-bold text-indigo-600 uppercase tracking-wider">Live Insights</span>
-            </div>
-          </div>
-
-          <WeeklyPatternsCarousel items={carouselItems} />
+        {/* [NEW] Plan Ahead Widget (Moved to TOP) */}
+        <div className="mb-0">
+          <PlanAheadWidget planning={planningData} />
         </div>
 
+
+        <StatusCardCarousel events={data.data} updatedAt={data.timestamp} />
+
+        {/* Legacy "Weekly Patterns" Removed - replaced by PlanAheadWidget */}
       </div>
     </main >
   );
