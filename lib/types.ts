@@ -54,6 +54,10 @@ export interface PlanningData {
   impactType?: string;
   slug: string;
   avgWait: number;
+  smart_analysis?: {
+    intro: string;
+    savings_analysis: string;
+  };
 }
 
 export interface SummaryResponse {

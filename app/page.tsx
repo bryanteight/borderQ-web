@@ -9,6 +9,7 @@ import { PlanAheadWidget } from "@/components/PlanAheadWidget"; // [NEW]
 import { StatusCardCarousel } from "@/components/StatusCardCarousel";
 import { DirectionTabs } from "@/components/DirectionTabs";
 import { EventAlert } from "@/lib/types";
+import { PlanAheadHeader } from "@/components/PlanAheadHeader";
 
 export default async function Home() {
   const data = await getBorderData();
@@ -58,31 +59,20 @@ export default async function Home() {
           );
         })()}
 
-        {/* Hero Section - Slogan visible on Mobile, Title hidden */}
-        <section className="flex flex-col items-center text-center gap-1 md:gap-4 mb-2 md:mb-10">
 
-          <div className="space-y-4 max-w-3xl flex flex-col items-center">
-            <h1 className="hidden md:block text-4xl sm:text-6xl md:text-7xl font-[800] tracking-tight text-slate-900 leading-[1.05]">
-              Plan Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600">Crossing</span>
-            </h1>
-            <p className="text-slate-500 text-xs sm:text-sm md:text-xl font-medium leading-relaxed max-w-2xl mx-auto whitespace-nowrap tracking-tight">
-              Real-time prediction for international crossings.
-            </p>
-          </div>
-        </section>   {/* Search Removed (Feature Disabled) */}
 
-        {/* Region / Division Navigation */}
-
-        {/* Direction Switcher (Global Context) */}
-        <DirectionTabs />
-
-        {/* [NEW] Plan Ahead Widget (Moved to TOP) */}
-        <div className="mb-0">
-          <PlanAheadWidget planning={planningData} />
+        {/* 2. Live Traffic Status (Compact) */}
+        <div className="mb-4 md:mb-12">
+          <StatusCardCarousel events={data.data} updatedAt={data.timestamp} />
         </div>
 
+        {/* 3. Hero Section (Slogan) - Optional/Reduced */}
+        <PlanAheadHeader />
 
-        <StatusCardCarousel events={data.data} updatedAt={data.timestamp} />
+        {/* 4. Plan Ahead Widget - "Peeking" Up Aggressively */}
+        <div className="-mt-12 md:mt-0 relative z-10">
+          <PlanAheadWidget planning={planningData} />
+        </div>
 
         {/* Legacy "Weekly Patterns" Removed - replaced by PlanAheadWidget */}
       </div>

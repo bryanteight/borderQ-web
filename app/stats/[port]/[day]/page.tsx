@@ -159,29 +159,7 @@ export default async function StatsPage({ params, searchParams }: { params: Prom
         </header>
     );
 
-    // Shared Direction Toggle Tab
-    const DirectionToggle = () => (
-        <div className="flex p-1 bg-white rounded-xl border border-slate-200 shadow-sm mb-6 relative">
-            <Link
-                href={`/stats/${port}/${day}`}
-                className={clsx(
-                    "flex-1 py-2 text-center text-xs font-black uppercase tracking-wider rounded-lg transition-all z-10",
-                    !isNorthbound ? "bg-indigo-600 text-white shadow-md" : "text-slate-400 hover:bg-slate-50"
-                )}
-            >
-                Canada → USA
-            </Link>
-            <Link
-                href={`/stats/${port}/${day}?direction=north`}
-                className={clsx(
-                    "flex-1 py-2 text-center text-xs font-black uppercase tracking-wider rounded-lg transition-all z-10",
-                    isNorthbound ? "bg-indigo-600 text-white shadow-md" : "text-slate-400 hover:bg-slate-50"
-                )}
-            >
-                USA → Canada
-            </Link>
-        </div>
-    );
+
 
     // 2. Handle Valid Page but No Data (e.g. Future Holiday or New Route)
     if (!data.stats || data.message || data.stats.sample_size < 10) {
@@ -198,7 +176,7 @@ export default async function StatsPage({ params, searchParams }: { params: Prom
                         </h1>
                     </div>
 
-                    <DirectionToggle />
+
 
                     <div className="bg-white rounded-[32px] p-8 text-center shadow-sm">
                         <div className="text-xl font-[800] text-slate-900 mb-2">Data Generating...</div>
@@ -262,7 +240,7 @@ export default async function StatsPage({ params, searchParams }: { params: Prom
                     </h1>
                 </div>
 
-                <DirectionToggle />
+
 
                 {/* 2. Hourly Trend Chart - Only 6 key hours (Moved to Top) */}
                 <div className="bg-white rounded-[32px] p-8 shadow-[0_2px_20px_rgb(0,0,0,0.04)] ring-1 ring-slate-100">

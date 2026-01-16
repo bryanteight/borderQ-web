@@ -70,10 +70,7 @@ export function StatusCardCarousel({ events, updatedAt }: { events: BorderEvent[
                 </div>
             </div>
 
-            {/* Mobile-only badge placement */}
-            <div className="flex md:hidden justify-center -mt-2 mb-2">
-                <ExchangeRateBadge />
-            </div>
+
 
             {/* Mobile: Carousel / Desktop: Grid */}
             <AnimatePresence mode="wait">
