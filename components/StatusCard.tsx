@@ -122,49 +122,13 @@ export function StatusCard({ event }: { event: BorderEvent }) {
         </div>
 
         {/* Footer: Smart Insight OR Placeholder (Hidden if both missing or no data) */}
-        {!isClosed && !isNoData && (event.smart_insight || (event.forecast_points && event.forecast_points.length > 1)) && (
+        {!isClosed && !isNoData && event.forecast_points && event.forecast_points.length > 1 && (
           // Reduced padding (pt-6 -> pt-3) to close the gap
           <div className="pt-3 mt-auto border-t border-slate-50 flex flex-col gap-3 group-hover:border-indigo-100 transition-colors relative">
             <div className="flex flex-col gap-3">
-              {/* "View Details" removed from here */}
-
-              {event.forecast_points && event.forecast_points.length > 1 ? (
-                <div className="w-full mt-1">
-                  <ForecastTeaser currentWait={Math.max(0, event.wait_time_minutes)} forecastPoints={event.forecast_points} />
-                </div>
-              ) : event.smart_insight ? (
-                <div className="flex items-start gap-3">
-                  <div className={clsx(
-                    "p-2 rounded-xl border shadow-sm backdrop-blur-[2px] transition-colors shrink-0",
-                    event.smart_insight.icon === 'surge' && "bg-red-50 text-red-600 border-red-100",
-                    event.smart_insight.icon === 'clearing' && "bg-orange-50 text-orange-600 border-orange-100",
-                    event.smart_insight.icon === 'fast' && "bg-emerald-50 text-emerald-600 border-emerald-100",
-                    event.smart_insight.icon === 'rising' && "bg-amber-50 text-amber-600 border-amber-100",
-                    event.smart_insight.icon === 'stable' && "bg-slate-50 text-slate-400 border-slate-100",
-                  )}>
-                    {event.smart_insight.icon === 'surge' && <Activity className="w-5 h-5" />}
-                    {event.smart_insight.icon === 'clearing' && <TrendingDown className="w-5 h-5" />}
-                    {event.smart_insight.icon === 'fast' && <Zap className="w-5 h-5" />}
-                    {event.smart_insight.icon === 'rising' && <TrendingUp className="w-5 h-5" />}
-                    {event.smart_insight.icon === 'stable' && <Minus className="w-5 h-5" />}
-                  </div>
-                  <div className="flex flex-col gap-0.5">
-                    <span className={clsx(
-                      "text-xs font-[900] uppercase tracking-wide",
-                      event.smart_insight.icon === 'surge' && "text-red-700",
-                      event.smart_insight.icon === 'clearing' && "text-orange-700",
-                      event.smart_insight.icon === 'fast' && "text-emerald-700",
-                      event.smart_insight.icon === 'rising' && "text-amber-700",
-                      event.smart_insight.icon === 'stable' && "text-slate-600",
-                    )}>
-                      {event.smart_insight.verdict}
-                    </span>
-                    <p className="text-sm font-bold text-slate-500 leading-tight">
-                      {event.smart_insight.detail}
-                    </p>
-                  </div>
-                </div>
-              ) : null}
+              <div className="w-full mt-1">
+                <ForecastTeaser currentWait={Math.max(0, event.wait_time_minutes)} forecastPoints={event.forecast_points} />
+              </div>
             </div>
           </div>
         )}

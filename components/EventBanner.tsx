@@ -117,6 +117,11 @@ export function EventBanner({ event }: EventBannerProps) {
                             <div className={clsx("text-xs font-medium opacity-80", styles.text)}>
                                 {timeLabel} {timeValue}
                             </div>
+                            {event.description && (
+                                <p className={clsx("text-xs mt-1.5 leading-snug font-medium opacity-100", styles.text)}>
+                                    {event.description}
+                                </p>
+                            )}
                         </div>
 
                         {/* Optional: Small 'Pop Out' Icon (Non-clickable, visual only) */}

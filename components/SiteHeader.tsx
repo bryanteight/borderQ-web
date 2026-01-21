@@ -33,6 +33,10 @@ export function SiteHeader() {
 
                 {/* Right Controls: Direction Toggle + Region Selector */}
                 <div className="flex items-center gap-2 sm:gap-4 md:gap-6">
+                    <Link href="/vectors" className="hidden sm:block text-sm font-bold text-slate-500 hover:text-blue-600 transition-colors">
+                        How it Works
+                    </Link>
+
                     {/* Direction Toggle (Moved from page body) */}
                     <div className="hidden sm:block">
                         <Suspense fallback={<div className="w-[200px] h-[36px] bg-slate-100 rounded-lg animate-pulse" />}>

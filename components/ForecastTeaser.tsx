@@ -77,10 +77,10 @@ export function ForecastTeaser({ currentWait, forecastPoints }: ForecastTeaserPr
             </div>
 
             {/* Sparkline Layer (Bottom) */}
-            <div className="relative h-14 w-full opacity-90 px-0">
+            <div className="relative h-24 w-full opacity-90 px-0">
                 <SimpleSparkline
                     points={forecastPoints}
-                    minimal={true}
+                    minimal={false}
                     color={s.chart as any}
                     labels={absoluteLabels}
                 />

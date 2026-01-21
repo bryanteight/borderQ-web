@@ -42,6 +42,7 @@ export interface EventAlert {
   hours_until_end: number;
   expected_attendance: number;
   url?: string;
+  description?: string;
 }
 
 export interface PlanningData {
