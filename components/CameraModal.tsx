@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { X, ChevronLeft, ChevronRight, AlertCircle, Maximize2, RotateCw } from "lucide-react";
 import { getBaseUrl } from "@/lib/api";
 import { CameraIcon } from "./icons/CameraIcon";
@@ -28,6 +28,7 @@ export function CameraModal({ crossingId, crossingName, isOpen, onClose }: Camer
     const [error, setError] = useState<string | null>(null);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [isRotated, setIsRotated] = useState(false);
+    const touchStart = useRef<number | null>(null);
 
     useEffect(() => {
         if (!isOpen) return;
@@ -65,6 +66,23 @@ export function CameraModal({ crossingId, crossingName, isOpen, onClose }: Camer
 
     const handleNext = () => {
         setCurrentIndex((prev) => (prev === snapshots.length - 1 ? 0 : prev + 1));
+    };
+
+    const handleTouchStart = (e: React.TouchEvent) => {
+        touchStart.current = e.touches[0].clientX;
+    };
+
+    const handleTouchEnd = (e: React.TouchEvent) => {
+        if (touchStart.current === null) return;
+        const touchEnd = e.changedTouches[0].clientX;
+        const diff = touchStart.current - touchEnd;
+
+        if (diff > 50) {
+            handleNext();
+        } else if (diff < -50) {
+            handlePrevious();
+        }
+        touchStart.current = null;
     };
 
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -141,15 +159,17 @@ export function CameraModal({ crossingId, crossingName, isOpen, onClose }: Camer
                                 {/* Image Container Wrapper */}
                                 <div className="flex justify-center overflow-hidden">
                                     <div
-                                        className="relative inline-flex justify-center items-center group cursor-zoom-in"
+                                        className="relative inline-flex justify-center items-center group cursor-zoom-in touch-pan-y"
                                         onClick={() => setIsFullscreen(true)}
+                                        onTouchStart={handleTouchStart}
+                                        onTouchEnd={handleTouchEnd}
                                     >
                                         {currentSnapshot.available ? (
                                             <>
                                                 <img
                                                     src={currentSnapshot.url}
                                                     alt={currentSnapshot.name}
-                                                    className="w-full h-auto max-h-[60vh] object-contain rounded-lg transition-transform duration-300 group-hover:scale-[1.01]"
+                                                    className="w-full h-auto max-h-[60vh] object-contain rounded-lg transition-transform duration-300 md:group-hover:scale-[1.01]"
                                                     style={{ clipPath: "inset(0 0 6% 0)", marginBottom: "-6%" }}
                                                     onError={(e) => {
                                                         (e.target as HTMLImageElement).src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600'%3E%3Crect fill='%23f1f5f9' width='800' height='600'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='20' fill='%2394a3b8'%3ECamera Unavailable%3C/text%3E%3C/svg%3E";
@@ -164,8 +184,8 @@ export function CameraModal({ crossingId, crossingName, isOpen, onClose }: Camer
                                                     )}
                                                 </div>
 
-                                                {/* Click Hint */}
-                                                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/10 rounded-lg pointer-events-none">
+                                                {/* Click Hint (Hidden on touch) */}
+                                                <div className="absolute inset-0 hidden md:flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/10 rounded-lg pointer-events-none">
                                                     <div className="bg-black/60 text-white px-3 py-1.5 rounded-full text-xs font-medium backdrop-blur-md flex items-center gap-2">
                                                         <Maximize2 className="w-3 h-3" />
                                                         Click to Expand
@@ -179,19 +199,19 @@ export function CameraModal({ crossingId, crossingName, isOpen, onClose }: Camer
                                             </div>
                                         )}
 
-                                        {/* Navigation Arrows (Stop Propagation to prevent zoom) */}
+                                        {/* Navigation Arrows */}
                                         {snapshots.length > 1 && (
                                             <>
                                                 <button
                                                     onClick={(e) => { e.stopPropagation(); handlePrevious(); }}
-                                                    className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-transparent hover:bg-white/10 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] flex items-center justify-center transition-all opacity-0 group-hover:opacity-100"
+                                                    className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-12 h-12 md:w-10 md:h-10 rounded-full bg-black/20 md:bg-transparent md:hover:bg-white/10 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] flex items-center justify-center transition-all opacity-100 md:opacity-0 md:group-hover:opacity-100"
                                                     aria-label="Previous camera"
                                                 >
                                                     <ChevronLeft className="w-8 h-8" />
                                                 </button>
                                                 <button
                                                     onClick={(e) => { e.stopPropagation(); handleNext(); }}
-                                                    className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-transparent hover:bg-white/10 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] flex items-center justify-center transition-all opacity-0 group-hover:opacity-100"
+                                                    className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-12 h-12 md:w-10 md:h-10 rounded-full bg-black/20 md:bg-transparent md:hover:bg-white/10 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] flex items-center justify-center transition-all opacity-100 md:opacity-0 md:group-hover:opacity-100"
                                                     aria-label="Next camera"
                                                 >
                                                     <ChevronRight className="w-8 h-8" />
