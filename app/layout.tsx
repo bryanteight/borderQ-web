@@ -27,8 +27,8 @@ import { InstallPrompt } from "@/components/InstallPrompt";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://borderq.com"),
-  title: "BorderQ | US-Canada Border Wait Time Estimation",
-  description: "Accurate wait time predictions for US-Canada border crossings. Get real-time data and plan your trip between BC and Washington State.",
+  title: "BorderQ | BC-Washington Border Wait Times & AI Traffic Forecast",
+  description: "Real-time BC-Washington border wait times, AI-powered traffic predictions, and live camera feeds for Peace Arch, Pacific Highway, and Aldergrove.",
   manifest: "/manifest.json",
   icons: {
     icon: "/icon-v2.png",

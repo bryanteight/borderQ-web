@@ -48,8 +48,8 @@ export default async function Home() {
     <main className="min-h-screen bg-[#F6F8FA] text-slate-900 pb-20 font-sans">
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 md:py-10">
-        {/* Event Alert Banner - extracted from API data */}
-        {(() => {
+        {/* Event Alert Banner - DEV ONLY */}
+        {process.env.NODE_ENV === 'development' && (() => {
           // Find first event with an event_alert
           const eventAlert = data.data?.find((e: any) => e.event_alert)?.event_alert as EventAlert | undefined;
           return eventAlert && (

@@ -3,7 +3,7 @@ import { SummaryResponse } from "@/lib/types";
 // Force dynamic rendering so we always get fresh data
 export const dynamic = 'force-dynamic';
 
-function getBaseUrl(): string {
+export function getBaseUrl(): string {
     let baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
     if (baseUrl.endsWith('/')) {
         baseUrl = baseUrl.slice(0, -1);

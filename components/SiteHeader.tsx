@@ -31,6 +31,14 @@ export function SiteHeader() {
                     </Link>
                 </div>
 
+                {/* SEO Header Title - Center */}
+                <div className="hidden lg:flex flex-col items-center justify-center flex-1 mx-4">
+                    <h1 className="text-[11px] font-black text-slate-800 uppercase tracking-[0.2em] text-center whitespace-nowrap">
+                        BC-Washington Border Wait Times & AI Forecast
+                    </h1>
+                    <div className="h-0.5 w-12 bg-indigo-500/30 mt-1 rounded-full"></div>
+                </div>
+
                 {/* Right Controls: Direction Toggle + Region Selector */}
                 <div className="flex items-center gap-2 sm:gap-4 md:gap-6">
                     <Link href="/vectors" className="hidden sm:block text-sm font-bold text-slate-500 hover:text-blue-600 transition-colors">

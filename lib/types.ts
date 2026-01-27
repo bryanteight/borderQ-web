@@ -30,6 +30,7 @@ export interface BorderEvent {
   typical_points?: number[]; // Baseline for comparison
   timeline_labels?: string[];
   event_alert?: EventAlert; // Event alert data from backend
+  has_cameras?: boolean;
 }
 
 export interface EventAlert {
