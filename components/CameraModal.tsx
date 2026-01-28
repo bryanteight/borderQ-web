@@ -170,26 +170,22 @@ export function CameraModal({ crossingId, crossingName, isOpen, onClose }: Camer
                                                     src={currentSnapshot.url}
                                                     alt={currentSnapshot.name}
                                                     className="w-full h-auto max-h-[60vh] object-contain rounded-lg transition-transform duration-300 md:group-hover:scale-[1.01]"
-                                                    style={{ clipPath: "inset(0 0 6% 0)", marginBottom: "-6%" }}
                                                     onError={(e) => {
                                                         (e.target as HTMLImageElement).src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600'%3E%3Crect fill='%23f1f5f9' width='800' height='600'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='20' fill='%2394a3b8'%3ECamera Unavailable%3C/text%3E%3C/svg%3E";
                                                     }}
                                                 />
-                                                {/* Timestamp Overlay */}
-                                                <div className="absolute bottom-1 left-2 text-white/90 text-[10px] md:text-xs font-bold tracking-wide drop-shadow-md pointer-events-none">
-                                                    {currentSnapshot.last_updated ? (
-                                                        <span>Updated: {new Date(currentSnapshot.last_updated as string).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
-                                                    ) : (
-                                                        <span>Updated: Live</span>
-                                                    )}
-                                                </div>
 
-                                                {/* Click Hint (Hidden on touch) */}
+                                                {/* Click Hint (Desktop: Hover Hint | Mobile: Constant Icon) */}
                                                 <div className="absolute inset-0 hidden md:flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/10 rounded-lg pointer-events-none">
                                                     <div className="bg-black/60 text-white px-3 py-1.5 rounded-full text-xs font-medium backdrop-blur-md flex items-center gap-2">
                                                         <Maximize2 className="w-3 h-3" />
                                                         Click to Expand
                                                     </div>
+                                                </div>
+
+                                                {/* Mobile-only Expand Icon */}
+                                                <div className="absolute top-2 right-2 md:hidden bg-black/40 text-white p-2 rounded-full backdrop-blur-md pointer-events-none">
+                                                    <Maximize2 className="w-4 h-4" />
                                                 </div>
                                             </>
                                         ) : (
@@ -204,14 +200,14 @@ export function CameraModal({ crossingId, crossingName, isOpen, onClose }: Camer
                                             <>
                                                 <button
                                                     onClick={(e) => { e.stopPropagation(); handlePrevious(); }}
-                                                    className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-12 h-12 md:w-10 md:h-10 rounded-full bg-black/20 md:bg-transparent md:hover:bg-white/10 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] flex items-center justify-center transition-all opacity-100 md:opacity-0 md:group-hover:opacity-100"
+                                                    className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-12 h-12 md:w-10 md:h-10 rounded-full bg-black/30 md:bg-transparent md:hover:bg-white/10 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] flex items-center justify-center transition-all opacity-100 md:opacity-0 md:group-hover:opacity-100"
                                                     aria-label="Previous camera"
                                                 >
                                                     <ChevronLeft className="w-8 h-8" />
                                                 </button>
                                                 <button
                                                     onClick={(e) => { e.stopPropagation(); handleNext(); }}
-                                                    className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-12 h-12 md:w-10 md:h-10 rounded-full bg-black/20 md:bg-transparent md:hover:bg-white/10 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] flex items-center justify-center transition-all opacity-100 md:opacity-0 md:group-hover:opacity-100"
+                                                    className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-12 h-12 md:w-10 md:h-10 rounded-full bg-black/30 md:bg-transparent md:hover:bg-white/10 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] flex items-center justify-center transition-all opacity-100 md:opacity-0 md:group-hover:opacity-100"
                                                     aria-label="Next camera"
                                                 >
                                                     <ChevronRight className="w-8 h-8" />
@@ -224,9 +220,14 @@ export function CameraModal({ crossingId, crossingName, isOpen, onClose }: Camer
                                 {/* Pagination Dots */}
                                 {snapshots.length > 1 && (
                                     <div className="flex items-center justify-center gap-2 py-2">
-                                        <span className="text-xs text-slate-400 font-medium mr-2">
-                                            {currentIndex + 1} / {snapshots.length}
-                                        </span>
+                                        <div className="flex flex-col items-center">
+                                            <span className="text-xs text-slate-400 font-medium">
+                                                {currentIndex + 1} / {snapshots.length}
+                                            </span>
+                                            <span className="text-[10px] text-slate-300 md:hidden font-medium animate-pulse">
+                                                Swipe to browse
+                                            </span>
+                                        </div>
                                         <div className="flex gap-1.5">
                                             {snapshots.map((_, idx) => (
                                                 <button
@@ -255,16 +256,21 @@ export function CameraModal({ crossingId, crossingName, isOpen, onClose }: Camer
                     onClick={() => setIsFullscreen(false)}
                 >
                     {/* Image */}
-                    <img
-                        src={currentSnapshot.url}
-                        alt={currentSnapshot.name}
-                        className={clsx(
-                            "transition-all duration-300 object-contain",
-                            isRotated ? "w-[90vh] h-[90vw] rotate-90" : "w-full h-full max-h-screen p-2"
-                        )}
-                        style={{ clipPath: "inset(0 0 6% 0)" }} // Keep footer clipped even in fullscreen
-                        onClick={(e) => e.stopPropagation()}
-                    />
+                    {/* Image Container (needed for relative positioning of mask) */}
+                    <div className="relative inline-block" onClick={(e) => e.stopPropagation()}>
+                        <img
+                            src={currentSnapshot.url}
+                            alt={currentSnapshot.name}
+                            className={clsx(
+                                "transition-all duration-300 object-contain",
+                                isRotated ? "w-[90vh] h-[90vw] rotate-90" : "w-full h-full max-h-screen p-2"
+                            )}
+                            onError={(e) => {
+                                onClose(); // Close on error in fullscreen
+                            }}
+                        />
+                        {/* Branding Mask (Fullscreen) */}
+                    </div>
 
                     {/* Controls */}
                     <div className="absolute top-4 right-4 flex gap-2">

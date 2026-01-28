@@ -20,15 +20,27 @@ interface CameraSnapshot {
     available: boolean;
 }
 
+// Simple module-level cache to persist data across tab switches (NB/SB)
+// This prevents redundant API calls and UI flickering when the user toggles views.
+const THUMBNAIL_CACHE: Record<string, { data: CameraSnapshot; timestamp: number }> = {};
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
 export function CameraThumbnail({ crossingId, crossingName, hasCameras, onOpen, className }: CameraThumbnailProps) {
     const [snapshot, setSnapshot] = useState<CameraSnapshot | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
 
-    // Camera polling logic is moved to backend (hasCameras prop)
-
     useEffect(() => {
         if (!hasCameras) {
+            setLoading(false);
+            return;
+        }
+
+        // Check Cache first
+        const cached = THUMBNAIL_CACHE[crossingId];
+        const now = Date.now();
+        if (cached && (now - cached.timestamp < CACHE_TTL)) {
+            setSnapshot(cached.data);
             setLoading(false);
             return;
         }
@@ -42,8 +54,13 @@ export function CameraThumbnail({ crossingId, crossingName, hasCameras, onOpen, 
 
                 const data = await res.json();
                 if (data && data.length > 0) {
-                    // Use the first available camera as the thumbnail
-                    setSnapshot(data[0]);
+                    const firstSnapshot = data[0];
+                    setSnapshot(firstSnapshot);
+                    // Update Cache
+                    THUMBNAIL_CACHE[crossingId] = {
+                        data: firstSnapshot,
+                        timestamp: Date.now()
+                    };
                 } else {
                     setError(true);
                 }
