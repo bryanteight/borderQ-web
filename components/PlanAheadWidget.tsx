@@ -68,8 +68,11 @@ export function PlanAheadWidget({ planning }: { planning: { SOUTHBOUND: Planning
     const style = getCardStyles(selectedItem);
     const Icon = style.icon;
 
-    // 4. Northbound Check: Hide widget completely
+    // Hide Plan Ahead widget for Northbound until data collection is complete
     if (direction === 'NORTHBOUND') return null;
+
+    const detailSlug = 'vancouver-to-seattle';
+    const detailQuery = '';
 
     return (
         <div className="w-full mb-6">
@@ -175,7 +178,7 @@ export function PlanAheadWidget({ planning }: { planning: { SOUTHBOUND: Planning
                             className="h-full"
                         >
                             <Link
-                                href={`/stats/vancouver-to-seattle/${selectedItem.slug}`}
+                                href={`/stats/${detailSlug}/${selectedItem.slug}${detailQuery}`}
                                 className="h-full flex flex-col relative group bg-white border border-slate-200/60 p-6 lg:p-8 rounded-[2rem] hover:shadow-xl hover:shadow-indigo-100/50 hover:border-indigo-200 transition-all duration-300 active:scale-[0.99] overflow-hidden"
                             >
                                 {/* Background Decor */}

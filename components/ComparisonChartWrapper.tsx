@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ComparisonChart } from "./ComparisonChart";
+import { AIInsight } from "./AIInsight";
 
 interface ComparisonData {
     day: string;
@@ -58,14 +59,7 @@ export function ComparisonChartWrapper({ day, direction = "southbound" }: { day:
             <ComparisonChart data={data} />
 
             {data.ai_insight && (
-                <section className="space-y-4">
-                    <h2 className="text-xl font-bold tracking-tight text-slate-900 leading-tight">
-                        Detailed Traffic Analysis
-                    </h2>
-                    <div className="prose prose-slate max-w-none text-slate-600 leading-relaxed whitespace-pre-wrap">
-                        {data.ai_insight}
-                    </div>
-                </section>
+                <AIInsight content={data.ai_insight} />
             )}
         </div>
     );

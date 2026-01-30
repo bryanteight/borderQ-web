@@ -27,7 +27,10 @@ export function SiteHeader() {
                             Border
                             <BorderQLogo className="w-6 h-6 sm:w-8 sm:h-8 sm:w-10 sm:h-10 -ml-1 mb-1" />
                         </span>
-                        <span className="text-[9px] sm:text-[10px] font-bold text-slate-400 tracking-widest uppercase ml-1">Traffic AI</span>
+                        <div className="flex items-center gap-2 ml-1">
+                            <span className="text-[9px] sm:text-[10px] font-bold text-slate-400 tracking-widest uppercase">Traffic AI</span>
+                            <span className="text-[8px] font-black text-indigo-600 bg-indigo-100 px-1.5 py-0.5 rounded-full uppercase tracking-wide">Beta</span>
+                        </div>
                     </Link>
                 </div>
 

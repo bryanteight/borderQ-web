@@ -51,3 +51,24 @@ export async function getExchangeRate(): Promise<ExchangeRate | null> {
         return null;
     }
 }
+
+export async function sendContactFeedback(email: string, message: string): Promise<{ success: boolean; message: string }> {
+    try {
+        const baseUrl = getBaseUrl();
+        const res = await fetch(`${baseUrl}/api/v1/contact`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, message }),
+        });
+
+        if (!res.ok) {
+            return { success: false, message: "Submission failed. Please try again later." };
+        }
+
+        return { success: true, message: "Success" };
+    } catch (e: any) {
+        return { success: false, message: e?.message || "Could not connect to the server." };
+    }
+}

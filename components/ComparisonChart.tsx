@@ -202,7 +202,7 @@ export function ComparisonChart({ data }: ComparisonChartProps) {
                         style={{ borderLeftColor: port.color }}
                     >
                         <div className="text-white font-bold text-sm">
-                            {port.name.replace(" (Southbound)", "").replace(" / Douglas", "").replace(" / Aldergrove", "")}
+                            {port.name.replace(" (Southbound)", "").replace(" (Northbound)", "").replace(" / Douglas", "").replace(" / Aldergrove", "")}
                         </div>
                         <div className="text-slate-400 text-xs">{port.subtitle}</div>
                     </div>

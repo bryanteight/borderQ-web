@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
-import { ComparisonChartWrapper } from "@/components/ComparisonChartWrapper";
+import { ArrowLeft, Database, TrendingUp, Clock } from "lucide-react";
 import { Metadata } from "next";
 
 export async function generateMetadata({ params }: { params: Promise<{ day: string }> }): Promise<Metadata> {
@@ -46,21 +45,71 @@ export default async function RegionalStatsPageNB({ params }: { params: Promise<
                     <h2 className="text-lg sm:text-xl font-medium text-slate-500 mb-6">
                         Seattle (WA) to Vancouver (BC) Prediction
                     </h2>
-
-
                 </div>
             </div>
 
             <div className="max-w-3xl mx-auto px-6 space-y-8">
-                {/* Placeholder Content */}
-                <section className="mt-8 flex flex-col items-center justify-center p-12 bg-white rounded-2xl border border-dashed border-slate-300 shadow-sm text-center">
-                    <div className="w-16 h-16 bg-indigo-50 rounded-full flex items-center justify-center mb-4">
-                        <span className="text-2xl">🚧</span>
+                {/* Data Collection Notice */}
+                <section className="mt-8">
+                    <div className="bg-white rounded-[2rem] border border-slate-200 p-8 md:p-12 text-center shadow-sm">
+                        {/* Icon */}
+                        <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-full flex items-center justify-center">
+                            <Database className="w-10 h-10 text-indigo-600" />
+                        </div>
+
+                        {/* Title */}
+                        <h3 className="text-2xl font-[800] text-slate-900 mb-3">
+                            Data Collection in Progress
+                        </h3>
+
+                        {/* Description */}
+                        <p className="text-slate-600 leading-relaxed max-w-md mx-auto mb-8">
+                            We're actively gathering Northbound traffic patterns to build accurate {dayName} forecasts.
+                            Our AI needs at least 30 days of data per weekday to generate reliable predictions.
+                        </p>
+
+                        {/* Progress Indicators */}
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 max-w-lg mx-auto">
+                            <div className="bg-slate-50 rounded-xl p-4">
+                                <div className="flex items-center justify-center gap-2 text-emerald-600 mb-1">
+                                    <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                                    <span className="text-xs font-bold uppercase tracking-wider">Active</span>
+                                </div>
+                                <p className="text-sm font-medium text-slate-700">Data Ingestion</p>
+                            </div>
+                            <div className="bg-slate-50 rounded-xl p-4">
+                                <div className="flex items-center justify-center gap-2 text-amber-600 mb-1">
+                                    <Clock className="w-3 h-3" />
+                                    <span className="text-xs font-bold uppercase tracking-wider">~18 Days</span>
+                                </div>
+                                <p className="text-sm font-medium text-slate-700">Collected</p>
+                            </div>
+                            <div className="bg-slate-50 rounded-xl p-4">
+                                <div className="flex items-center justify-center gap-2 text-indigo-600 mb-1">
+                                    <TrendingUp className="w-3 h-3" />
+                                    <span className="text-xs font-bold uppercase tracking-wider">Soon</span>
+                                </div>
+                                <p className="text-sm font-medium text-slate-700">AI Insights</p>
+                            </div>
+                        </div>
+
+                        {/* CTA */}
+                        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                            <Link
+                                href={`/stats/vancouver-to-seattle/${day}`}
+                                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-slate-900 text-white font-bold rounded-full hover:bg-slate-800 transition-colors"
+                            >
+                                View Southbound Forecast
+                                <ArrowLeft className="w-4 h-4 rotate-180" />
+                            </Link>
+                            <Link
+                                href="/"
+                                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-slate-100 text-slate-700 font-bold rounded-full hover:bg-slate-200 transition-colors"
+                            >
+                                Live Dashboard
+                            </Link>
+                        </div>
                     </div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-2">Northbound Prediction Coming Soon</h3>
-                    <p className="text-slate-500 max-w-md">
-                        We are currently training our AI models on historical traffic patterns for Seattle to Vancouver. Please check back later!
-                    </p>
                 </section>
             </div>
         </div>

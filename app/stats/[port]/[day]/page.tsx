@@ -140,7 +140,7 @@ export default async function StatsPage({ params, searchParams }: { params: Prom
         <header className="relative bg-[#F6F8FA] border-b border-white/50 py-4 px-6 mb-6">
             <div className="max-w-md mx-auto flex items-center justify-between">
                 {/* Back to Regional */}
-                <Link href={`/stats/vancouver-to-seattle/${day}`} className="flex items-center gap-2 group">
+                <Link href={`/stats/${isNorthbound ? 'seattle-to-vancouver' : 'vancouver-to-seattle'}/${day}`} className="flex items-center gap-2 group">
                     <div className="p-2 rounded-full bg-white shadow-sm border border-slate-100 group-hover:bg-slate-50 transition-colors">
                         <ArrowLeft className="w-4 h-4 text-slate-600" />
                     </div>

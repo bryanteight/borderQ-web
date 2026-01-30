@@ -6,13 +6,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // 1. Static Pages
     const staticRoutes = [
         '',
+        '/about',
+        '/contact',
+        '/vectors',
         '/privacy',
         '/terms',
     ].map((route) => ({
         url: `${baseUrl}${route}`,
         lastModified: new Date(),
         changeFrequency: 'monthly' as const,
-        priority: route === '' ? 1.0 : 0.5,
+        priority: route === '' ? 1.0 : 0.8,
     }));
 
     // Start with Standard Days
@@ -38,13 +41,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }));
 
     // 3. Aggregate Stats Pages (Regional)
-    // /stats/seattle-to-vancouver/[day]
-    const aggregateRoutes = days.map((day) => ({
-        url: `${baseUrl}/stats/vancouver-to-seattle/${day}`,
-        lastModified: new Date(),
-        changeFrequency: 'weekly' as const,
-        priority: 0.8,
-    }));
+    // /stats/vancouver-to-seattle/[day] and /stats/seattle-to-vancouver/[day]
+    const aggregateRoutes = [
+        ...days.map((day) => ({
+            url: `${baseUrl}/stats/vancouver-to-seattle/${day}`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly' as const,
+            priority: 0.8,
+        })),
+        ...days.map((day) => ({
+            url: `${baseUrl}/stats/seattle-to-vancouver/${day}`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly' as const,
+            priority: 0.8,
+        }))
+    ];
 
     // 4. Single Port Stats Pages
     // /stats/[port]/[day]

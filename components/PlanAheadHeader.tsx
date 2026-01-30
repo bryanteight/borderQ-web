@@ -5,6 +5,7 @@ import { useDirection } from "@/context/DirectionContext";
 export function PlanAheadHeader() {
     const { direction } = useDirection();
 
+    // Hide for Northbound until data collection is complete
     if (direction === 'NORTHBOUND') return null;
 
     return (

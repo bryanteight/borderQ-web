@@ -84,7 +84,7 @@ export function StatusCardCarousel({ events, updatedAt }: { events: BorderEvent[
                 >
                     <div
                         ref={containerRef}
-                        className="flex overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 px-4 md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible md:pb-0 md:mx-0 md:px-0 gap-4 mb-2 md:mb-12 scrollbar-hide perspective-1000"
+                        className="flex overflow-x-auto snap-x snap-mandatory pt-20 -mt-20 pb-4 -mx-4 px-4 md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible md:pt-0 md:mt-0 md:pb-0 md:mx-0 md:px-0 gap-4 mb-2 md:mb-12 scrollbar-hide perspective-1000"
                     >
                         {sortedEvents.map((event) => (
                             <div key={event.id} className="min-w-[80vw] sm:min-w-[380px] md:min-w-0 snap-center h-full">

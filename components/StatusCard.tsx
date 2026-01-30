@@ -6,7 +6,8 @@ import { TrendingDown, TrendingUp, Minus, Activity, Car, Zap, ChevronRight } fro
 import { clsx } from "clsx";
 import { ForecastTeaser } from "./ForecastTeaser";
 import { CameraModal } from "./CameraModal";
-import { CameraThumbnail } from "./CameraThumbnail"; // New Import
+import { CameraThumbnail } from "./CameraThumbnail";
+import { Tooltip } from "./Tooltip";
 import { getSlugFromEvent, isEventClosed } from "@/lib/utils";
 
 export function StatusCard({ event }: { event: BorderEvent }) {
@@ -64,8 +65,9 @@ export function StatusCard({ event }: { event: BorderEvent }) {
 
             {/* Official Estimate Label */}
             {!isClosed && !isNoData && (
-              <span className="text-[#94a3b8] font-black text-[10px] uppercase tracking-[0.1em] whitespace-nowrap mt-2">
+              <span className="text-[#94a3b8] font-black text-[10px] uppercase tracking-[0.1em] whitespace-nowrap mt-2 flex items-center gap-1">
                 OFFICIAL ESTIMATE
+                <Tooltip id="wait-time" align="left" content="Max of CBSA, CBP & DriveBC. Updates every 5 mins." />
               </span>
             )}
             {isClosed && (
@@ -78,10 +80,13 @@ export function StatusCard({ event }: { event: BorderEvent }) {
 
           <div className="flex flex-col items-end gap-2">
             {!isClosed && event.standard_lanes_open !== undefined && event.standard_lanes_open !== null && (
-              <span className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 text-white text-[9px] font-black uppercase tracking-tight rounded-full shadow-lg shadow-emerald-100 transition-transform active:scale-95 whitespace-nowrap">
-                <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                {event.standard_lanes_open} {event.standard_lanes_open === 1 ? "Lane" : "Lanes"}
-              </span>
+              <div className="flex items-center gap-1">
+                <span className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 text-white text-[9px] font-black uppercase tracking-tight rounded-full shadow-lg shadow-emerald-100 transition-transform active:scale-95 whitespace-nowrap">
+                  <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                  {event.standard_lanes_open} {event.standard_lanes_open === 1 ? "Lane" : "Lanes"}
+                </span>
+                <Tooltip id="lane-count" align="right" side="bottom" content="Number of inspection lanes currently open." />
+              </div>
             )}
 
             {/* View Details Link - DEV ONLY */}
