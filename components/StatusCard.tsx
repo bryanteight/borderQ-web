@@ -67,7 +67,7 @@ export function StatusCard({ event }: { event: BorderEvent }) {
             {!isClosed && !isNoData && (
               <span className="text-[#94a3b8] font-black text-[10px] uppercase tracking-[0.1em] whitespace-nowrap mt-2 flex items-center gap-1">
                 OFFICIAL ESTIMATE
-                <Tooltip id="wait-time" align="left" content="Max of CBSA, CBP & DriveBC. Updates every 5 mins." />
+                <Tooltip id="wait-time" align="left" content="Max of CBSA, CBP & DriveBC. Updates every 15 mins." />
               </span>
             )}
             {isClosed && (
