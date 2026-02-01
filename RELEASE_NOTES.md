@@ -1,2 +1,2 @@
-# Release Notes v0.6.9 (2026-01-30)
+# Release Notes v0.6.10 (2026-02-01)
 
