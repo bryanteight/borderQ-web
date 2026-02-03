@@ -97,3 +97,36 @@ export async function getSpecificForecast(date: string, crossing_id: string, dir
         return null;
     }
 }
+
+export interface ComparisonForecast {
+    date: string;
+    direction: string;
+    ports: Record<string, {
+        id: string;
+        name: string;
+        slug: string;
+        forecast_96_slots: number[];
+        tier_used: string;
+        confidence: string;
+    }>;
+    smart_pick: {
+        recommended_port_ids: string[];
+        reason: string;
+        average_waits: Record<string, number>;
+    };
+    is_holiday: boolean;
+    holiday_name: string | null;
+}
+
+export async function getComparisonForecast(date: string, direction: string): Promise<ComparisonForecast | null> {
+    try {
+        const baseUrl = getBaseUrl();
+        const res = await fetch(`${baseUrl}/api/v1/forecast/comparison/${date}?direction=${direction}`, {
+            next: { revalidate: 600 } // Cache for 10 mins
+        });
+        if (!res.ok) return null;
+        return res.json();
+    } catch {
+        return null;
+    }
+}

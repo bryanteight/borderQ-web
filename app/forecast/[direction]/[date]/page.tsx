@@ -1,4 +1,4 @@
-import { getSpecificForecast } from "@/lib/api";
+import { getComparisonForecast } from "@/lib/api";
 import { ForecastDetailView } from "@/components/ForecastDetailView";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
@@ -29,19 +29,16 @@ export default async function ForecastPage({ params }: Props) {
 
     // Map URL slug to backend enums
     let dirEnum = "";
-    let crossingId = ""; // Peace Arch as Primary
 
     if (direction === "vancouver-to-seattle") {
         dirEnum = "SOUTHBOUND";
-        crossingId = "02300402";
     } else if (direction === "seattle-to-vancouver") {
         dirEnum = "NORTHBOUND";
-        crossingId = "02300402"; // Backend handles mapping to NB_ ID
     } else {
         notFound();
     }
 
-    const forecast = await getSpecificForecast(date, crossingId, dirEnum);
+    const forecast = await getComparisonForecast(date, dirEnum);
 
     if (!forecast) {
         return (
