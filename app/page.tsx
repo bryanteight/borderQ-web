@@ -6,6 +6,7 @@ import { ExchangeRateBadge } from "@/components/ExchangeRateBadge";
 import { getBorderData } from "@/lib/api";
 import { TrendingUp, TrendingDown, Clock, Sun, ArrowRight, Calendar, Star, Car } from "lucide-react";
 import { PlanAheadWidget } from "@/components/PlanAheadWidget"; // [NEW]
+import { SmartForecastWidget } from "@/components/SmartForecastWidget";
 import { StatusCardCarousel } from "@/components/StatusCardCarousel";
 import { DirectionTabs } from "@/components/DirectionTabs";
 import { EventAlert } from "@/lib/types";
@@ -69,8 +70,11 @@ export default async function Home() {
         {/* 3. Hero Section (Slogan) - Optional/Reduced */}
         <PlanAheadHeader />
 
+        {/* 3b. Smart Forecast (New) */}
+        <SmartForecastWidget />
+
         {/* 4. Plan Ahead Widget - "Peeking" Up Aggressively */}
-        <div className="-mt-12 md:mt-0 relative z-10">
+        <div className="-mt-4 md:mt-0 relative z-10">
           <PlanAheadWidget planning={planningData} />
         </div>
 

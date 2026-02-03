@@ -72,3 +72,28 @@ export async function sendContactFeedback(email: string, message: string): Promi
         return { success: false, message: e?.message || "Could not connect to the server." };
     }
 }
+
+export interface SpecificForecast {
+    date: string;
+    crossing_id: string;
+    direction: string;
+    forecast_96_slots: number[];
+    tier_used: string;
+    confidence: string;
+    context: any;
+    best_window: { start: string, end: string };
+    similar_days: any[];
+}
+
+export async function getSpecificForecast(date: string, crossing_id: string, direction: string): Promise<SpecificForecast | null> {
+    try {
+        const baseUrl = getBaseUrl();
+        const res = await fetch(`${baseUrl}/api/v1/forecast/specific/${date}?crossing_id=${crossing_id}&direction=${direction}`, {
+            next: { revalidate: 300 } // Cache for 5 mins
+        });
+        if (!res.ok) return null;
+        return res.json();
+    } catch {
+        return null;
+    }
+}
