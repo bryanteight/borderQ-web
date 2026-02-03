@@ -38,11 +38,11 @@ export function ForecastDetailView({ forecast }: { forecast: SpecificForecast })
                                 Artificial Intelligence
                             </span>
                             <span className="px-2.5 py-1 rounded-md bg-white border border-slate-200 text-slate-500 text-[10px] font-bold uppercase tracking-wider">
-                                {forecast.crossing_id}
+                                {getPortName(forecast.crossing_id)}
                             </span>
                         </div>
                         <h1 className="text-3xl md:text-5xl font-[900] text-slate-900 tracking-tight mb-2">
-                            Smart Forecast
+                            {forecast.direction === "SOUTHBOUND" ? "Southbound" : "Northbound"} Forecast
                         </h1>
                         <p className="text-xl text-slate-500 font-medium">
                             {dateObj.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
@@ -240,4 +240,13 @@ function convertToAMPM(time24: string) {
     hour = hour % 12;
     hour = hour ? hour : 12;
     return `${hour}:${m} ${ampm}`;
+}
+
+function getPortName(id: string) {
+    // Normal IDs
+    if (id === "02300402" || id === "NB_02300402") return "Peace Arch";
+    if (id === "02300401" || id === "NB_02300401") return "Pacific Highway";
+    if (id === "02302301" || id === "NB_02302301") return "Lynden";
+    // Fallback
+    return id;
 }
