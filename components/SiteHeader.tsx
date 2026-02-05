@@ -1,15 +1,15 @@
 import React, { Suspense } from 'react';
 import Link from "next/link";
 import { BorderQLogo } from "@/components/BorderQLogo";
-import { RegionSelector } from "@/components/RegionSelector";
+// import { RegionSelector } from "@/components/RegionSelector";
 
 // TODO: In a real app, this state should be managed globally (Context or URL params)
 // For now, we mirror the static tabs from page.tsx to keep the UI functional visually.
-const regionTabs = [
-    { id: 'seattle', label: 'BC / WA', active: true, comingSoon: false },
-    { id: 'niagara', label: 'Niagara / NY', active: false, comingSoon: true },
-    { id: 'detroit', label: 'Detroit / Windsor', active: false, comingSoon: true },
-];
+// const regionTabs = [
+//     { id: 'seattle', label: 'BC / WA', active: true, comingSoon: false },
+//     { id: 'niagara', label: 'Niagara / NY', active: false, comingSoon: true },
+//     { id: 'detroit', label: 'Detroit / Windsor', active: false, comingSoon: true },
+// ];
 
 // Imports cleaned up
 import { CompactDirectionToggle } from "./CompactDirectionToggle";
@@ -27,7 +27,8 @@ export function SiteHeader() {
                             Border
                             <BorderQLogo className="w-6 h-6 sm:w-8 sm:h-8 sm:w-10 sm:h-10 -ml-1 mb-1" />
                         </span>
-                        <div className="flex items-center gap-2 ml-1">
+                        <div className="hidden sm:flex items-center gap-2 ml-1">
+                            {/* Hide subtitle on tiny screens to fit Toggle */}
                             <span className="text-[9px] sm:text-[10px] font-bold text-slate-400 tracking-widest uppercase">Traffic AI</span>
                             <span className="text-[8px] font-black text-indigo-600 bg-indigo-100 px-1.5 py-0.5 rounded-full uppercase tracking-wide">Beta</span>
                         </div>
@@ -48,26 +49,18 @@ export function SiteHeader() {
                         How it Works
                     </Link>
 
-                    {/* Direction Toggle (Moved from page body) */}
-                    <div className="hidden sm:block">
+                    {/* Direction Toggle (Moved to Header Loop for All Screens) */}
+                    <div className="block">
                         <Suspense fallback={<div className="w-[200px] h-[36px] bg-slate-100 rounded-lg animate-pulse" />}>
                             <CompactDirectionToggle />
                         </Suspense>
                     </div>
-                    {/* Mobile: Simple Toggle (Maybe icon based?) -> Stick to compact toggle for now */}
 
-                    {/* Region Selector */}
-                    <div className="flex items-center pl-4 border-l border-slate-200">
+                    {/* Region Selector - Hidden request 2026-02-02 */}
+                    {/* <div className="flex items-center pl-4 border-l border-slate-200">
                         <RegionSelector tabs={regionTabs} />
-                    </div>
+                    </div> */}
                 </div>
-            </div>
-
-            {/* Mobile-Only Direction Toggle Row (Below Header) */}
-            <div className="sm:hidden border-b border-slate-50 bg-white/50 backdrop-blur-sm px-4 py-2 flex justify-center">
-                <Suspense fallback={<div className="w-[200px] h-[36px] bg-slate-100 rounded-lg animate-pulse" />}>
-                    <CompactDirectionToggle />
-                </Suspense>
             </div>
         </header>
     );

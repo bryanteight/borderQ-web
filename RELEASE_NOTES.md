@@ -1,12 +1,6 @@
-# Release Notes v0.7.1 (2026-02-02)
+# Release Notes v0.7.2 (2026-02-05)
 
 ## 🚀 New Features
-- fix: improved long weekend detection logic and added unit tests
-- feat: add long weekend forecast tier and increase sample limits
-- perf: optimize Railway memory usage - limit uvicorn workers, add scheduler Dockerfile
-
-## 🐛 Bug Fixes
-- fix: weekend forecast now uses most recent patterns instead of arbitrary index order
-- fix: cap Updated At timestamp to never show future time
-- fix: prioritize Lynden South camera as thumbnail
+- feat: Multi-port comparison engine with pre-calc and smart decision logic
+- feat: Add specific forecast endpoint with 96-slot resolution
 

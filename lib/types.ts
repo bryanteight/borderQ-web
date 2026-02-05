@@ -56,10 +56,7 @@ export interface PlanningData {
   impactType?: string;
   slug: string;
   avgWait: number;
-  smart_analysis?: {
-    intro: string;
-    savings_analysis: string;
-  };
+  html_report?: string;  // DSPy-generated AI analysis
 }
 
 export interface SummaryResponse {

@@ -1,0 +1,38 @@
+
+> frontend@0.7.1 dev
+> next dev
+
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+   ▲ Next.js 16.0.10 (Turbopack)
+   - Local:         http://localhost:3000
+   - Network:       http://192.168.86.48:3000
+
+ ✓ Starting...
+ ✓ Ready in 539ms
+ GET / 200 in 2.5s (compile: 1759ms, render: 703ms)
+ GET / 200 in 557ms (compile: 10ms, render: 547ms)
+ GET /forecast/vancouver-to-seattle/2026-02-05 200 in 1771ms (compile: 1485ms, render: 286ms)
+ GET / 200 in 305ms (compile: 6ms, render: 299ms)
+ ✓ Compiled in 98ms
+ ✓ Compiled in 176ms
+ ✓ Compiled in 140ms
+ GET / 200 in 5.4s (compile: 110ms, render: 5.3s)
+ GET /stats/lynden/Thursday 200 in 1212ms (compile: 1054ms, render: 158ms)
+ GET / 200 in 321ms (compile: 6ms, render: 315ms)
+ GET /stats/lynden/Thursday 200 in 98ms (compile: 14ms, render: 84ms)
+ GET / 200 in 495ms (compile: 17ms, render: 479ms)
+ GET /forecast/vancouver-to-seattle/2026-02-08 200 in 312ms (compile: 14ms, render: 298ms)
+ GET / 200 in 537ms (compile: 9ms, render: 528ms)
+ GET /stats/peace-arch/Monday 200 in 73ms (compile: 6ms, render: 67ms)
+The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+ GET /forecast/vancouver-to-seattle/2026-02-05 200 in 397ms (compile: 6ms, render: 391ms)
+ GET / 200 in 507ms (compile: 7ms, render: 500ms)
+ GET /stats/peace-arch/Monday 200 in 48ms (compile: 4ms, render: 43ms)
+The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+ GET /forecast/vancouver-to-seattle/2026-02-05 200 in 126ms (compile: 5ms, render: 121ms)

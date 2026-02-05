@@ -106,12 +106,15 @@ export interface ComparisonForecast {
         name: string;
         slug: string;
         forecast_96_slots: number[];
+        forecast_96_ranges_min: number[];
+        forecast_96_ranges_max: number[];
         tier_used: string;
         confidence: string;
     }>;
     smart_pick: {
         recommended_port_ids: string[];
         reason: string;
+        html_report?: string;
         average_waits: Record<string, number>;
     };
     is_holiday: boolean;
@@ -122,7 +125,7 @@ export async function getComparisonForecast(date: string, direction: string): Pr
     try {
         const baseUrl = getBaseUrl();
         const res = await fetch(`${baseUrl}/api/v1/forecast/comparison/${date}?direction=${direction}`, {
-            next: { revalidate: 600 } // Cache for 10 mins
+            cache: 'no-store'
         });
         if (!res.ok) return null;
         return res.json();

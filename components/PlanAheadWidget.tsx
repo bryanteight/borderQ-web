@@ -1,11 +1,58 @@
 'use client';
 
-import { ArrowRight, TrendingUp, Sun, Calendar, Star, Ticket } from "lucide-react";
+import { ArrowRight, TrendingUp, Sun as LucideSun, Calendar, Star, Ticket } from "lucide-react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { PlanningData } from "@/lib/types";
 import { useDirection } from "@/context/DirectionContext";
+
+// Custom Filled Sun Icon for Brand Alignment
+const CustomSun = ({ className }: { className?: string }) => (
+    <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        className={className}
+    >
+        {/* Solid Center */}
+        <circle cx="12" cy="12" r="6.5" fill="currentColor" />
+
+        {/* Thickness Rays */}
+        <g stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+            <path d="M12 2v2" />
+            <path d="M12 20v2" />
+            <path d="M4.93 4.93l1.41 1.41" />
+            <path d="M17.66 17.66l1.41 1.41" />
+            <path d="M2 12h2" />
+            <path d="M20 12h2" />
+            <path d="M6.34 17.66l-1.41 1.41" />
+            <path d="M19.07 4.93l-1.41 1.41" />
+        </g>
+    </svg>
+);
+
+// Helper to parse AI report into structured sections
+function parseAIReport(html: string): { summary: string; timing: string } {
+    // Strip HTML tags first
+    const text = html
+        .replace(/<[^>]*>/g, ' ')
+        .replace(/&nbsp;/g, ' ')
+        .replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+    // Extract Summary section
+    const summaryMatch = text.match(/Summary:\s*([^]*?)(?=Smart Timing:|Route Strategy:|$)/i);
+    const summary = summaryMatch ? summaryMatch[1].trim().slice(0, 150) : '';
+
+    // Extract Smart Timing section
+    const timingMatch = text.match(/Smart Timing:\s*([^]*?)(?=Route Strategy:|$)/i);
+    const timing = timingMatch ? timingMatch[1].trim().slice(0, 150) : '';
+
+    return { summary, timing };
+}
 
 export function PlanAheadWidget({ planning }: { planning: { SOUTHBOUND: PlanningData[], NORTHBOUND: PlanningData[] } }) {
     const { direction } = useDirection();
@@ -28,40 +75,40 @@ export function PlanAheadWidget({ planning }: { planning: { SOUTHBOUND: Planning
             return {
                 icon: Ticket,
                 color: "amber", // Gold-ish
-                badgeBg: "bg-amber-100",
-                badgeText: "text-amber-800",
-                iconBg: "bg-amber-100",
-                iconColor: "text-amber-600"
+                badgeBg: "bg-amber-500",
+                badgeText: "text-white",
+                iconBg: "bg-amber-500 shadow-md shadow-amber-200",
+                iconColor: "text-white"
             };
         }
         if (item.status === 'red') {
             return {
                 icon: TrendingUp,
                 color: "rose",
-                badgeBg: "bg-rose-100",
-                badgeText: "text-rose-800",
-                iconBg: "bg-rose-100",
-                iconColor: "text-rose-600"
+                badgeBg: "bg-rose-500",
+                badgeText: "text-white",
+                iconBg: "bg-rose-500 shadow-md shadow-rose-200",
+                iconColor: "text-white"
             };
         }
         if (item.status === 'yellow') {
             return {
                 icon: Calendar,
                 color: "orange",
-                badgeBg: "bg-orange-100",
-                badgeText: "text-orange-800",
-                iconBg: "bg-orange-100",
-                iconColor: "text-orange-600"
+                badgeBg: "bg-orange-500",
+                badgeText: "text-white",
+                iconBg: "bg-orange-500 shadow-md shadow-orange-200",
+                iconColor: "text-white"
             };
         }
         // Green
         return {
-            icon: Sun,
+            icon: CustomSun,
             color: "emerald",
-            badgeBg: "bg-emerald-100",
-            badgeText: "text-emerald-800",
-            iconBg: "bg-emerald-100",
-            iconColor: "text-emerald-600"
+            badgeBg: "bg-emerald-500", // Solid Green
+            badgeText: "text-white",   // White text
+            iconBg: "bg-emerald-500 shadow-md shadow-emerald-200", // Solid Green BG
+            iconColor: "text-white"           // White Icon
         };
     };
 
@@ -69,10 +116,9 @@ export function PlanAheadWidget({ planning }: { planning: { SOUTHBOUND: Planning
     const Icon = style.icon;
 
     // Hide Plan Ahead widget for Northbound until data collection is complete
-    if (direction === 'NORTHBOUND') return null;
+    // if (direction === 'NORTHBOUND') return null; // Enabled now!
 
-    const detailSlug = 'vancouver-to-seattle';
-    const detailQuery = '';
+    const detailSlug = direction === 'SOUTHBOUND' ? 'vancouver-to-seattle' : 'seattle-to-vancouver';
 
     return (
         <div className="w-full mb-6">
@@ -178,7 +224,7 @@ export function PlanAheadWidget({ planning }: { planning: { SOUTHBOUND: Planning
                             className="h-full"
                         >
                             <Link
-                                href={`/stats/${detailSlug}/${selectedItem.slug}${detailQuery}`}
+                                href={`/forecast/${detailSlug}/${selectedItem.date}`}
                                 className="h-full flex flex-col relative group bg-white border border-slate-200/60 p-6 lg:p-8 rounded-[2rem] hover:shadow-xl hover:shadow-indigo-100/50 hover:border-indigo-200 transition-all duration-300 active:scale-[0.99] overflow-hidden"
                             >
                                 {/* Background Decor */}
@@ -187,18 +233,19 @@ export function PlanAheadWidget({ planning }: { planning: { SOUTHBOUND: Planning
                                 {/* Header Section */}
                                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-6">
                                     {/* Icon & Title */}
-                                    <div className="flex items-start gap-4">
-                                        <div className={`p-3.5 rounded-2xl ${style.iconBg} ${style.iconColor} shadow-sm ring-1 ring-inset ring-black/5`}>
-                                            <Icon className="w-6 h-6" strokeWidth={2.5} />
+                                    <div className="flex items-start gap-5">
+                                        <div className={`w-14 h-14 flex items-center justify-center rounded-[1.2rem] ${style.iconBg} ${style.iconColor} shadow-sm ring-1 ring-inset ring-black/5 transition-transform group-hover:scale-105 duration-300`}>
+                                            <Icon className="w-7 h-7" strokeWidth={2.5} />
                                         </div>
                                         <div>
                                             <h4 className="font-[900] text-slate-900 text-xl lg:text-2xl uppercase tracking-tight leading-none mb-1.5">
                                                 {selectedItem.dayLabel.split(',')[0]}
                                             </h4>
-                                            <p className="text-slate-500 text-xs font-bold uppercase tracking-wide flex items-center gap-2">
+                                            <p className="text-slate-500 text-xs font-bold uppercase tracking-wide flex items-center gap-3 mt-1">
                                                 {selectedItem.dayLabel.split(',')[1]}
                                                 {selectedItem.impactBadge && (
-                                                    <span className={`px-2 py-0.5 rounded-full text-[10px] ${style.badgeBg} ${style.badgeText}`}>
+                                                    <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-100 shadow-sm text-[10px] font-[800] tracking-wide">
+                                                        <Ticket className="w-3 h-3 text-emerald-500 fill-emerald-50" />
                                                         {selectedItem.impactBadge}
                                                     </span>
                                                 )}
@@ -220,29 +267,51 @@ export function PlanAheadWidget({ planning }: { planning: { SOUTHBOUND: Planning
                                     </div>
                                 </div>
 
-                                {/* Content Area: AI Insight */}
+                                {/* Content Area: AI Insight - Two Sections */}
                                 <div className="flex-1 bg-slate-50/80 rounded-2xl p-5 border border-slate-100 relative group-hover:bg-indigo-50/30 transition-colors">
-                                    <div className="flex gap-3">
-                                        <div className="mt-1">
-                                            {/* AI Sparkle Icon */}
-                                            <svg className="w-4 h-4 text-indigo-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M12 2L14.39 9.61L22 12L14.39 14.39L12 22L9.61 14.39L2 12L9.61 9.61L12 2Z" fill="currentColor" className="animate-pulse" />
-                                            </svg>
+                                    {selectedItem.html_report ? (() => {
+                                        const { summary, timing } = parseAIReport(selectedItem.html_report);
+                                        return (
+                                            <div className="space-y-4">
+                                                {/* Summary Section */}
+                                                <div>
+                                                    <div className="flex items-center gap-2 mb-1.5">
+                                                        <svg className="w-4 h-4 text-indigo-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M12 2L14.39 9.61L22 12L14.39 14.39L12 22L9.61 14.39L2 12L9.61 9.61L12 2Z" fill="currentColor" className="animate-pulse" />
+                                                        </svg>
+                                                        <span className="text-sm font-black text-slate-800 uppercase tracking-wide">Summary</span>
+                                                    </div>
+                                                    <p className="text-base lg:text-lg font-semibold text-slate-700 leading-relaxed">
+                                                        <TypewriterText text={summary || "Loading summary..."} />
+                                                    </p>
+                                                </div>
+
+                                                {/* Smart Timing Section */}
+                                                <div className="pt-3 border-t border-slate-200">
+                                                    <div className="flex items-center gap-2 mb-1.5">
+                                                        <svg className="w-4 h-4 text-emerald-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
+                                                            <path d="M12 6V12L16 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                                                        </svg>
+                                                        <span className="text-sm font-black text-emerald-700 uppercase tracking-wide">Smart Timing</span>
+                                                    </div>
+                                                    <p className="text-base lg:text-lg font-semibold text-slate-700 leading-relaxed">
+                                                        <TypewriterText text={timing || "Best times loading..."} />
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        );
+                                    })() : (
+                                        <div className="text-base font-medium text-slate-500">
+                                            AI forecast analysis loading. Check back shortly for detailed insights.
                                         </div>
-                                        <div className="text-sm lg:text-[15px] font-medium text-slate-600 leading-relaxed font-mono w-full">
-                                            <TypewriterText
-                                                text={selectedItem.smart_analysis
-                                                    ? `${selectedItem.smart_analysis.intro} ${selectedItem.smart_analysis.savings_analysis}`
-                                                    : "Forecast analysis is improving. Check back shortly for detailed insights."}
-                                            />
-                                        </div>
-                                    </div>
+                                    )}
                                 </div>
 
                                 {/* Footer CTA */}
                                 <div className="mt-5 flex justify-end items-center gap-2 opacity-60 group-hover:opacity-100 transition-opacity">
                                     <span className="text-xs font-bold text-indigo-600 uppercase tracking-widest">
-                                        See Hourly Chart
+                                        See Detail Chart and AI Analysis
                                     </span>
                                     <div className="bg-indigo-100 p-1.5 rounded-full text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-all">
                                         <ArrowRight className="w-3 h-3" />
