@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { BorderEvent } from "@/lib/types";
-import { TrendingDown, TrendingUp, Minus, Activity, Car, Zap, ChevronRight } from "lucide-react";
+import { TrendingDown, TrendingUp, Minus, Activity, Car, Zap, ChevronRight, Octagon, CornerUpRight } from "lucide-react";
 import { clsx } from "clsx";
 import { ForecastTeaser } from "./ForecastTeaser";
 import { CameraModal } from "./CameraModal";
@@ -64,11 +64,36 @@ export function StatusCard({ event }: { event: BorderEvent }) {
             })()}
 
             {/* Official Estimate Label */}
+            {/* Official Estimate Label OR Nowcast Recommendation */}
             {!isClosed && !isNoData && (
-              <span className="text-[#94a3b8] font-black text-[10px] uppercase tracking-[0.1em] whitespace-nowrap mt-2 flex items-center gap-1">
-                OFFICIAL ESTIMATE
-                <Tooltip id="wait-time" align="left" content="Max of CBSA, CBP & DriveBC. Updates every 15 mins." />
-              </span>
+              <div className="mt-2 text-[10px] font-black uppercase tracking-[0.1em] flex items-center gap-1">
+                {event.recommendation ? (
+                  // [NEW] Action-Oriented Pulse Chip
+                  <div className={clsx(
+                    "flex items-center gap-1.5 px-2 py-1 rounded-md text-white shadow-sm animate-in fade-in zoom-in duration-300",
+                    event.recommendation.action === 'GO_NOW' && "bg-gradient-to-r from-violet-600 to-indigo-600 ring-1 ring-white/20",
+                    event.recommendation.action === 'HOLD' && "bg-gradient-to-r from-red-500 to-orange-500 ring-1 ring-white/20",
+                    event.recommendation.action === 'DETOUR' && "bg-gradient-to-r from-blue-600 to-cyan-600 ring-1 ring-white/20"
+                  )}>
+                    {event.recommendation.action === 'GO_NOW' && <Zap className="w-3 h-3 fill-white animate-pulse" />}
+                    {event.recommendation.action === 'HOLD' && <Octagon className="w-3 h-3 fill-white" />}
+                    {event.recommendation.action === 'DETOUR' && <CornerUpRight className="w-3 h-3" />}
+
+                    <span className="tracking-wide">{event.recommendation.title}</span>
+                    <Tooltip
+                      id="rec-tooltip"
+                      align="left"
+                      content={event.recommendation.description}
+                    />
+                  </div>
+                ) : (
+                  // Default Label
+                  <span className="text-[#94a3b8] flex items-center gap-1">
+                    OFFICIAL ESTIMATE
+                    <Tooltip id="wait-time" align="left" content="Max of CBSA, CBP & DriveBC. Updates every 15 mins." />
+                  </span>
+                )}
+              </div>
             )}
             {isClosed && (
               <span className="text-red-500 font-[900] text-xs uppercase tracking-widest flex items-center gap-2 mt-1">
@@ -149,12 +174,16 @@ export function StatusCard({ event }: { event: BorderEvent }) {
         {/* Footer: Smart Insight Only (Camera Button Removed) */}
         {!isClosed && !isNoData && event.forecast_points && event.forecast_points.length > 1 && (
           <div className="pt-3 mt-auto border-t border-slate-50 flex flex-col gap-3 group-hover:border-indigo-100 transition-colors relative">
-            <div className="flex flex-col gap-3">
-              <div className="w-full mt-1">
-                <ForecastTeaser currentWait={Math.max(0, event.wait_time_minutes)} forecastPoints={event.forecast_points} />
+            {/* Forecast Teaser (conditionally rendered) */}
+            {!isClosed && !isNoData && (
+              <div className="mt-4 pb-2">
+                <ForecastTeaser
+                  currentWait={event.wait_time_minutes}
+                  forecastPoints={event.forecast_points}
+                  labels={event.timeline_labels}
+                />
               </div>
-            </div>
-          </div>
+            )}</div>
         )}
 
         {/* Background Decor Layer */}

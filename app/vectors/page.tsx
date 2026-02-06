@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, Clock, Calendar, Cloud, MapPin, Zap, Info, ShieldAlert, Thermometer, Sparkles } from "lucide-react";
+import { ArrowLeft, Clock, Calendar, Cloud, MapPin, Zap, Info, ShieldAlert, Thermometer, Sparkles, Bot, Check } from "lucide-react";
 import { clsx } from "clsx";
 
 export default function VectorsPage() {
@@ -16,7 +16,7 @@ export default function VectorsPage() {
                             <span className="font-medium text-sm">Back to Dashboard</span>
                         </Link>
                         <h1 className="text-xl md:text-2xl font-bold tracking-tight text-slate-900 hidden sm:block">
-                            How Our AI Works
+                            The Science of Prediction
                         </h1>
                     </div>
                 </div>
@@ -27,11 +27,11 @@ export default function VectorsPage() {
                 {/* Intro Section */}
                 <section className="text-center max-w-3xl mx-auto space-y-6">
                     <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
-                        Traffic Prediction with <span className="text-blue-600">Smart Context™</span>
+                        Traffic Prediction with <span className="text-blue-600">Contextual Intelligence</span>
                     </h2>
                     <p className="text-lg text-slate-600 leading-relaxed">
                         Standard GPS apps just look at "current speed". We look deeper.
-                        Our system analyzes <strong>dozens of contextual factors</strong> to find historical patterns
+                        Our system analyzes <strong>dozens of variables</strong> to find historical patterns
                         that match the <em>exact DNA</em> of the current moment.
                     </p>
                 </section>
@@ -119,6 +119,119 @@ export default function VectorsPage() {
                             bg="bg-cyan-50"
                         />
 
+                    </div>
+                </section>
+
+                {/* The Twin-Track Strategy */}
+                <section className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-3xl p-8 md:p-12 text-white shadow-xl relative overflow-hidden">
+                    <div className="relative z-10">
+                        <div className="flex items-center gap-3 mb-8">
+                            <div className="p-2 bg-white/20 rounded-lg">
+                                <Zap className="w-6 h-6 text-white" />
+                            </div>
+                            <h3 className="text-2xl font-bold">The Twin-Track Strategy: Planner vs. Nowcast</h3>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 gap-12 relative">
+                            {/* Vertical line for desktop */}
+                            <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-white/20"></div>
+
+                            <div className="space-y-4">
+                                <div className="uppercase tracking-wider text-xs font-bold opacity-70">Strategic Layer</div>
+                                <h4 className="text-2xl font-bold">Context Vectors (Planning)</h4>
+                                <p className="text-blue-100 leading-relaxed">
+                                    Used for the <strong>7-Day Forecast</strong>. This track searches for historical matches based on "Static Context"—long-range factors like holidays, stadium event schedules, and seasonal weather patterns.
+                                </p>
+                                <div className="bg-white/10 p-4 rounded-xl text-sm border border-white/10">
+                                    <div className="font-bold mb-1">Goal: Accuracy at Distance</div>
+                                    <p className="opacity-80 italic">"What is the most likely shape of traffic next Tuesday?"</p>
+                                </div>
+                            </div>
+
+                            <div className="space-y-4">
+                                <div className="uppercase tracking-wider text-xs font-bold opacity-70">Tactical Layer</div>
+                                <h4 className="text-2xl font-bold">Dynamics Vectors (Nowcasting)</h4>
+                                <p className="text-blue-100 leading-relaxed">
+                                    Powering <strong>Live Updates</strong>. This track ignores the calendar and matches current "Traffic Physics"—momentum, acceleration (rate of change), and spatial variations between neighboring ports.
+                                </p>
+                                <div className="bg-white/10 p-4 rounded-xl text-sm border border-white/10">
+                                    <div className="font-bold mb-1">Goal: Real-time Resilience</div>
+                                    <p className="opacity-80 italic">"Something is happening right now. Where have we seen this physics before?"</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Applied AI Section */}
+                <section className="space-y-8">
+                    <div className="flex items-center gap-3 mb-8 justify-center md:justify-start">
+                        <div className="p-2 bg-purple-100 text-purple-600 rounded-lg">
+                            <Bot className="w-6 h-6" />
+                        </div>
+                        <h3 className="text-2xl font-bold text-slate-900">From Data to Action: Applied Generative AI</h3>
+                    </div>
+
+                    <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-8 md:p-12 text-white shadow-xl relative overflow-hidden">
+                        {/* Background decorative elements */}
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
+
+                        <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
+                            <div className="space-y-6">
+                                <h4 className="text-2xl md:text-3xl font-bold">
+                                    Beyond Numbers: <br />
+                                    <span className="text-blue-400">An AI That Thinks Like a Local</span>
+                                </h4>
+                                <p className="text-slate-300 leading-relaxed text-lg">
+                                    Raw data charts are hard to read. We use <strong>DSPy (Declarative Self-Improving Python)</strong> to transform complex vector statistics into clear, actionable advice.
+                                </p>
+
+                                <ul className="space-y-4">
+                                    <li className="flex gap-3">
+                                        <div className="bg-blue-500/20 p-1 rounded text-blue-400 h-fit"><Check className="w-4 h-4" /></div>
+                                        <div>
+                                            <strong className="block text-white">Self-Correcting Logic</strong>
+                                            <span className="text-slate-400 text-sm">
+                                                Uses a <strong>"Generate & Filter"</strong> architecture. If the AI drafts a report that contradicts the data (e.g., calling a 90-minute wait "smooth"), it catches its own mistake and rewrites it automatically.
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li className="flex gap-3">
+                                        <div className="bg-purple-500/20 p-1 rounded text-purple-400 h-fit"><Check className="w-4 h-4" /></div>
+                                        <div>
+                                            <strong className="block text-white">Smart Timing Recommendations</strong>
+                                            <span className="text-slate-400 text-sm">
+                                                Instead of static graphs, it finds specific <strong>"Green Windows"</strong>—identifying exactly when you should leave to shave 30+ minutes off your trip.
+                                            </span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            {/* Visual Representation of the "Loop" */}
+                            <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 font-mono text-xs md:text-sm text-slate-300 space-y-4">
+                                <div className="flex items-center gap-2 text-blue-400">
+                                    <span className="animate-pulse">●</span> INPUT: Context JSON
+                                </div>
+                                <div className="pl-4 border-l border-white/10 space-y-2">
+                                    <div className="opacity-50">data: &#123; peak_wait: 90, event: "Concert" &#125;</div>
+                                </div>
+
+                                <div className="flex items-center gap-2 text-yellow-400 mt-4">
+                                    <span>⚡</span> GENERATION 1 (Rejected)
+                                </div>
+                                <div className="pl-4 border-l border-white/10 space-y-2 text-red-300/70 line-through decoration-red-400/50">
+                                    "Traffic looks good! Head out now."
+                                </div>
+
+                                <div className="flex items-center gap-2 text-emerald-400 mt-4">
+                                    <span>✓</span> GENERATION 2 (Approved)
+                                </div>
+                                <div className="pl-4 border-l border-white/10 space-y-2 text-emerald-100 bg-emerald-500/10 p-2 rounded">
+                                    "High traffic alert! Wait until 8 PM to avoid post-concert gridlock."
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
 

@@ -88,6 +88,32 @@ export default function AboutPage() {
                     </p>
                 </section>
 
+                {/* Real-Time Nowcast */}
+                <section className="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-slate-100 space-y-6">
+                    <h3 className="text-xl font-bold text-slate-900 flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-violet-100 text-violet-600 flex items-center justify-center">
+                            <Sparkles className="w-4 h-4" />
+                        </div>
+                        Real-Time Nowcast (Beta)
+                    </h3>
+
+                    <div className="space-y-4 text-slate-600 leading-relaxed">
+                        <p>
+                            Beyond historical averages, we now track <strong>real-time traffic physics</strong>.
+                        </p>
+                        <p>
+                            Our <strong>Dynamics Vector Engine</strong> measures momentum and acceleration to predict short-term surges before they happen.
+                        </p>
+                        <p>
+                            Look for the <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-xs font-bold rounded-md">⚡ Surge Ahead</span> badge for immediate "Go/Hold" advice.
+                        </p>
+                    </div>
+
+                    <p className="text-sm text-slate-500 bg-violet-50 p-4 rounded-xl">
+                        This feature activates automatically when traffic patterns match known surge signatures from our historical database.
+                    </p>
+                </section>
+
                 {/* Beta Notice */}
                 <section className="bg-indigo-50 rounded-3xl p-8 md:p-12 border border-indigo-100 space-y-4 text-center">
                     <h3 className="text-xl font-bold text-indigo-900">We're Still Learning</h3>

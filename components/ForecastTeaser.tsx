@@ -4,9 +4,10 @@ import { SimpleSparkline } from "./SimpleSparkline";
 interface ForecastTeaserProps {
     currentWait: number;
     forecastPoints?: number[];
+    labels?: string[];
 }
 
-export function ForecastTeaser({ currentWait, forecastPoints }: ForecastTeaserProps) {
+export function ForecastTeaser({ currentWait, forecastPoints, labels }: ForecastTeaserProps) {
     if (!forecastPoints || forecastPoints.length < 2) return null;
 
     const maxForecast = Math.max(...forecastPoints);
@@ -20,14 +21,17 @@ export function ForecastTeaser({ currentWait, forecastPoints }: ForecastTeaserPr
 
     // Generate Absolute Time Labels
     const getLabels = () => {
+        if (labels && labels.length === forecastPoints.length) {
+            return labels;
+        }
         const now = new Date();
         return forecastPoints.map((_, i) => {
-            if (i === 0) return "Now";
+            if (i === 0) return "NOW"; // Uppercase as per UI
             const futureDate = new Date(now.getTime() + i * 60 * 60 * 1000);
             return futureDate.toLocaleTimeString('en-US', { hour: 'numeric', hour12: true }).replace(/\s/g, '');
         });
     };
-    const absoluteLabels = getLabels();
+    const displayLabels = getLabels();
 
     // Logic Scenarios
 
@@ -82,7 +86,7 @@ export function ForecastTeaser({ currentWait, forecastPoints }: ForecastTeaserPr
                     points={forecastPoints}
                     minimal={false}
                     color={s.chart as any}
-                    labels={absoluteLabels}
+                    labels={displayLabels}
                 />
             </div>
         </div>

@@ -1,3 +1,23 @@
+# Release Notes v0.7.3 (2026-02-05)
+
+## 🚀 Key Improvements
+
+### ⚡ Real-Time Nowcast (Beta)
+- **Physics-Based Search**: Uses the Dynamics Vector Engine to encode traffic momentum and acceleration.
+- **High-Resolution Sampling**: Switches from hourly increments to **30-minute intervals** during surges.
+- **"Surge Ahead" Badge (⚡)**: Purple high-visibility badge signaling rapid traffic changes.
+
+### 📢 Smart Alerting with Vision
+- **Discord Camera Snapshots**: High-traffic alerts now include **Live Camera Snapshot URLs** for visual verification.
+- **Crossing-Specific Views**: Alerts automatically fetch cameras for the port that triggered the surge.
+
+### 🏛️ Engineering & Architecture
+- **SOLID Refactor**: Decoupled Nowcast logic into `nowcast_service.py`, reducing router complexity.
+- **Nowcast Beta Section**: Added educational content to the "About Us" page detailing the physics engine.
+- **Mock Cleanup**: Fully purged demo code and verified with UI regression suite.
+
+---
+
 # Release Notes v0.7.2 (2026-02-05)
 
 ## 🚀 Key Improvements

@@ -31,6 +31,15 @@ export interface BorderEvent {
   timeline_labels?: string[];
   event_alert?: EventAlert; // Event alert data from backend
   has_cameras?: boolean;
+  // [NEW] Nowcast / Recommendation Fields
+  forecast_tier?: string;
+  forecast_method?: string;
+  forecast_samples?: number;
+  recommendation?: {
+    action: "GO_NOW" | "HOLD" | "DETOUR";
+    title: string;
+    description: string;
+  };
 }
 
 export interface EventAlert {
