@@ -60,58 +60,60 @@ export default function AboutPage() {
                 </section>
 
                 {/* Data Sources */}
+                {/* Hybrid Intelligence */}
                 <section className="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-slate-100 space-y-6">
                     <h3 className="text-xl font-bold text-slate-900 flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center">
                             <MapPin className="w-4 h-4" />
                         </div>
-                        Our Data Sources
+                        Hybrid Intelligence
                     </h3>
 
-                    <ul className="space-y-3 text-slate-600">
-                        <li className="flex items-start gap-3">
-                            <span className="text-emerald-500 font-bold">•</span>
-                            <span><strong>CBSA</strong> — Canada Border Services Agency</span>
+                    <div className="space-y-4 text-slate-600 leading-relaxed">
+                        <p>
+                            We don't rely on a single source. Official government sites often give you a delayed "snapshot" from just one perspective.
+                        </p>
+                        <p>
+                            BorderQ fuses data from <strong>US CBP</strong>, <strong>Canada CBSA</strong>, and live camera feeds from <strong>DriveBC/WSDOT</strong> to create a single source of truth that is more accurate than any individual official site.
+                        </p>
+                    </div>
+
+                    <ul className="space-y-2 text-sm text-slate-500 bg-slate-50 p-4 rounded-xl">
+                        <li className="flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                            <span>Cross-referenced sensor data</span>
                         </li>
-                        <li className="flex items-start gap-3">
-                            <span className="text-emerald-500 font-bold">•</span>
-                            <span><strong>US CBP</strong> — U.S. Customs and Border Protection</span>
+                        <li className="flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                            <span>Live camera verification</span>
                         </li>
-                        <li className="flex items-start gap-3">
-                            <span className="text-emerald-500 font-bold">•</span>
-                            <span><strong>DriveBC</strong> — Live camera snapshots</span>
+                        <li className="flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                            <span>Max-wait conservative estimates</span>
                         </li>
                     </ul>
-
-                    <p className="text-sm text-slate-500 bg-slate-50 p-4 rounded-xl">
-                        We display the <strong>maximum</strong> wait time across all sources to give you the most conservative estimate.
-                    </p>
                 </section>
 
-                {/* Real-Time Nowcast */}
+                {/* Dynamics Vector Engine */}
                 <section className="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-slate-100 space-y-6">
                     <h3 className="text-xl font-bold text-slate-900 flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full bg-violet-100 text-violet-600 flex items-center justify-center">
                             <Sparkles className="w-4 h-4" />
                         </div>
-                        Real-Time Nowcast (Beta)
+                        Dynamics Vector Engine
                     </h3>
 
                     <div className="space-y-4 text-slate-600 leading-relaxed">
                         <p>
-                            Beyond historical averages, we now track <strong>real-time traffic physics</strong>.
+                            Traffic isn't static—it's physics.
                         </p>
                         <p>
-                            Our <strong>Dynamics Vector Engine</strong> measures momentum and acceleration to predict short-term surges before they happen.
+                            Our proprietary <strong>Dynamics Vector Engine</strong> measures momentum and acceleration to predict short-term surges before they happen.
                         </p>
                         <p>
-                            Look for the <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-xs font-bold rounded-md">⚡ Surge Ahead</span> badge for immediate "Go/Hold" advice.
+                            If cars are piling up faster than they are being processed, we flag a <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-xs font-bold rounded-md">⚡ Surge Ahead</span> alert, giving you immediate "Go/Hold" advice that official sites miss.
                         </p>
                     </div>
-
-                    <p className="text-sm text-slate-500 bg-violet-50 p-4 rounded-xl">
-                        This feature activates automatically when traffic patterns match known surge signatures from our historical database.
-                    </p>
                 </section>
 
                 {/* Beta Notice */}

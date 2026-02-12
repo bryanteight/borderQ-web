@@ -79,6 +79,7 @@ export function SiteFooter() {
                 <div className="flex flex-wrap justify-center gap-6 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
                     <Link href="/vectors" className="hover:text-indigo-600 transition-colors">How It Works</Link>
                     <Link href="/about" className="hover:text-indigo-600 transition-colors">About Us</Link>
+                    <a href="https://x.com/BorderqAI" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-600 transition-colors">Follow on X</a>
                     <Link href="/contact" className="hover:text-indigo-600 transition-colors">Contact</Link>
                     <Link href="/terms" className="hover:text-indigo-600 transition-colors">Terms of Service</Link>
                     <Link href="/privacy" className="hover:text-indigo-600 transition-colors">Privacy Policy</Link>
@@ -86,7 +87,7 @@ export function SiteFooter() {
 
                 {/* Version & Copyright */}
                 <div className="flex flex-col items-center gap-1">
-                    <p className="text-xs text-slate-400">BorderQ AI v0.7.3 &copy; {new Date().getFullYear()}</p>
+                    <p className="text-xs text-slate-400">BorderQ AI v0.7.4 &copy; {new Date().getFullYear()}</p>
                 </div>
             </div>
         </footer>

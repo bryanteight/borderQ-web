@@ -31,6 +31,16 @@ export interface BorderEvent {
   timeline_labels?: string[];
   event_alert?: EventAlert; // Event alert data from backend
   has_cameras?: boolean;
+  // Vision Enrichment (Phase 7 — Camera AI)
+  camera_insight?: {
+    icon: string;
+    verdict: string;
+    detail: string;
+    severity: 'clear' | 'normal' | 'busy' | 'warning' | 'info';
+    car_count: number;
+  };
+  // Phase 8: Smart Analysis (DSPy Pulse)
+  smart_analysis?: string;
   // [NEW] Nowcast / Recommendation Fields
   forecast_tier?: string;
   forecast_method?: string;

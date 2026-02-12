@@ -37,6 +37,9 @@ export function StatusCard({ event }: { event: BorderEvent }) {
   const dayName = new Date().toLocaleDateString('en-US', { weekday: 'long' });
   const href = `/stats/${baseSlug}/${dayName}${isNorthbound ? '?direction=north' : ''}`;
 
+  // Use real data
+  const smartAnalysis = event.smart_analysis;
+
   return (
     <>
       <div
@@ -159,8 +162,8 @@ export function StatusCard({ event }: { event: BorderEvent }) {
             )}
           </div>
 
-          {/* Right: Camera Thumbnail */}
-          <div className="flex-1 max-w-[50%] flex justify-end">
+          {/* Right: Camera Thumbnail + AI Insight */}
+          <div className="flex-1 max-w-[50%] flex flex-col items-end gap-1.5">
             <CameraThumbnail
               crossingId={event.id}
               crossingName={event.crossing_name}
@@ -168,10 +171,59 @@ export function StatusCard({ event }: { event: BorderEvent }) {
               onOpen={() => setIsCameraModalOpen(true)}
               className="w-full aspect-video max-w-[180px] h-auto shadow-sm"
             />
+
+            {/* Camera AI Insight (Vision Enrichment) */}
+            {event.camera_insight && (
+              <button
+                onClick={(e) => { e.stopPropagation(); setIsCameraModalOpen(true); }}
+                className={clsx(
+                  "w-full max-w-[180px] text-left px-2.5 py-1.5 rounded-lg border transition-all duration-200 group/insight",
+                  "hover:shadow-sm active:scale-[0.98]",
+                  event.camera_insight.severity === 'busy' && "bg-red-50 border-red-100 hover:border-red-200",
+                  event.camera_insight.severity === 'warning' && "bg-amber-50 border-amber-100 hover:border-amber-200",
+                  event.camera_insight.severity === 'clear' && "bg-emerald-50 border-emerald-100 hover:border-emerald-200",
+                  event.camera_insight.severity === 'info' && "bg-blue-50 border-blue-100 hover:border-blue-200",
+                  event.camera_insight.severity === 'normal' && "bg-slate-50 border-slate-100 hover:border-slate-200",
+                )}
+              >
+                <p className={clsx(
+                  "text-[10px] font-bold leading-tight",
+                  event.camera_insight.severity === 'busy' && "text-red-700",
+                  event.camera_insight.severity === 'warning' && "text-amber-700",
+                  event.camera_insight.severity === 'clear' && "text-emerald-700",
+                  event.camera_insight.severity === 'info' && "text-blue-700",
+                  event.camera_insight.severity === 'normal' && "text-slate-600",
+                )}>
+                  {event.camera_insight.verdict}
+                </p>
+                <p className="text-[9px] text-slate-400 mt-0.5 leading-tight group-hover/insight:text-slate-500 transition-colors">
+                  {event.camera_insight.detail}
+                </p>
+              </button>
+            )}
           </div>
         </div>
 
-        {/* Footer: Smart Insight Only (Camera Button Removed) */}
+        {/* Smart Analysis (AI Insight) */}
+        {smartAnalysis && (
+          <div className="mt-4 pt-3 border-t border-indigo-50 relative z-10">
+            <div className="flex items-start gap-3">
+              <div className="p-1.5 bg-indigo-50 rounded-lg shrink-0 mt-0.5 shadow-sm ring-1 ring-indigo-100">
+                <Activity className="w-3.5 h-3.5 text-indigo-600 animate-pulse" />
+              </div>
+              <div className="flex-1">
+                <p className="text-[9px] font-black text-indigo-600 uppercase tracking-widest mb-1 flex items-center gap-1">
+                  AI Live Analysis
+                </p>
+                <p className="text-xs text-slate-700 leading-relaxed font-medium bg-slate-50/50 p-2 rounded-lg border border-slate-100">
+                  {smartAnalysis}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Forecast Footer */}
         {!isClosed && !isNoData && event.forecast_points && event.forecast_points.length > 1 && (
           <div className="pt-3 mt-auto border-t border-slate-50 flex flex-col gap-3 group-hover:border-indigo-100 transition-colors relative">
             {/* Forecast Teaser (conditionally rendered) */}

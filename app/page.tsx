@@ -4,7 +4,8 @@ import { BorderQLogo } from "@/components/BorderQLogo";
 import { EventBanner } from "@/components/EventBanner";
 import { ExchangeRateBadge } from "@/components/ExchangeRateBadge";
 import { getBorderData } from "@/lib/api";
-import { TrendingUp, TrendingDown, Clock, Sun, ArrowRight, Calendar, Star, Car } from "lucide-react";
+import { TrendingUp, TrendingDown, Clock, Sun, ArrowRight, Calendar, Star, Car, Activity } from "lucide-react";
+import Link from "next/link";
 import { PlanAheadWidget } from "@/components/PlanAheadWidget"; // [NEW]
 import { StatusCardCarousel } from "@/components/StatusCardCarousel";
 import { DirectionTabs } from "@/components/DirectionTabs";
