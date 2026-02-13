@@ -116,7 +116,7 @@ export function PlanAheadWidget({ planning }: { planning: { SOUTHBOUND: Planning
     const Icon = style.icon;
 
     // Hide Plan Ahead widget for Northbound until data collection is complete
-    // if (direction === 'NORTHBOUND') return null; // Enabled now!
+    if (direction === 'NORTHBOUND') return null;
 
     const detailSlug = direction === 'SOUTHBOUND' ? 'vancouver-to-seattle' : 'seattle-to-vancouver';
 

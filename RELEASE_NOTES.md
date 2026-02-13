@@ -1,8 +1,6 @@
-# Release Notes v0.7.4 (2026-02-11)
-
-## 🚀 New Features
-- feat: deploy vision-based car counting service (YOLOv8)
+# Release Notes v0.7.5 (2026-02-12)
 
 ## 🐛 Bug Fixes
-- fix: use PST timezone for forecast date validation (fixes 502 on prod)
+- fix(deploy): upgrade to python 3.10 to support type union syntax in vision service
+- fix(deploy): install opencv system dependencies (fixes 502 libGL error)
 
