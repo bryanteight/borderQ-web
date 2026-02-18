@@ -330,19 +330,20 @@ export function PlanAheadWidget({ planning }: { planning: { SOUTHBOUND: Planning
 // Sub-component for Typewriter effect
 function TypewriterText({ text }: { text: string }) {
     const [displayed, setDisplayed] = useState("");
+    const [isTyping, setIsTyping] = useState(true);
 
     useEffect(() => {
         setDisplayed("");
-        let i = 0;
+        setIsTyping(true);
         const speed = 20; // ms per char
 
-        // Correct implementation
         const intervalId = setInterval(() => {
             setDisplayed((prev) => {
                 if (prev.length < text.length) {
                     return prev + text.charAt(prev.length);
                 }
                 clearInterval(intervalId);
+                setIsTyping(false);
                 return prev;
             });
         }, speed);
@@ -353,7 +354,7 @@ function TypewriterText({ text }: { text: string }) {
     return (
         <span>
             {displayed}
-            <span className="animate-pulse ml-0.5 text-indigo-400 opacity-70">|</span>
+            {isTyping && <span className="animate-pulse ml-0.5 text-indigo-400 opacity-70">|</span>}
         </span>
     );
 }
