@@ -337,6 +337,7 @@ function TypewriterText({ text }: { text: string }) {
         setIsTyping(true);
         const speed = 20; // ms per char
 
+        // Correct implementation
         const intervalId = setInterval(() => {
             setDisplayed((prev) => {
                 if (prev.length < text.length) {
