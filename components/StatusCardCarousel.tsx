@@ -7,13 +7,25 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useDirection } from "@/context/DirectionContext";
 import { ExchangeRateBadge } from "@/components/ExchangeRateBadge";
 
-export function StatusCardCarousel({ events, updatedAt }: { events: BorderEvent[], updatedAt?: string }) {
+export function StatusCardCarousel({ events, updatedAt, region = "cascadia" }: { events: BorderEvent[], updatedAt?: string, region?: string }) {
     const { direction } = useDirection();
     const [activeIndex, setActiveIndex] = useState(0);
 
-    // Filter events based on active direction
+    // Deterministic region resolver: uses explicit region field, or falls back to port ID prefix
+    const resolveRegion = (e: BorderEvent): string => {
+        if (e.region) return e.region;
+        const rawId = e.id.replace(/^NB_/, "");
+        if (rawId.startsWith("023")) return "cascadia";
+        if (rawId.startsWith("038")) return "detroit";
+        if (rawId.startsWith("009")) return "niagara";
+        return "cascadia";
+    };
+
+    // Filter events by region first, then by direction
+    const regionFiltered = events.filter(e => resolveRegion(e) === region);
+
     // Note: If event.direction is missing (old data), assume SOUTHBOUND to be safe
-    const filteredEvents = events.filter(e =>
+    const filteredEvents = regionFiltered.filter(e =>
         (e.direction || "SOUTHBOUND") === direction
     );
 

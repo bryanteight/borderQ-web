@@ -12,7 +12,9 @@ import { DirectionTabs } from "@/components/DirectionTabs";
 import { EventAlert } from "@/lib/types";
 import { PlanAheadHeader } from "@/components/PlanAheadHeader";
 
-export default async function Home() {
+export default async function Home({ searchParams }: { searchParams: Promise<{ region?: string }> }) {
+  const params = await searchParams;
+  const region = params.region || "cascadia";
   const data = await getBorderData();
   const hints = [
     "Best time to cross tomorrow?",
@@ -64,7 +66,7 @@ export default async function Home() {
 
         {/* 2. Live Traffic Status (Compact) */}
         <div className="mb-4 md:mb-12">
-          <StatusCardCarousel events={data.data} updatedAt={data.timestamp} />
+          <StatusCardCarousel events={data.data} updatedAt={data.timestamp} region={region} />
         </div>
 
         {/* 3. Hero Section (Slogan) - Optional/Reduced */}

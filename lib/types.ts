@@ -19,6 +19,7 @@ export interface BorderEvent {
   standard_lanes_open?: number;
   nexus_lanes_open?: number;
   direction?: string;
+  region?: string; // Region key (e.g., "cascadia", "detroit", "niagara")
   last_sync?: string; // ISO string from backend
   source_note?: string;
   smart_insight?: {

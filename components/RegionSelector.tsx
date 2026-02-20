@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Check } from "lucide-react";
 import { clsx } from "clsx";
@@ -8,13 +9,29 @@ import { clsx } from "clsx";
 type RegionTab = {
     id: string;
     label: string;
-    active: boolean;
     comingSoon?: boolean;
 };
 
-export function RegionSelector({ tabs }: { tabs: RegionTab[] }) {
+const REGION_TABS: RegionTab[] = [
+    { id: "cascadia", label: "BC / WA" },
+    { id: "detroit", label: "Detroit / Windsor", comingSoon: false },
+    { id: "niagara", label: "Niagara / NY", comingSoon: false },
+];
+
+export function RegionSelector() {
     const [isOpen, setIsOpen] = useState(false);
-    const activeTab = tabs.find((t) => t.active) || tabs[0];
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const activeRegion = searchParams.get("region") || "cascadia";
+    const activeTab = REGION_TABS.find((t) => t.id === activeRegion) || REGION_TABS[0];
+
+    const handleSelect = (tab: RegionTab) => {
+        if (tab.comingSoon) return;
+        setIsOpen(false);
+        const params = new URLSearchParams(searchParams.toString());
+        params.set("region", tab.id);
+        router.push(`/?${params.toString()}`);
+    };
 
     return (
         <div className="relative z-20">
@@ -23,14 +40,11 @@ export function RegionSelector({ tabs }: { tabs: RegionTab[] }) {
                 onClick={() => setIsOpen(!isOpen)}
                 className={clsx(
                     "relative flex items-center gap-2 rounded-full transition-all duration-300",
-                    // Mobile: Compact
                     "px-3 py-1.5 bg-slate-100 border border-slate-200",
-                    // Desktop: Larger, High Contrast, Shadow
                     "sm:px-5 sm:py-2.5 sm:bg-white sm:border-slate-300 sm:shadow-sm sm:hover:shadow-md sm:hover:border-slate-400",
                     "active:scale-95"
                 )}
             >
-                {/* Desktop Label: "Region:" */}
                 <span className="hidden sm:inline text-sm font-bold text-slate-500 mr-1.5">
                     Region:
                 </span>
@@ -46,7 +60,7 @@ export function RegionSelector({ tabs }: { tabs: RegionTab[] }) {
                 />
             </button>
 
-            {/* Dropdown Menu (Absolute) */}
+            {/* Dropdown Menu */}
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
@@ -58,24 +72,21 @@ export function RegionSelector({ tabs }: { tabs: RegionTab[] }) {
                     >
                         <div className="bg-white/80 backdrop-blur-xl border border-white/50 rounded-2xl shadow-xl overflow-hidden p-1.5 ring-1 ring-black/5">
                             <div className="flex flex-col gap-0.5">
-                                {tabs.map((tab) => (
+                                {REGION_TABS.map((tab) => (
                                     <button
                                         key={tab.id}
                                         disabled={tab.comingSoon}
-                                        onClick={() => {
-                                            if (!tab.comingSoon) setIsOpen(false);
-                                            // Navigation logic would go here
-                                        }}
+                                        onClick={() => handleSelect(tab)}
                                         className={clsx(
                                             "flex items-center justify-between w-full px-3 py-2 rounded-xl text-left transition-colors text-xs font-bold",
-                                            tab.active
+                                            tab.id === activeRegion
                                                 ? "bg-indigo-50 text-indigo-700"
                                                 : "text-slate-600 hover:bg-white/50 hover:text-slate-900",
                                             tab.comingSoon && "opacity-50 cursor-not-allowed"
                                         )}
                                     >
                                         <span className="flex-1">{tab.label}</span>
-                                        {tab.active && <Check className="w-3 h-3 text-indigo-600" />}
+                                        {tab.id === activeRegion && <Check className="w-3 h-3 text-indigo-600" />}
                                         {tab.comingSoon && (
                                             <span className="text-[9px] uppercase tracking-wider text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded">
                                                 Soon
@@ -99,3 +110,4 @@ export function RegionSelector({ tabs }: { tabs: RegionTab[] }) {
         </div>
     );
 }
+

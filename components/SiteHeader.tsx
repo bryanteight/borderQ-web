@@ -1,20 +1,8 @@
 import React, { Suspense } from 'react';
 import Link from "next/link";
 import { BorderQLogo } from "@/components/BorderQLogo";
-// import { RegionSelector } from "@/components/RegionSelector";
-
-// TODO: In a real app, this state should be managed globally (Context or URL params)
-// For now, we mirror the static tabs from page.tsx to keep the UI functional visually.
-// const regionTabs = [
-//     { id: 'seattle', label: 'BC / WA', active: true, comingSoon: false },
-//     { id: 'niagara', label: 'Niagara / NY', active: false, comingSoon: true },
-//     { id: 'detroit', label: 'Detroit / Windsor', active: false, comingSoon: true },
-// ];
-
-// Imports cleaned up
+import { RegionSelector } from "@/components/RegionSelector";
 import { CompactDirectionToggle } from "./CompactDirectionToggle";
-
-// ... existing state ...
 
 export function SiteHeader() {
     return (
@@ -43,25 +31,30 @@ export function SiteHeader() {
                     <div className="h-0.5 w-12 bg-indigo-500/30 mt-1 rounded-full"></div>
                 </div>
 
-                {/* Right Controls: Direction Toggle + Region Selector */}
+                {/* Right Controls: Direction Toggle + Region Selector (Dev Only) */}
                 <div className="flex items-center gap-2 sm:gap-4 md:gap-6">
                     <Link href="/vectors" className="hidden sm:block text-sm font-bold text-slate-500 hover:text-blue-600 transition-colors">
                         How it Works
                     </Link>
 
-                    {/* Direction Toggle (Moved to Header Loop for All Screens) */}
+                    {/* Direction Toggle */}
                     <div className="block">
                         <Suspense fallback={<div className="w-[200px] h-[36px] bg-slate-100 rounded-lg animate-pulse" />}>
                             <CompactDirectionToggle />
                         </Suspense>
                     </div>
 
-                    {/* Region Selector - Hidden request 2026-02-02 */}
-                    {/* <div className="flex items-center pl-4 border-l border-slate-200">
-                        <RegionSelector tabs={regionTabs} />
-                    </div> */}
+                    {/* Region Selector - DEV ONLY */}
+                    {process.env.NODE_ENV === 'development' && (
+                        <div className="flex items-center pl-4 border-l border-slate-200">
+                            <Suspense fallback={<div className="w-[120px] h-[36px] bg-slate-100 rounded-full animate-pulse" />}>
+                                <RegionSelector />
+                            </Suspense>
+                        </div>
+                    )}
                 </div>
             </div>
         </header>
     );
 }
+
