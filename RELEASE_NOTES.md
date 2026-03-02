@@ -1,3 +1,17 @@
+# Release Notes v0.7.11 (2026-03-02)
+
+## 🚀 New Features
+- **Proactive Health Monitoring**: Added internal probes to the scheduler to independently check backend API health (every 5 min) and camera snapshot availability (every 15 min).
+- **Discord Outage Alerts**: Automatic Discord notifications (with 30-60 min cooldowns) for API 5xx errors, container unreachability, and complete camera source failures at specific crossings.
+- **Recovery Notifications**: Discord alerts automatically triggered when the API or cameras come back online.
+- **Dynamic Frontend Checks**: Extended API probe to verify the 7-day `/forecast/...` Next.js frontend pages, ensuring SEO and routing are alive.
+
+## 🐛 Bug Fixes
+- None
+
+## 🔧 Maintenance
+- 12 new unit tests covering mocked HTTP responses, cooldown logic, failure thresholds, and recovery states for the health monitor service.
+
 # Release Notes v0.7.10 (2026-02-21)
 
 ## 🚀 New Features
