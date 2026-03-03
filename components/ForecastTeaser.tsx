@@ -1,5 +1,6 @@
 import React from "react";
 import { SimpleSparkline } from "./SimpleSparkline";
+import { useTranslations } from "next-intl";
 
 interface ForecastTeaserProps {
     currentWait: number;
@@ -8,6 +9,7 @@ interface ForecastTeaserProps {
 }
 
 export function ForecastTeaser({ currentWait, forecastPoints, labels }: ForecastTeaserProps) {
+    const t = useTranslations('Home');
     if (!forecastPoints || forecastPoints.length < 2) return null;
 
     const maxForecast = Math.max(...forecastPoints);
@@ -26,7 +28,7 @@ export function ForecastTeaser({ currentWait, forecastPoints, labels }: Forecast
         }
         const now = new Date();
         return forecastPoints.map((_, i) => {
-            if (i === 0) return "NOW"; // Uppercase as per UI
+            if (i === 0) return t('now'); // NOW -> localized uppercase
             const futureDate = new Date(now.getTime() + i * 60 * 60 * 1000);
             return futureDate.toLocaleTimeString('en-US', { hour: 'numeric', hour12: true }).replace(/\s/g, '');
         });
@@ -59,7 +61,7 @@ export function ForecastTeaser({ currentWait, forecastPoints, labels }: Forecast
     const s = styles[theme];
 
     // Static Label as requested by user
-    const labelText = "Next Hour Forecast";
+    const labelText = t('nextHourForecast');
 
     return (
         <div className={`relative w-full rounded-2xl border ${s.border} ${s.bg} shadow-sm overflow-hidden transition-all hover:shadow-lg hover:-translate-y-0.5 cursor-pointer`}>

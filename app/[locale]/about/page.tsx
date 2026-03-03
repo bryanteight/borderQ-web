@@ -1,9 +1,12 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { ArrowLeft, Users, MapPin, Sparkles, MessageSquare } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export default function AboutPage() {
+    const t = useTranslations('About');
+    const tCommon = useTranslations('Common');
     return (
         <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
             {/* Header */}
@@ -12,10 +15,10 @@ export default function AboutPage() {
                     <div className="flex items-center gap-4">
                         <Link href="/" className="flex items-center gap-2 text-slate-500 hover:text-blue-600 transition-colors bg-slate-100/50 hover:bg-blue-50 px-3 py-2 rounded-full">
                             <ArrowLeft className="w-5 h-5" />
-                            <span className="font-medium text-sm">Back to Dashboard</span>
+                            <span className="font-medium text-sm">{tCommon('backToDashboard')}</span>
                         </Link>
                         <h1 className="text-xl md:text-2xl font-bold tracking-tight text-slate-900 hidden sm:block">
-                            About BorderQ
+                            {t('title')}
                         </h1>
                     </div>
                 </div>
@@ -27,13 +30,15 @@ export default function AboutPage() {
                 <section className="text-center space-y-6">
                     <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-bold">
                         <Sparkles className="w-4 h-4" />
-                        Beta Version
+                        {t('beta')}
                     </div>
                     <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
-                        Smarter Border Crossings
+                        {t('heroTitle')}
                     </h2>
                     <p className="text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto">
-                        BorderQ is built by independent developers in <strong>Seattle</strong> who cross the US-Canada border regularly.
+                        {t.rich('heroDesc', {
+                            bold: (chunks) => <strong>{chunks}</strong>
+                        })}
                     </p>
                 </section>
 
@@ -43,18 +48,18 @@ export default function AboutPage() {
                         <div className="w-8 h-8 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center">
                             <Users className="w-4 h-4" />
                         </div>
-                        Why We Built This
+                        {t('whyTitle')}
                     </h3>
 
                     <div className="space-y-4 text-slate-600 leading-relaxed">
                         <p>
-                            We got tired of navigating <strong>unfriendly official sites</strong> and hunting for camera snapshots across multiple sources.
+                            {t.rich('why1', { bold: (chunks) => <strong>{chunks}</strong> })}
                         </p>
                         <p>
-                            So we combined everything into <strong>one place</strong> for easy access to live wait times, camera feeds, and historical patterns.
+                            {t.rich('why2', { bold: (chunks) => <strong>{chunks}</strong> })}
                         </p>
                         <p>
-                            We're also tired of <strong>guessing</strong> wait times. That's why we built smarter predictions using similarity matching and historical data analysis.
+                            {t.rich('why3', { bold: (chunks) => <strong>{chunks}</strong> })}
                         </p>
                     </div>
                 </section>
@@ -66,30 +71,30 @@ export default function AboutPage() {
                         <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center">
                             <MapPin className="w-4 h-4" />
                         </div>
-                        Hybrid Intelligence
+                        {t('hybridTitle')}
                     </h3>
 
                     <div className="space-y-4 text-slate-600 leading-relaxed">
                         <p>
-                            We don't rely on a single source. Official government sites often give you a delayed "snapshot" from just one perspective.
+                            {t('hybrid1')}
                         </p>
                         <p>
-                            BorderQ fuses data from <strong>US CBP</strong>, <strong>Canada CBSA</strong>, and live camera feeds from <strong>DriveBC/WSDOT</strong> to create a single source of truth that is more accurate than any individual official site.
+                            {t.rich('hybrid2', { bold: (chunks) => <strong>{chunks}</strong> })}
                         </p>
                     </div>
 
                     <ul className="space-y-2 text-sm text-slate-500 bg-slate-50 p-4 rounded-xl">
                         <li className="flex items-center gap-2">
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                            <span>Cross-referenced sensor data</span>
+                            <span>{t('hybridPoint1')}</span>
                         </li>
                         <li className="flex items-center gap-2">
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                            <span>Live camera verification</span>
+                            <span>{t('hybridPoint2')}</span>
                         </li>
                         <li className="flex items-center gap-2">
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                            <span>Max-wait conservative estimates</span>
+                            <span>{t('hybridPoint3')}</span>
                         </li>
                     </ul>
                 </section>
@@ -100,37 +105,43 @@ export default function AboutPage() {
                         <div className="w-8 h-8 rounded-full bg-violet-100 text-violet-600 flex items-center justify-center">
                             <Sparkles className="w-4 h-4" />
                         </div>
-                        Dynamics Vector Engine
+                        {t('dynamicsTitle')}
                     </h3>
 
                     <div className="space-y-4 text-slate-600 leading-relaxed">
                         <p>
-                            Traffic isn't static—it's physics.
+                            {t('dynamics1')}
                         </p>
                         <p>
-                            Our proprietary <strong>Dynamics Vector Engine</strong> measures momentum and acceleration to predict short-term surges before they happen.
+                            {t.rich('dynamics2', { bold: (chunks) => <strong>{chunks}</strong> })}
                         </p>
                         <p>
-                            If cars are piling up faster than they are being processed, we flag a <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-xs font-bold rounded-md">⚡ Surge Ahead</span> alert, giving you immediate "Go/Hold" advice that official sites miss.
+                            {t.rich('dynamics3', {
+                                surgeBadge: () => (
+                                    <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-xs font-bold rounded-md">
+                                        {t('surgeAhead')}
+                                    </span>
+                                )
+                            })}
                         </p>
                     </div>
                 </section>
 
                 {/* Beta Notice */}
                 <section className="bg-indigo-50 rounded-3xl p-8 md:p-12 border border-indigo-100 space-y-4 text-center">
-                    <h3 className="text-xl font-bold text-indigo-900">We're Still Learning</h3>
+                    <h3 className="text-xl font-bold text-indigo-900">{t('learningTitle')}</h3>
                     <p className="text-indigo-700 leading-relaxed">
-                        BorderQ is in active development. The more data we collect, the smarter our predictions become.
+                        {t('learning1')}
                     </p>
                     <p className="text-indigo-700 leading-relaxed">
-                        Have feedback? We'd love to hear from you.
+                        {t('learning2')}
                     </p>
                     <Link
                         href="/contact"
                         className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white font-bold rounded-full hover:bg-indigo-700 transition-colors"
                     >
                         <MessageSquare className="w-4 h-4" />
-                        Send Feedback
+                        {t('sendFeedback')}
                     </Link>
                 </section>
 

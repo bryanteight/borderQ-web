@@ -1,12 +1,14 @@
 "use client";
 
 import { Sparkles, Brain, Zap, ArrowRight, ShieldCheck } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface AIInsightProps {
   content: string;
 }
 
 export function AIInsight({ content }: AIInsightProps) {
+  const t = useTranslations('AIInsight');
   if (!content) return null;
 
   // Simple parser to split by markdown headers (## Title)
@@ -30,13 +32,13 @@ export function AIInsight({ content }: AIInsightProps) {
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-500/20 border border-indigo-500/30 rounded-full text-indigo-300 text-[10px] font-black uppercase tracking-[0.2em] mb-2 animate-pulse">
               <Zap className="w-3 h-3" />
-              Smart Context Active
+              {t('smartContextActive')}
             </div>
             <h2 className="text-3xl md:text-4xl font-[900] text-white tracking-tight leading-none">
-              Traffic <span className="text-indigo-400">Analysis</span>
+              {t('titlePart1')}<span className="text-indigo-400">{t('titlePart2')}</span>
             </h2>
             <p className="text-slate-400 text-sm md:text-base font-medium">
-              Analyzing live traffic against historical trends.
+              {t('subtitle')}
             </p>
           </div>
 

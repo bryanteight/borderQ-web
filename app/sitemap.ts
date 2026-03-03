@@ -3,6 +3,21 @@ import { MetadataRoute } from 'next';
 export default function sitemap(): MetadataRoute.Sitemap {
     const baseUrl = 'https://borderq.com'; // Replace with actual domain when live (or process.env.NEXT_PUBLIC_URL)
 
+    const generateAlternates = (urlPath: string) => {
+        const path = urlPath.startsWith('/') ? urlPath : `/${urlPath}`;
+        const cleanPath = path === '/' ? '' : path;
+        return {
+            url: `${baseUrl}${cleanPath}`,
+            alternates: {
+                languages: {
+                    'en': `${baseUrl}${cleanPath}`,
+                    'zh-CN': `${baseUrl}/zh-CN${cleanPath}`,
+                    'zh-TW': `${baseUrl}/zh-TW${cleanPath}`,
+                }
+            }
+        };
+    };
+
     // 1. Static Pages
     const staticRoutes = [
         '',
@@ -12,7 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         '/privacy',
         '/terms',
     ].map((route) => ({
-        url: `${baseUrl}${route}`,
+        ...generateAlternates(route),
         lastModified: new Date(),
         changeFrequency: 'monthly' as const,
         priority: route === '' ? 1.0 : 0.8,
@@ -34,7 +49,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // 2. Crossing Hub Pages (New)
     // /crossing/[port]
     const crossingRoutes = ports.map((port) => ({
-        url: `${baseUrl}/crossing/${port}`,
+        ...generateAlternates(`/crossing/${port}`),
         lastModified: new Date(),
         changeFrequency: 'daily' as const,
         priority: 0.9,
@@ -44,13 +59,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // /stats/vancouver-to-seattle/[day] and /stats/seattle-to-vancouver/[day]
     const aggregateRoutes = [
         ...days.map((day) => ({
-            url: `${baseUrl}/stats/vancouver-to-seattle/${day}`,
+            ...generateAlternates(`/stats/vancouver-to-seattle/${day}`),
             lastModified: new Date(),
             changeFrequency: 'weekly' as const,
             priority: 0.8,
         })),
         ...days.map((day) => ({
-            url: `${baseUrl}/stats/seattle-to-vancouver/${day}`,
+            ...generateAlternates(`/stats/seattle-to-vancouver/${day}`),
             lastModified: new Date(),
             changeFrequency: 'weekly' as const,
             priority: 0.8,
@@ -61,7 +76,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // /stats/[port]/[day]
     const portRoutes = ports.flatMap((port) =>
         days.map((day) => ({
-            url: `${baseUrl}/stats/${port}/${day}`,
+            ...generateAlternates(`/stats/${port}/${day}`),
             lastModified: new Date(),
             changeFrequency: 'weekly' as const,
             priority: 0.7,

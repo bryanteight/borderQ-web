@@ -11,21 +11,24 @@ import { StatusCardCarousel } from "@/components/StatusCardCarousel";
 import { DirectionTabs } from "@/components/DirectionTabs";
 import { EventAlert } from "@/lib/types";
 import { PlanAheadHeader } from "@/components/PlanAheadHeader";
+import { getTranslations } from "next-intl/server";
 
-export default async function Home({ searchParams }: { searchParams: Promise<{ region?: string }> }) {
-  const params = await searchParams;
-  const region = params.region || "cascadia";
-  const data = await getBorderData();
+export default async function Home({ params, searchParams }: { params: Promise<{ locale: string }>, searchParams: Promise<{ region?: string }> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'Home' });
+  const searchProps = await searchParams;
+  const region = searchProps.region || "cascadia";
+  const data = await getBorderData(locale);
   const hints = [
-    "Best time to cross tomorrow?",
-    "Peace Arch vs Pacific Highway right now",
-    "How was traffic last Christmas?",
-    "Forecast for New Year's Day",
-    "Is Lynden faster than Peace Arch?",
-    "Traffic prediction for Friday afternoon",
-    "Was it busy last weekend?",
-    "Best time to leave for Vancouver",
-    "Compare Saturday vs Sunday traffic"
+    t('hint1'),
+    t('hint2'),
+    t('hint3'),
+    t('hint4'),
+    t('hint5'),
+    t('hint6'),
+    t('hint7'),
+    t('hint8'),
+    t('hint9')
   ];
 
   // If data is null or has error
@@ -33,12 +36,12 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ r
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-[#F6F8FA] text-slate-500 gap-4 font-sans">
         <BorderQLogo className="w-16 h-16 opacity-50 mb-2 grayscale" />
-        <h2 className="text-xl font-[800] text-slate-700">Connecting to AI Brain...</h2>
+        <h2 className="text-xl font-[800] text-slate-700">{t('connecting')}</h2>
         <p className="max-w-md text-center text-sm px-6 leading-relaxed bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-          {data?.message || "Initializing connection to traffic prediction engine."}
+          {data?.message || t('initializing')}
         </p>
         <div className="text-xs text-slate-400 font-mono mt-4">
-          CHECKING: {process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000"}
+          {t('checking')} {process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000"}
         </div>
       </div>
     );

@@ -6,9 +6,11 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useDirection } from "@/context/DirectionContext";
 import { ExchangeRateBadge } from "@/components/ExchangeRateBadge";
+import { useTranslations } from "next-intl";
 
 export function StatusCardCarousel({ events, updatedAt, region = "cascadia" }: { events: BorderEvent[], updatedAt?: string, region?: string }) {
     const { direction } = useDirection();
+    const t = useTranslations('Home');
     const [activeIndex, setActiveIndex] = useState(0);
 
     // Deterministic region resolver: uses explicit region field, or falls back to port ID prefix
@@ -70,11 +72,11 @@ export function StatusCardCarousel({ events, updatedAt, region = "cascadia" }: {
             {/* Context Header: Simplified Direction Title */}
             <div className="relative flex flex-col justify-center items-center -mt-2 pb-2 md:pb-0">
                 <h2 className="text-xl md:text-2xl font-[900] text-slate-900 tracking-tight text-center">
-                    {direction === "SOUTHBOUND" ? "Southbound Live Traffic" : "Northbound Live Traffic"}
+                    {direction === "SOUTHBOUND" ? t('southboundLive') : t('northboundLive')}
                 </h2>
                 {timeStr && (
                     <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">
-                        Updated at {timeStr}
+                        {t('updatedAt')} {timeStr}
                     </span>
                 )}
                 <div className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2">

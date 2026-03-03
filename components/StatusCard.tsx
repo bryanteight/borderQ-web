@@ -9,8 +9,10 @@ import { CameraModal } from "./CameraModal";
 import { CameraThumbnail } from "./CameraThumbnail";
 import { Tooltip } from "./Tooltip";
 import { getSlugFromEvent, isEventClosed } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 export function StatusCard({ event }: { event: BorderEvent }) {
+  const t = useTranslations('StatusCard');
   const [isCameraModalOpen, setIsCameraModalOpen] = useState(false);
   const isClosed = isEventClosed(event);
   const isNoData = event.wait_time_minutes === -1;
@@ -92,8 +94,8 @@ export function StatusCard({ event }: { event: BorderEvent }) {
                 ) : (
                   // Default Label
                   <span className="text-[#94a3b8] flex items-center gap-1">
-                    OFFICIAL ESTIMATE
-                    <Tooltip id="wait-time" align="left" content="Max of CBSA, CBP & DriveBC. Updates every 15 mins." />
+                    {t('officialEstimate')}
+                    <Tooltip id="wait-time" align="left" content={t('officialEstimateTooltip')} />
                   </span>
                 )}
               </div>
@@ -101,7 +103,7 @@ export function StatusCard({ event }: { event: BorderEvent }) {
             {isClosed && (
               <span className="text-red-500 font-[900] text-xs uppercase tracking-widest flex items-center gap-2 mt-1">
                 <div className="w-1.5 h-1.5 rounded-full bg-red-500" />
-                Closed
+                {t('closed')}
               </span>
             )}
           </div>
@@ -111,16 +113,16 @@ export function StatusCard({ event }: { event: BorderEvent }) {
               <div className="flex items-center gap-1">
                 <span className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 text-white text-[9px] font-black uppercase tracking-tight rounded-full shadow-lg shadow-emerald-100 transition-transform active:scale-95 whitespace-nowrap">
                   <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                  {event.standard_lanes_open} {event.standard_lanes_open === 1 ? "Lane" : "Lanes"}
+                  {event.standard_lanes_open} {event.standard_lanes_open === 1 ? t('lane') : t('lanes')}
                 </span>
-                <Tooltip id="lane-count" align="right" side="bottom" content="Number of inspection lanes currently open." />
+                <Tooltip id="lane-count" align="right" side="bottom" content={t('openLanesTooltip')} />
               </div>
             )}
 
             {/* View Details Link - DEV ONLY */}
             {process.env.NODE_ENV === 'development' && (
               <div className="flex items-center gap-0.5 text-[10px] font-bold text-indigo-600 opacity-0 group-hover:opacity-100 transition-all ml-auto mt-1">
-                <span>See details</span>
+                <span>{t('seeDetails')}</span>
                 <ChevronRight className="w-3 h-3" />
               </div>
             )}
@@ -135,7 +137,7 @@ export function StatusCard({ event }: { event: BorderEvent }) {
             <div className="flex items-baseline gap-1">
               {isNoData ? (
                 <span className="text-3xl md:text-4xl font-[900] tracking-tight leading-none text-gray-300">
-                  No data
+                  {t('noData')}
                 </span>
               ) : (
                 <>
@@ -145,7 +147,7 @@ export function StatusCard({ event }: { event: BorderEvent }) {
                   )}>
                     {event.wait_time_minutes}
                   </span>
-                  <span className="text-lg md:text-xl font-black text-slate-300 transform -translate-y-1">min</span>
+                  <span className="text-lg md:text-xl font-black text-slate-300 transform -translate-y-1">{t('min')}</span>
                 </>
               )}
             </div>
@@ -153,11 +155,11 @@ export function StatusCard({ event }: { event: BorderEvent }) {
             {/* Typical Time Row */}
             {!isClosed && !isNoData && event.official_avg_minutes !== undefined && event.official_avg_minutes !== null && event.official_avg_minutes > 0 && (
               <div className="flex items-baseline gap-1.5 mt-1 ml-1">
-                <span className="text-[11px] font-bold text-slate-400">Typical</span>
+                <span className="text-[11px] font-bold text-slate-400">{t('typical')}</span>
                 <span className="text-xl font-[900] text-slate-400/80 tracking-tight leading-none">
                   {event.official_avg_minutes}
                 </span>
-                <span className="text-[10px] font-bold text-slate-300">min</span>
+                <span className="text-[10px] font-bold text-slate-300">{t('min')}</span>
               </div>
             )}
           </div>
@@ -213,7 +215,7 @@ export function StatusCard({ event }: { event: BorderEvent }) {
               </div>
               <div className="flex-1">
                 <p className="text-[9px] font-black text-indigo-600 uppercase tracking-widest mb-1 flex items-center gap-1">
-                  AI Live Analysis
+                  {t('aiLiveAnalysis')}
                 </p>
                 <p className="text-xs text-slate-700 leading-relaxed font-medium bg-slate-50/50 p-2 rounded-lg border border-slate-100">
                   {smartAnalysis}

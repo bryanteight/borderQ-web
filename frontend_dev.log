@@ -1,5 +1,5 @@
 
-> frontend@0.7.1 dev
+> frontend@0.7.10 dev
 > next dev
 
 [baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
@@ -8,31 +8,167 @@
    - Network:       http://192.168.86.48:3000
 
  ✓ Starting...
- ✓ Ready in 539ms
- GET / 200 in 2.5s (compile: 1759ms, render: 703ms)
- GET / 200 in 557ms (compile: 10ms, render: 547ms)
- GET /forecast/vancouver-to-seattle/2026-02-05 200 in 1771ms (compile: 1485ms, render: 286ms)
- GET / 200 in 305ms (compile: 6ms, render: 299ms)
- ✓ Compiled in 98ms
- ✓ Compiled in 176ms
- ✓ Compiled in 140ms
- GET / 200 in 5.4s (compile: 110ms, render: 5.3s)
- GET /stats/lynden/Thursday 200 in 1212ms (compile: 1054ms, render: 158ms)
- GET / 200 in 321ms (compile: 6ms, render: 315ms)
- GET /stats/lynden/Thursday 200 in 98ms (compile: 14ms, render: 84ms)
- GET / 200 in 495ms (compile: 17ms, render: 479ms)
- GET /forecast/vancouver-to-seattle/2026-02-08 200 in 312ms (compile: 14ms, render: 298ms)
- GET / 200 in 537ms (compile: 9ms, render: 528ms)
- GET /stats/peace-arch/Monday 200 in 73ms (compile: 6ms, render: 67ms)
+ ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+ ✓ Ready in 1086ms
+ GET /zh-CN 200 in 4.4s (compile: 2.6s, proxy.ts: 1972µs, render: 1796ms)
+ GET /zh-CN 200 in 1479ms (compile: 13ms, proxy.ts: 13ms, render: 1452ms)
+ GET /zh-CN/forecast/vancouver-to-seattle/2026-03-02 200 in 1484ms (compile: 1374ms, proxy.ts: 5ms, render: 105ms)
+ GET /zh-CN 200 in 1520ms (compile: 13ms, proxy.ts: 6ms, render: 1500ms)
+ GET /zh-CN/forecast/vancouver-to-seattle/2026-03-02 200 in 147ms (compile: 14ms, proxy.ts: 5ms, render: 128ms)
+ GET /zh-CN 200 in 1311ms (compile: 10ms, proxy.ts: 6ms, render: 1296ms)
+ HEAD / 200 in 1495ms (compile: 15ms, proxy.ts: 10ms, render: 1470ms)
+ GET /zh-CN/forecast/vancouver-to-seattle/2026-03-02 200 in 370ms (compile: 8ms, proxy.ts: 4ms, render: 358ms)
+ GET /zh-CN 200 in 1535ms (compile: 17ms, proxy.ts: 12ms, render: 1505ms)
+ GET /zh-CN 200 in 2.7s (compile: 8ms, proxy.ts: 4ms, render: 2.7s)
+ GET /zh-CN 200 in 115ms (compile: 65ms, proxy.ts: 4ms, render: 46ms)
+ GET /zh-CN 200 in 1491ms (compile: 55ms, proxy.ts: 1991µs, render: 1435ms)
+ GET /zh-CN 200 in 2.6s (compile: 3ms, proxy.ts: 2ms, render: 2.5s)
+ GET /zh-CN 200 in 5.6s (compile: 15ms, proxy.ts: 18ms, render: 5.6s)
+ GET /zh-CN/forecast/vancouver-to-seattle/2026-03-02 200 in 383ms (compile: 76ms, proxy.ts: 10ms, render: 297ms)
+ GET /zh-CN 200 in 1319ms (compile: 8ms, proxy.ts: 4ms, render: 1307ms)
+ GET /zh-CN 200 in 1566ms (compile: 14ms, proxy.ts: 5ms, render: 1547ms)
+ ✓ Compiled in 71ms
+ GET /zh-CN 200 in 1714ms (compile: 79ms, proxy.ts: 5ms, render: 1630ms)
+ GET /zh-CN/forecast/vancouver-to-seattle/2026-03-05 200 in 321ms (compile: 9ms, proxy.ts: 8ms, render: 305ms)
+ GET /zh-CN 200 in 1569ms (compile: 37ms, proxy.ts: 14ms, render: 1518ms)
+ ✓ Compiled in 70ms
+ GET /zh-CN 200 in 205ms (compile: 70ms, proxy.ts: 6ms, render: 128ms)
+ GET /zh-CN 200 in 205ms (compile: 90ms, proxy.ts: 5ms, render: 110ms)
+ GET /zh-CN 200 in 55ms (compile: 3ms, proxy.ts: 3ms, render: 49ms)
+ GET /zh-CN 200 in 38ms (compile: 5ms, proxy.ts: 2ms, render: 30ms)
+ GET /zh-CN 200 in 183ms (compile: 45ms, proxy.ts: 2ms, render: 136ms)
+ GET /zh-CN 200 in 110ms (compile: 5ms, proxy.ts: 1729µs, render: 103ms)
+ GET /zh-CN 200 in 91ms (compile: 10ms, proxy.ts: 2ms, render: 79ms)
+ GET /zh-CN 200 in 54ms (compile: 18ms, proxy.ts: 6ms, render: 30ms)
+ GET /zh-CN 200 in 260ms (compile: 34ms, proxy.ts: 1583µs, render: 225ms)
+ GET /zh-CN 200 in 204ms (compile: 11ms, proxy.ts: 5ms, render: 188ms)
+ GET /zh-CN 200 in 171ms (compile: 99ms, proxy.ts: 9ms, render: 63ms)
+ GET /zh-CN 200 in 50ms (compile: 9ms, proxy.ts: 3ms, render: 38ms)
+ ✓ Compiled in 86ms
+ ✓ Compiled in 100ms
+ GET /zh-CN 200 in 363ms (compile: 86ms, proxy.ts: 9ms, render: 269ms)
+ GET /zh-CN 200 in 217ms (compile: 21ms, proxy.ts: 8ms, render: 187ms)
+ GET /zh-CN 200 in 132ms (compile: 9ms, proxy.ts: 6ms, render: 117ms)
+ GET /zh-CN 200 in 110ms (compile: 19ms, proxy.ts: 4ms, render: 87ms)
+ GET /zh-CN 200 in 152ms (compile: 39ms, proxy.ts: 4ms, render: 110ms)
+ GET /zh-CN 200 in 96ms (compile: 7ms, proxy.ts: 4ms, render: 86ms)
+ GET /zh-CN 200 in 77ms (compile: 10ms, proxy.ts: 3ms, render: 64ms)
+ GET /zh-CN 200 in 89ms (compile: 9ms, proxy.ts: 4ms, render: 77ms)
+ GET /zh-CN 200 in 179ms (compile: 53ms, proxy.ts: 2ms, render: 124ms)
+ GET /zh-CN 200 in 102ms (compile: 8ms, proxy.ts: 2ms, render: 92ms)
+ GET /zh-CN 200 in 71ms (compile: 17ms, proxy.ts: 5ms, render: 49ms)
+ GET /zh-CN 200 in 37ms (compile: 5ms, proxy.ts: 1761µs, render: 30ms)
+ ✓ Compiled in 75ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled in 53ms
+Error: MISSING_MESSAGE: Could not resolve `Home.updatedAt` in messages for locale `zh-CN`.
+    at StatusCardCarousel (components/StatusCardCarousel.tsx:79:26)
+  77 |                 {timeStr && (
+  78 |                     <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">
+> 79 |                         {t('updatedAt')} {timeStr}
+     |                          ^
+  80 |                     </span>
+  81 |                 )}
+  82 |                 <div className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2"> {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Home.updatedAt` in messages for locale `zh-CN`.'
+}
+ GET /zh-CN 200 in 1995ms (compile: 163ms, proxy.ts: 95ms, render: 1737ms)
+Error: MISSING_MESSAGE: Could not resolve `Home.updatedAt` in messages for locale `zh-CN`.
+    at StatusCardCarousel (components/StatusCardCarousel.tsx:79:26)
+  77 |                 {timeStr && (
+  78 |                     <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">
+> 79 |                         {t('updatedAt')} {timeStr}
+     |                          ^
+  80 |                     </span>
+  81 |                 )}
+  82 |                 <div className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2"> {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Home.updatedAt` in messages for locale `zh-CN`.'
+}
+ GET /zh-CN 200 in 1275ms (compile: 13ms, proxy.ts: 2ms, render: 1259ms)
+ GET /zh-CN 200 in 153ms (compile: 45ms, proxy.ts: 2ms, render: 106ms)
+ GET /zh-CN 200 in 91ms (compile: 9ms, proxy.ts: 4ms, render: 78ms)
+ GET /zh-CN 200 in 61ms (compile: 6ms, proxy.ts: 3ms, render: 52ms)
+ GET /zh-CN 200 in 40ms (compile: 10ms, proxy.ts: 2ms, render: 28ms)
+ GET /zh-CN 200 in 214ms (compile: 50ms, proxy.ts: 3ms, render: 161ms)
+ GET /zh-CN 200 in 133ms (compile: 14ms, proxy.ts: 4ms, render: 114ms)
+ GET /zh-CN 200 in 93ms (compile: 26ms, proxy.ts: 10ms, render: 57ms)
+ GET /zh-CN 200 in 48ms (compile: 11ms, proxy.ts: 3ms, render: 35ms)
+ GET /zh-CN 200 in 135ms (compile: 40ms, proxy.ts: 2ms, render: 92ms)
+ GET /zh-CN 200 in 80ms (compile: 5ms, proxy.ts: 3ms, render: 72ms)
+ GET /zh-CN 200 in 62ms (compile: 6ms, proxy.ts: 3ms, render: 53ms)
+ GET /zh-CN 200 in 43ms (compile: 11ms, proxy.ts: 6ms, render: 27ms)
+ GET /zh-CN 200 in 1669ms (compile: 24ms, proxy.ts: 10ms, render: 1635ms)
+ GET /zh-CN/stats/pacific-highway/Monday 200 in 1273ms (compile: 1074ms, proxy.ts: 8ms, render: 190ms)
+ GET /zh-CN 200 in 1301ms (compile: 5ms, proxy.ts: 2ms, render: 1293ms)
+ ✓ Compiled in 51ms
+ GET /zh-CN 200 in 183ms (compile: 97ms, proxy.ts: 8ms, render: 78ms)
+ GET /zh-CN 200 in 181ms (compile: 131ms, proxy.ts: 7ms, render: 42ms)
+ GET /zh-CN 200 in 150ms (compile: 4ms, proxy.ts: 5ms, render: 141ms)
+ GET /zh-CN 200 in 133ms (compile: 15ms, proxy.ts: 3ms, render: 115ms)
+ GET /zh-CN 200 in 97ms (compile: 14ms, proxy.ts: 3ms, render: 80ms)
+ GET /zh-CN 200 in 46ms (compile: 8ms, proxy.ts: 1942µs, render: 36ms)
+ GET /zh-CN 200 in 185ms (compile: 55ms, proxy.ts: 1485µs, render: 129ms)
+ GET /zh-CN 200 in 134ms (compile: 6ms, proxy.ts: 3ms, render: 124ms)
+ GET /zh-CN 200 in 108ms (compile: 6ms, proxy.ts: 3ms, render: 99ms)
+ GET /zh-CN 200 in 90ms (compile: 8ms, proxy.ts: 3ms, render: 80ms)
+ GET /zh-CN 200 in 70ms (compile: 7ms, proxy.ts: 1710µs, render: 61ms)
+ GET /zh-CN 200 in 49ms (compile: 7ms, proxy.ts: 3ms, render: 39ms)
+ GET /zh-CN 200 in 207ms (compile: 69ms, proxy.ts: 2ms, render: 136ms)
+ GET /zh-CN 200 in 151ms (compile: 7ms, proxy.ts: 3ms, render: 141ms)
+ GET /zh-CN 200 in 143ms (compile: 6ms, proxy.ts: 3ms, render: 134ms)
+ GET /zh-CN 200 in 126ms (compile: 7ms, proxy.ts: 4ms, render: 114ms)
+ GET /zh-CN 200 in 115ms (compile: 9ms, proxy.ts: 3ms, render: 104ms)
+ GET /zh-CN 200 in 120ms (compile: 10ms, proxy.ts: 4ms, render: 106ms)
+ ✓ Compiled in 105ms
+ GET /zh-CN 200 in 620ms (compile: 125ms, proxy.ts: 2ms, render: 493ms)
+ GET /zh-CN 200 in 2.3s (compile: 4ms, proxy.ts: 1664µs, render: 2.3s)
+ ✓ Compiled in 95ms
+ GET /zh-CN 200 in 340ms (compile: 90ms, proxy.ts: 21ms, render: 228ms)
+ GET /zh-CN 200 in 197ms (compile: 20ms, proxy.ts: 5ms, render: 171ms)
+ GET /zh-CN 200 in 172ms (compile: 27ms, proxy.ts: 3ms, render: 142ms)
+ GET /zh-CN 200 in 140ms (compile: 7ms, proxy.ts: 2ms, render: 130ms)
+ GET /zh-CN 200 in 149ms (compile: 8ms, proxy.ts: 2ms, render: 139ms)
+ GET /zh-CN 200 in 125ms (compile: 10ms, proxy.ts: 2ms, render: 112ms)
+ GET /zh-CN 200 in 102ms (compile: 9ms, proxy.ts: 3ms, render: 89ms)
+ GET /zh-CN 200 in 77ms (compile: 8ms, proxy.ts: 4ms, render: 65ms)
+ GET /zh-CN 200 in 52ms (compile: 10ms, proxy.ts: 4ms, render: 38ms)
+ GET /zh-CN 200 in 206ms (compile: 53ms, proxy.ts: 2ms, render: 150ms)
+ GET /zh-CN 200 in 144ms (compile: 6ms, proxy.ts: 3ms, render: 135ms)
+ GET /zh-CN 200 in 154ms (compile: 9ms, proxy.ts: 3ms, render: 143ms)
+ GET /zh-CN 200 in 176ms (compile: 8ms, proxy.ts: 3ms, render: 164ms)
+ GET /zh-CN 200 in 164ms (compile: 9ms, proxy.ts: 5ms, render: 150ms)
+ GET /zh-CN 200 in 133ms (compile: 10ms, proxy.ts: 5ms, render: 118ms)
+ GET /zh-CN 200 in 108ms (compile: 12ms, proxy.ts: 4ms, render: 93ms)
+ GET /zh-CN 200 in 80ms (compile: 10ms, proxy.ts: 3ms, render: 67ms)
+ GET /zh-CN 200 in 56ms (compile: 7ms, proxy.ts: 4ms, render: 44ms)
+ GET /zh-CN 200 in 1599ms (compile: 29ms, proxy.ts: 20ms, render: 1550ms)
+ GET /zh-CN 200 in 2.1s (compile: 66ms, proxy.ts: 70ms, render: 1989ms)
+ GET /zh-CN/vectors 200 in 1869ms (compile: 1826ms, proxy.ts: 11ms, render: 32ms)
+ GET /zh-CN 200 in 1509ms (compile: 12ms, proxy.ts: 2ms, render: 1495ms)
+ GET / 200 in 1827ms (compile: 27ms, proxy.ts: 15ms, render: 1785ms)
+ GET /stats/peace-arch/Monday 200 in 371ms (compile: 147ms, proxy.ts: 1902µs, render: 222ms)
 The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
- GET /forecast/vancouver-to-seattle/2026-02-05 200 in 397ms (compile: 6ms, render: 391ms)
- GET / 200 in 507ms (compile: 7ms, render: 500ms)
- GET /stats/peace-arch/Monday 200 in 48ms (compile: 4ms, render: 43ms)
+ GET /forecast/vancouver-to-seattle/2026-03-02 200 in 303ms (compile: 81ms, proxy.ts: 1430µs, render: 220ms)
 The width(-1) and height(-1) of chart should be greater than 0,
        please check the style of container, or the props width(100%) and height(100%),
        or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
        height and width.
- GET /forecast/vancouver-to-seattle/2026-02-05 200 in 126ms (compile: 5ms, render: 121ms)
+ GET /forecast/seattle-to-vancouver/2026-03-02 200 in 122ms (compile: 3ms, proxy.ts: 2ms, render: 117ms)
+ GET / 200 in 6.5s (compile: 19ms, proxy.ts: 11ms, render: 6.4s)
+ GET /stats/peace-arch/Monday 200 in 101ms (compile: 8ms, proxy.ts: 1941µs, render: 91ms)
+The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+ GET /forecast/vancouver-to-seattle/2026-03-02 200 in 296ms (compile: 5ms, proxy.ts: 1524µs, render: 289ms)
+The width(-1) and height(-1) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width.
+ GET /forecast/seattle-to-vancouver/2026-03-02 200 in 219ms (compile: 3ms, proxy.ts: 1241µs, render: 215ms)

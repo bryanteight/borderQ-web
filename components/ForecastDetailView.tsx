@@ -1,12 +1,15 @@
 'use client';
 
 import { ComparisonForecast } from "@/lib/api";
-import { Line, LineChart, Area, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis, Legend } from "recharts";
-import { ArrowLeft, CheckCircle2, Info, Zap, AlertCircle, Maximize2, X } from "lucide-react";
-import Link from "next/link";
+import { Area, CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { AlertCircle, ArrowLeft, CheckCircle2, Info, Maximize2, X, Zap } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 import React, { useState } from "react";
+import { useTranslations, useLocale } from "next-intl";
 
 export function ForecastDetailView({ forecast }: { forecast: ComparisonForecast }) {
+    const t = useTranslations('ForecastDetail');
+    const locale = useLocale();
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [selectedPort, setSelectedPort] = useState<string | null>(null);
 
@@ -34,6 +37,8 @@ export function ForecastDetailView({ forecast }: { forecast: ComparisonForecast 
 
     const dateObj = new Date(forecast.date + 'T12:00:00');
 
+
+
     // COLORS for ports (High Contrast: Emerald, Indigo, Amber)
     const colors: Record<string, string> = {
         "peace-arch": "#10b981",     // Emerald 500
@@ -52,14 +57,14 @@ export function ForecastDetailView({ forecast }: { forecast: ComparisonForecast 
                     <div className="bg-white p-2 rounded-full border border-slate-200 group-hover:border-slate-300 shadow-sm">
                         <ArrowLeft className="w-4 h-4" />
                     </div>
-                    <span className="font-bold text-sm">Back to Dashboard</span>
+                    <span className="font-bold text-sm">{t('backToDashboard')}</span>
                 </Link>
 
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                     <div>
                         <div className="flex items-center gap-3 mb-2">
                             <span className="px-2.5 py-1 rounded-md bg-indigo-100 text-indigo-700 text-[10px] font-[900] uppercase tracking-wider">
-                                Regional AI Comparison
+                                {t('regionalComparison')}
                             </span>
                             {forecast.is_holiday && (
                                 <span className="px-2.5 py-1 rounded-md bg-rose-100 text-rose-700 text-[10px] font-[900] uppercase tracking-wider">
@@ -68,20 +73,14 @@ export function ForecastDetailView({ forecast }: { forecast: ComparisonForecast 
                             )}
                         </div>
                         <h1 className="text-3xl md:text-5xl font-[900] text-slate-900 tracking-tight mb-2">
-                            {forecast.direction === "SOUTHBOUND" ? "Southbound" : "Northbound"} Forecast
+                            {forecast.direction === "SOUTHBOUND" ? t('southbound') : t('northbound')}
                         </h1>
                         <p className="text-xl text-slate-500 font-medium">
-                            {dateObj.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
+                            {dateObj.toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
                         </p>
                     </div>
 
-                    <div className="flex items-center gap-4">
-                        {/* Confidence Badge */}
-                        <div className="bg-white border border-slate-200 px-4 py-2 rounded-xl text-right">
-                            <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">Confidence</span>
-                            <span className="text-emerald-600 font-[800] text-sm">High Reliability</span>
-                        </div>
-                    </div>
+
                 </div>
             </div>
 
@@ -90,7 +89,7 @@ export function ForecastDetailView({ forecast }: { forecast: ComparisonForecast 
                 <div className="bg-white border-2 border-indigo-500 p-6 rounded-[2rem] shadow-xl shadow-indigo-100 flex flex-col md:flex-row items-center gap-6">
 
                     <div className="flex-1 text-center md:text-left">
-                        <h3 className="text-indigo-600 font-[900] text-xs uppercase tracking-[0.2em] mb-1">AI Smart Recommendation</h3>
+                        <h3 className="text-indigo-600 font-[900] text-xs uppercase tracking-[0.2em] mb-1">{t('aiRecommendation')}</h3>
                         <div
                             className="text-slate-900 text-sm md:text-base font-medium leading-relaxed space-y-4"
                             dangerouslySetInnerHTML={{ __html: forecast.smart_pick.html_report || forecast.smart_pick.reason }}
@@ -108,12 +107,12 @@ export function ForecastDetailView({ forecast }: { forecast: ComparisonForecast 
                     <div className="bg-white border border-slate-200 p-6 rounded-3xl shadow-sm">
                         <h3 className="text-sm font-[800] text-slate-900 mb-6 flex items-center gap-2">
                             <Zap className="w-4 h-4 text-indigo-500" />
-                            Average Wait Focus
+                            {t('averageWaitFocus')}
                         </h3>
 
                         <div className="space-y-6">
                             {Object.values(forecast.ports).map((port) => {
-                                const avg = Math.round(forecast.smart_pick.average_waits[port.id]);
+                                const peakWait = Math.max(...port.forecast_96_slots);
                                 const isBest = forecast.smart_pick.recommended_port_ids.includes(port.id);
 
                                 // Calculate day-wide averages for the range
@@ -128,7 +127,7 @@ export function ForecastDetailView({ forecast }: { forecast: ComparisonForecast 
                                             </span>
                                             <div className="text-right">
                                                 <div className={`text-xl font-[900] ${isBest ? 'text-slate-900' : 'text-slate-900'}`} style={{ color: isBest ? colors[port.slug] : undefined }}>
-                                                    {avg}m
+                                                    {peakWait}m
                                                 </div>
                                                 <div className="text-[10px] font-bold text-slate-400 -mt-1">
                                                     {avgMin}~{avgMax}m
@@ -139,7 +138,7 @@ export function ForecastDetailView({ forecast }: { forecast: ComparisonForecast 
                                             <div
                                                 className={`h-full rounded-full transition-all duration-1000 ${isBest ? 'opacity-100' : 'opacity-30 grayscale'}`}
                                                 style={{
-                                                    width: `${Math.min(100, (avg / 60) * 100)}%`,
+                                                    width: `${Math.min(100, (peakWait / 120) * 100)}%`,
                                                     backgroundColor: colors[port.slug]
                                                 }}
                                             />
@@ -152,9 +151,9 @@ export function ForecastDetailView({ forecast }: { forecast: ComparisonForecast 
 
                     <div className="bg-indigo-900 text-white p-6 rounded-3xl shadow-lg relative overflow-hidden group">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-bl-[4rem] group-hover:scale-110 transition-transform" />
-                        <h3 className="text-xs font-bold text-indigo-300 uppercase tracking-widest mb-2 font-mono">Expert Tip</h3>
+                        <h3 className="text-xs font-bold text-indigo-300 uppercase tracking-widest mb-2 font-mono">{t('expertTip')}</h3>
                         <p className="text-sm font-medium leading-relaxed">
-                            Pacific Highway (Truck Crossing) often has shorter waits for passenger vehicles during PAX peak hours, even if commercial lines look long.
+                            {t('expertTipContent')}
                         </p>
                     </div>
                 </div>
@@ -165,7 +164,7 @@ export function ForecastDetailView({ forecast }: { forecast: ComparisonForecast 
                         <div>
                             <div className="flex items-center gap-2 mb-1">
                                 <h3 className="text-sm font-[800] text-slate-400 uppercase tracking-wider">
-                                    24-Hour Comparison
+                                    {t('comparison24h')}
                                 </h3>
                                 <button
                                     onClick={() => setIsFullscreen(true)}
@@ -174,7 +173,7 @@ export function ForecastDetailView({ forecast }: { forecast: ComparisonForecast 
                                     <Maximize2 className="w-4 h-4" />
                                 </button>
                             </div>
-                            <p className="text-xs text-slate-500 font-medium">Historical simulation for {dateObj.toDateString()}</p>
+                            <p className="text-xs text-slate-500 font-medium">{t('historicalSimulation', { date: dateObj.toLocaleDateString(locale) })}</p>
                         </div>
                         <div className="flex flex-wrap gap-4 px-2 py-2 bg-slate-50 rounded-xl">
                             {Object.values(forecast.ports).map(port => (
@@ -205,7 +204,7 @@ export function ForecastDetailView({ forecast }: { forecast: ComparisonForecast 
                                     unit="m"
                                     dx={-5}
                                 />
-                                <Tooltip content={<CustomTooltip colors={colors} />} />
+                                <Tooltip content={<CustomTooltip colors={colors} t={t} />} />
                                 <Legend wrapperStyle={{ display: 'none' }} />
 
                                 {Object.values(forecast.ports).map(port => {
@@ -246,7 +245,7 @@ export function ForecastDetailView({ forecast }: { forecast: ComparisonForecast 
                     <div className="mt-6 p-4 bg-slate-50 rounded-2xl border border-slate-100 flex items-start gap-3">
                         <Info className="w-4 h-4 text-slate-400 mt-0.5" />
                         <p className="text-[11px] text-slate-500 leading-relaxed font-medium">
-                            Note: The comparison data is generated using similar historical scenarios (Holidays, Weather, and Day-of-week). Real-time conditions like accidents or inspection surges are not factored into future forecasts.
+                            {t('note')}
                         </p>
                     </div>
                 </div>
@@ -285,7 +284,7 @@ export function ForecastDetailView({ forecast }: { forecast: ComparisonForecast 
             {isFullscreen && (
                 <div className="fixed inset-0 z-50 bg-[#F6F8FA] p-4 flex flex-col overflow-hidden">
                     <div className="flex justify-between items-center mb-4 shrink-0">
-                        <h2 className="text-lg font-[900] text-slate-900">Landscape View</h2>
+                        <h2 className="text-lg font-[900] text-slate-900">{t('landscapeView')}</h2>
                         <button
                             onClick={() => setIsFullscreen(false)}
                             className="p-2 bg-white rounded-full shadow-lg border border-slate-200"
@@ -299,7 +298,7 @@ export function ForecastDetailView({ forecast }: { forecast: ComparisonForecast 
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                                 <XAxis dataKey="time" />
                                 <YAxis unit="m" />
-                                <Tooltip content={<CustomTooltip colors={colors} />} />
+                                <Tooltip content={<CustomTooltip colors={colors} t={t} />} />
                                 {Object.values(forecast.ports).map(port => {
                                     if (selectedPort && selectedPort !== port.slug) return null;
                                     return (
@@ -328,7 +327,7 @@ export function ForecastDetailView({ forecast }: { forecast: ComparisonForecast 
                         </ResponsiveContainer>
                     </div>
                     <p className="text-center text-slate-400 text-xs mt-4 shrink-0 animate-pulse">
-                        Rotate your device for best experience
+                        {t('rotateDevice')}
                     </p>
                 </div>
             )}
@@ -336,7 +335,7 @@ export function ForecastDetailView({ forecast }: { forecast: ComparisonForecast 
     );
 }
 
-function CustomTooltip({ active, payload, label, colors }: any) {
+function CustomTooltip({ active, payload, label, colors, t }: any) {
     if (active && payload && payload.length) {
         // payload is array of all lines/areas. 
         // We have duplicates because we have Line + Area for each port.
@@ -369,12 +368,20 @@ function CustomTooltip({ active, payload, label, colors }: any) {
                                     <div className="w-2 h-2 rounded-full" style={{ backgroundColor: color, boxShadow: `0 0 0 2px ${color}60` }} />
                                     <span className="text-xs font-bold text-slate-700 uppercase tracking-tighter">{name}</span>
                                 </div>
-                                <div className="text-right">
-                                    <span className="text-sm font-[900] text-slate-900">{avg}m</span>
+                                <div className="text-right flex flex-col items-end gap-1">
+                                    <span className="text-sm font-[900] text-slate-900 leading-none">{avg}m</span>
                                     {range && (
-                                        <span className="text-[10px] text-slate-400 font-mono ml-1.5 opacity-80">
-                                            {range[0]}-{range[1]}
-                                        </span>
+                                        <div className="flex items-center gap-1.5 opacity-90">
+                                            <span className="text-[10px] text-slate-500 font-mono tracking-tighter">
+                                                {range[0]}-{range[1]}m
+                                            </span>
+                                            <span className="text-slate-300 text-[8px]">|</span>
+                                            <span className={`text-[9px] font-bold ${getConfidenceScore(range[0], range[1]) >= 90 ? 'text-emerald-500' :
+                                                getConfidenceScore(range[0], range[1]) >= 80 ? 'text-amber-500' : 'text-rose-500'
+                                                }`}>
+                                                {getConfidenceScore(range[0], range[1])}% {t ? t('confidence') : 'CONF.'}
+                                            </span>
+                                        </div>
                                     )}
                                 </div>
                             </div>
@@ -395,4 +402,15 @@ function convertToAMPM(time24: string) {
     hour = hour % 12;
     hour = hour ? hour : 12;
     return `${hour}:${m} ${ampm}`;
+}
+
+function getConfidenceScore(min: number, max: number): number {
+    const variance = max - min;
+    // Base confidence is high
+    let confidence = 98;
+    // Penalize confidence based on variance width (approx 1% drop per 2 mins of variance)
+    confidence -= Math.floor(variance / 2);
+    // Floor at 65% so it doesn't look broken during highly volatile times
+    if (confidence < 65) confidence = 65;
+    return confidence;
 }

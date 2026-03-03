@@ -7,7 +7,7 @@ import { clsx } from "clsx";
 import dynamic from 'next/dynamic';
 
 // Dynamic import for Recharts to avoid SSR issues
-const AccuracyChart = dynamic(() => import('../../components/AccuracyChart'), { ssr: false });
+const AccuracyChart = dynamic(() => import('@/components/AccuracyChart'), { ssr: false });
 
 interface WeeklyData {
     week: string;
@@ -15,6 +15,12 @@ interface WeeklyData {
     avg_mape: number | null;
     avg_rmse: number | null;
     days_with_data: number;
+    user_accuracy?: {
+        tier_accuracy: number;
+        within_5_min: number;
+        within_10_min: number;
+        within_15_min: number;
+    } | null;
 }
 
 interface ApiResponse {
@@ -96,28 +102,28 @@ export default function AccuracyPage() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="bg-white p-6 rounded-2xl shadow-soft-xl border border-slate-100">
                         <div className="flex items-center justify-between mb-4">
-                            <span className="text-slate-500 text-sm font-semibold uppercase tracking-wider">Latest MAE</span>
-                            <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center">
-                                <span className="text-blue-600 text-xs font-bold">AVG</span>
+                            <span className="text-slate-500 text-sm font-semibold uppercase tracking-wider">Correct Tier</span>
+                            <div className="w-8 h-8 rounded-full bg-emerald-50 flex items-center justify-center">
+                                <span className="text-emerald-600 text-xs font-bold">✓</span>
                             </div>
                         </div>
                         <div className="text-4xl font-mono font-bold text-slate-900 tracking-tighter">
-                            {latest?.avg_mae ? latest.avg_mae : '--'} <span className="text-lg text-slate-400 font-sans font-normal">min</span>
+                            {latest?.user_accuracy?.tier_accuracy ? latest.user_accuracy.tier_accuracy : '--'} <span className="text-lg text-slate-400 font-sans font-normal">%</span>
                         </div>
-                        <div className="text-sm text-slate-500 mt-2">Avg minutes off target</div>
+                        <div className="text-sm text-slate-500 mt-2">Correctly predicted traffic color</div>
                     </div>
 
                     <div className="bg-white p-6 rounded-2xl shadow-soft-xl border border-slate-100">
                         <div className="flex items-center justify-between mb-4">
-                            <span className="text-slate-500 text-sm font-semibold uppercase tracking-wider">Latest MAPE</span>
-                            <div className="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center">
-                                <span className="text-amber-600 text-xs font-bold">%</span>
+                            <span className="text-slate-500 text-sm font-semibold uppercase tracking-wider">Within 10 Min</span>
+                            <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center">
+                                <span className="text-blue-600 text-xs font-bold">±</span>
                             </div>
                         </div>
                         <div className="text-4xl font-mono font-bold text-slate-900 tracking-tighter">
-                            {latest?.avg_mape ? latest.avg_mape : '--'} <span className="text-lg text-slate-400 font-sans font-normal">%</span>
+                            {latest?.user_accuracy?.within_10_min ? latest.user_accuracy.within_10_min : '--'} <span className="text-lg text-slate-400 font-sans font-normal">%</span>
                         </div>
-                        <div className="text-sm text-slate-500 mt-2">Avg percentage error</div>
+                        <div className="text-sm text-slate-500 mt-2">Forecast within 10m of actual</div>
                     </div>
 
                     <div className="bg-white p-6 rounded-2xl shadow-soft-xl border border-slate-100">
@@ -175,26 +181,26 @@ export default function AccuracyPage() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="p-6">
                         <h4 className="text-slate-900 font-bold mb-2 flex items-center gap-2">
-                            <div className="w-2 h-2 rounded-full bg-blue-500"></div> MAE
+                            <div className="w-2 h-2 rounded-full bg-emerald-500"></div> Correct Tier
                         </h4>
                         <p className="text-slate-600 text-sm leading-relaxed">
-                            Mean Absolute Error. The average number of minutes our forecast differs from the actual wait time. Lower is better.
+                            How often our forecast successfully predicts the correct specific traffic level (Green: Short, Yellow: Moderate, Red: Long waits).
                         </p>
                     </div>
                     <div className="p-6 border-l border-slate-200">
                         <h4 className="text-slate-900 font-bold mb-2 flex items-center gap-2">
-                            <div className="w-2 h-2 rounded-full bg-amber-500"></div> MAPE
+                            <div className="w-2 h-2 rounded-full bg-blue-500"></div> Within 10 Min
                         </h4>
                         <p className="text-slate-600 text-sm leading-relaxed">
-                            Mean Absolute Percentage Error. Useful for comparing accuracy across different wait time volumes, though it can spike when wait times are very low.
+                            How often our forecasted wait time is within exactly 10 minutes of what travelers actually experienced at the border.
                         </p>
                     </div>
                     <div className="p-6 border-l border-slate-200">
                         <h4 className="text-slate-900 font-bold mb-2 flex items-center gap-2">
-                            <div className="w-2 h-2 rounded-full bg-emerald-500"></div> RMSE
+                            <div className="w-2 h-2 rounded-full bg-indigo-500"></div> MAE
                         </h4>
                         <p className="text-slate-600 text-sm leading-relaxed">
-                            Root Mean Square Error. This metric penalizes large outlier errors more heavily than MAE, helping identify inconsistent predictions.
+                            Mean Absolute Error. The average bare number of minutes our forecast differs from the actual wait time. Lower is better.
                         </p>
                     </div>
                 </div>

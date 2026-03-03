@@ -11,10 +11,10 @@ export function getBaseUrl(): string {
     return baseUrl;
 }
 
-export async function getBorderData(): Promise<SummaryResponse | null> {
+export async function getBorderData(locale: string = "en"): Promise<SummaryResponse | null> {
     try {
         const baseUrl = getBaseUrl();
-        const res = await fetch(`${baseUrl}/api/v1/summary`, { cache: 'no-store' });
+        const res = await fetch(`${baseUrl}/api/v1/summary?locale=${locale}`, { cache: 'no-store' });
 
         if (!res.ok) {
             return { type: "error", data: [], message: `API Error: ${res.status} ${res.statusText}` };
@@ -121,10 +121,10 @@ export interface ComparisonForecast {
     holiday_name: string | null;
 }
 
-export async function getComparisonForecast(date: string, direction: string): Promise<ComparisonForecast | null> {
+export async function getComparisonForecast(date: string, direction: string, locale: string = "en"): Promise<ComparisonForecast | null> {
     try {
         const baseUrl = getBaseUrl();
-        const res = await fetch(`${baseUrl}/api/v1/forecast/comparison/${date}?direction=${direction}`, {
+        const res = await fetch(`${baseUrl}/api/v1/forecast/comparison/${date}?direction=${direction}&locale=${locale}`, {
             cache: 'no-store'
         });
         if (!res.ok) return null;

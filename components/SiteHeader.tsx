@@ -1,10 +1,14 @@
 import React, { Suspense } from 'react';
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { BorderQLogo } from "@/components/BorderQLogo";
 import { RegionSelector } from "@/components/RegionSelector";
 import { CompactDirectionToggle } from "./CompactDirectionToggle";
+import { LanguageSwitcher } from "./LanguageSwitcher";
+import { useTranslations } from 'next-intl';
 
 export function SiteHeader() {
+    const t = useTranslations('Header');
+
     return (
         <header className="bg-white/80 backdrop-blur-md border-b border-white sticky top-0 z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 md:h-20 flex items-center justify-between">
@@ -18,7 +22,7 @@ export function SiteHeader() {
                         <div className="hidden sm:flex items-center gap-2 ml-1">
                             {/* Hide subtitle on tiny screens to fit Toggle */}
                             <span className="text-[9px] sm:text-[10px] font-bold text-slate-400 tracking-widest uppercase">Traffic AI</span>
-                            <span className="text-[8px] font-black text-indigo-600 bg-indigo-100 px-1.5 py-0.5 rounded-full uppercase tracking-wide">Beta</span>
+                            <span className="text-[8px] font-black text-indigo-600 bg-indigo-100 px-1.5 py-0.5 rounded-full uppercase tracking-wide">{t('beta')}</span>
                         </div>
                     </Link>
                 </div>
@@ -26,7 +30,7 @@ export function SiteHeader() {
                 {/* SEO Header Title - Center */}
                 <div className="hidden lg:flex flex-col items-center justify-center flex-1 mx-4">
                     <h1 className="text-[11px] font-black text-slate-800 uppercase tracking-[0.2em] text-center whitespace-nowrap">
-                        BC-Washington Border Wait Times & AI Forecast
+                        {t('tagline')}
                     </h1>
                     <div className="h-0.5 w-12 bg-indigo-500/30 mt-1 rounded-full"></div>
                 </div>
@@ -34,7 +38,7 @@ export function SiteHeader() {
                 {/* Right Controls: Direction Toggle + Region Selector (Dev Only) */}
                 <div className="flex items-center gap-2 sm:gap-4 md:gap-6">
                     <Link href="/vectors" className="hidden sm:block text-sm font-bold text-slate-500 hover:text-blue-600 transition-colors">
-                        How it Works
+                        {t('howItWorks')}
                     </Link>
 
                     {/* Direction Toggle */}
@@ -43,6 +47,9 @@ export function SiteHeader() {
                             <CompactDirectionToggle />
                         </Suspense>
                     </div>
+
+                    {/* Language Switcher */}
+                    <LanguageSwitcher />
 
                     {/* Region Selector - DEV ONLY */}
                     {process.env.NODE_ENV === 'development' && (

@@ -3,11 +3,14 @@
 import { clsx } from "clsx";
 import { useDirection } from "@/context/DirectionContext";
 import { motion } from "framer-motion";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "@/i18n/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 export function CompactDirectionToggle() {
     const { direction, setDirection } = useDirection();
+    const t = useTranslations('Direction');
     const pathname = usePathname();
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -77,7 +80,7 @@ export function CompactDirectionToggle() {
                 )}
             >
                 <span className="text-sm">🇨🇦</span>
-                <span className="whitespace-nowrap">To USA</span>
+                <span className="whitespace-nowrap">{t('toUSA')}</span>
             </button>
 
             {/* Tab: USA -> Canada */}
@@ -89,7 +92,7 @@ export function CompactDirectionToggle() {
                 )}
             >
                 <span className="text-sm">🇺🇸</span>
-                <span className="whitespace-nowrap">To Canada</span>
+                <span className="whitespace-nowrap">{t('toCanada')}</span>
             </button>
         </div>
     );

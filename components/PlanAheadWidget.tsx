@@ -2,10 +2,11 @@
 
 import { ArrowRight, TrendingUp, Sun as LucideSun, Calendar, Star, Ticket } from "lucide-react";
 import { useState, useEffect } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { PlanningData } from "@/lib/types";
 import { useDirection } from "@/context/DirectionContext";
+import { useTranslations } from "next-intl";
 
 // Custom Filled Sun Icon for Brand Alignment
 const CustomSun = ({ className }: { className?: string }) => (
@@ -31,25 +32,23 @@ const CustomSun = ({ className }: { className?: string }) => (
     </svg>
 );
 
-// Helper to parse AI report into structured sections
 function parseAIReport(html: string): { summary: string; timing: string } {
-    // Strip HTML tags first
-    const text = html
-        .replace(/<[^>]*>/g, ' ')
-        .replace(/&nbsp;/g, ' ')
-        .replace(/&amp;/g, '&')
-        .replace(/&lt;/g, '<')
-        .replace(/&gt;/g, '>')
-        .replace(/\s+/g, ' ')
-        .trim();
+    if (!html) return { summary: '', timing: '' };
 
-    // Extract Summary section
-    const summaryMatch = text.match(/Summary:\s*([^]*?)(?=Smart Timing:|Route Strategy:|$)/i);
-    const summary = summaryMatch ? summaryMatch[1].trim().slice(0, 150) : '';
+    // The DSPy output always uses <p> tags for the sections.
+    // 1st <p> is Summary, 2nd <p> is Smart Timing
+    const paragraphs = html.match(/<p>[^]*?<\/p>/gi) || [];
 
-    // Extract Smart Timing section
-    const timingMatch = text.match(/Smart Timing:\s*([^]*?)(?=Route Strategy:|$)/i);
-    const timing = timingMatch ? timingMatch[1].trim().slice(0, 150) : '';
+    const cleanText = (val: string) => val.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
+
+    const summaryRaw = paragraphs[0] || '';
+    const timingRaw = paragraphs[1] || '';
+
+    // Strip the very first <strong>...</strong> block which contains the label (e.g., "Summary:" or "总结：")
+    const stripPrefix = (htmlStr: string) => cleanText(htmlStr.replace(/^<p>\s*<strong>[^<]+<\/strong>\s*/i, ''));
+
+    const summary = stripPrefix(summaryRaw).slice(0, 150);
+    const timing = stripPrefix(timingRaw).slice(0, 150);
 
     return { summary, timing };
 }
@@ -57,6 +56,7 @@ function parseAIReport(html: string): { summary: string; timing: string } {
 export function PlanAheadWidget({ planning }: { planning: { SOUTHBOUND: PlanningData[], NORTHBOUND: PlanningData[] } }) {
     const { direction } = useDirection();
     const [selectedIndex, setSelectedIndex] = useState(0);
+    const t = useTranslations('PlanAhead');
 
     // Safety check
     const items = planning ? (planning[direction] || planning["SOUTHBOUND"]) : [];
@@ -126,7 +126,7 @@ export function PlanAheadWidget({ planning }: { planning: { SOUTHBOUND: Planning
             <div className="flex items-center justify-center sm:justify-between mb-5 px-1 mt-2">
                 <h3 className="text-2xl font-[900] tracking-tight relative inline-block">
                     <span className="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-indigo-800 to-slate-900 animate-gradient-x bg-[length:200%_auto]">
-                        Plan Ahead
+                        {t('title')}
                     </span>
                     {/* Sparkle Icon for flair */}
                     <span className="absolute -top-1 -right-4 text-amber-400 animate-pulse">
@@ -181,7 +181,7 @@ export function PlanAheadWidget({ planning }: { planning: { SOUTHBOUND: Planning
 
                                         {/* Day Name (MON) */}
                                         <span className={`text-[10px] lg:text-xs font-bold uppercase tracking-wider ${isSelected ? 'text-slate-400' : 'text-slate-400'}`}>
-                                            {idx === 0 ? 'Today' : item.dayName}
+                                            {idx === 0 ? t('today') : item.dayName}
                                         </span>
 
                                         {/* Date Number (14) */}
@@ -253,17 +253,21 @@ export function PlanAheadWidget({ planning }: { planning: { SOUTHBOUND: Planning
                                         </div>
                                     </div>
 
-                                    {/* Worst Time Pill */}
-                                    <div className="self-start bg-slate-50 px-4 py-2 rounded-xl border border-slate-100 shadow-sm">
-                                        <span className="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">
-                                            Worst Time
-                                        </span>
-                                        <div className="flex items-center gap-1.5">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
-                                            <span className="text-sm font-black text-slate-800">
-                                                {selectedItem.worstTime}
+                                    {/* Stats Column: Worst Time & Confidence */}
+                                    <div className="self-start flex flex-col gap-2 items-end">
+                                        <div className="bg-slate-50 px-4 py-2 rounded-xl border border-slate-100 shadow-sm w-full">
+                                            <span className="block text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">
+                                                {t('worstTime')}
                                             </span>
+                                            <div className="flex items-center gap-1.5">
+                                                <div className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
+                                                <span className="text-sm font-black text-slate-800">
+                                                    {selectedItem.worstTime}
+                                                </span>
+                                            </div>
                                         </div>
+
+
                                     </div>
                                 </div>
 
@@ -279,10 +283,10 @@ export function PlanAheadWidget({ planning }: { planning: { SOUTHBOUND: Planning
                                                         <svg className="w-4 h-4 text-indigo-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                             <path d="M12 2L14.39 9.61L22 12L14.39 14.39L12 22L9.61 14.39L2 12L9.61 9.61L12 2Z" fill="currentColor" className="animate-pulse" />
                                                         </svg>
-                                                        <span className="text-sm font-black text-slate-800 uppercase tracking-wide">Summary</span>
+                                                        <span className="text-sm font-black text-slate-800 uppercase tracking-wide">{t('summary')}</span>
                                                     </div>
                                                     <p className="text-base lg:text-lg font-semibold text-slate-700 leading-relaxed">
-                                                        <TypewriterText text={summary || "Loading summary..."} />
+                                                        <TypewriterText text={summary || t('loadingSummary')} />
                                                     </p>
                                                 </div>
 
@@ -293,17 +297,17 @@ export function PlanAheadWidget({ planning }: { planning: { SOUTHBOUND: Planning
                                                             <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
                                                             <path d="M12 6V12L16 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                                                         </svg>
-                                                        <span className="text-sm font-black text-emerald-700 uppercase tracking-wide">Smart Timing</span>
+                                                        <span className="text-sm font-black text-emerald-700 uppercase tracking-wide">{t('smartTiming')}</span>
                                                     </div>
                                                     <p className="text-base lg:text-lg font-semibold text-slate-700 leading-relaxed">
-                                                        <TypewriterText text={timing || "Best times loading..."} />
+                                                        <TypewriterText text={timing || t('loadingTiming')} />
                                                     </p>
                                                 </div>
                                             </div>
                                         );
                                     })() : (
                                         <div className="text-base font-medium text-slate-500">
-                                            AI forecast analysis loading. Check back shortly for detailed insights.
+                                            {t('loadingAi')}
                                         </div>
                                     )}
                                 </div>
@@ -311,7 +315,7 @@ export function PlanAheadWidget({ planning }: { planning: { SOUTHBOUND: Planning
                                 {/* Footer CTA */}
                                 <div className="mt-5 flex justify-end items-center gap-2 opacity-60 group-hover:opacity-100 transition-opacity">
                                     <span className="text-xs font-bold text-indigo-600 uppercase tracking-widest">
-                                        See Detail Chart and AI Analysis
+                                        {t('seeDetail')}
                                     </span>
                                     <div className="bg-indigo-100 p-1.5 rounded-full text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-all">
                                         <ArrowRight className="w-3 h-3" />

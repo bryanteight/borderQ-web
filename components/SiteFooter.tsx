@@ -1,10 +1,12 @@
 "use client";
 
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { useState, useEffect } from 'react';
 import { ChevronDown, ChevronUp, Car } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export function SiteFooter() {
+    const t = useTranslations('Footer');
     const [isExpanded, setIsExpanded] = useState(false);
     const [isStandalone, setIsStandalone] = useState(true); // Default to true (hidden) to prevent flash
 
@@ -38,8 +40,8 @@ export function SiteFooter() {
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M8 6H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-3" /><polyline points="16 6 12 2 8 6" /><line x1="12" y1="2" x2="12" y2="15" /></svg>
                         </span>
                         <div className="text-left flex flex-col">
-                            <span className="text-sm font-bold text-slate-900 group-hover:text-indigo-700 transition-colors">Add to Home Screen</span>
-                            <span className="text-[10px] text-slate-500 font-medium">Get instant wait time updates</span>
+                            <span className="text-sm font-bold text-slate-900 group-hover:text-indigo-700 transition-colors">{t('addToHomeScreen')}</span>
+                            <span className="text-[10px] text-slate-500 font-medium">{t('getUpdates')}</span>
                         </div>
                     </button>
                 )}
@@ -50,7 +52,7 @@ export function SiteFooter() {
                     <div className="flex items-center justify-center gap-2">
                         <div className="flex items-center gap-1.5 px-3 py-1 bg-white text-slate-400 rounded-lg text-[10px] font-black uppercase tracking-widest border border-slate-100 shadow-sm">
                             <Car className="w-3.5 h-3.5" />
-                            <span>PAX = Passenger Vehicles</span>
+                            <span>{t('paxDefinition')}</span>
                         </div>
 
                     </div>
@@ -60,34 +62,34 @@ export function SiteFooter() {
                         onClick={() => setIsExpanded(!isExpanded)}
                         className="md:hidden flex items-center justify-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wide w-full"
                     >
-                        <span>Not Govt Affiliated • Safety Info</span>
+                        <span>{t('safetyInfo')}</span>
                         {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                     </button>
 
                     {/* Content: Hidden on Mobile unless Expanded, Always Visible on Desktop */}
                     <div className={`${isExpanded ? 'block' : 'hidden'} md:block space-y-2 transition-all duration-300`}>
                         <p className="text-xs text-slate-500 leading-relaxed font-medium">
-                            <strong className="text-slate-700">Disclaimer:</strong> BorderQ is an independent tool providing estimates based on historical data and AI analysis. We are not affiliated with U.S. CBP or Canada CBSA.
+                            <strong className="text-slate-700">Disclaimer:</strong> {t('disclaimerBase')}
                         </p>
                         <p className="text-xs text-slate-400 leading-relaxed">
-                            Wait times are predictions and not guaranteed. <span className="text-slate-500 font-bold">Please drive safely and do not use this app while operating a vehicle.</span>
+                            {t('disclaimerWarning')} <span className="text-slate-500 font-bold">{t('driveSafely')}</span>
                         </p>
                     </div>
                 </div>
 
                 {/* Legal Links */}
                 <div className="flex flex-wrap justify-center gap-6 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
-                    <Link href="/vectors" className="hover:text-indigo-600 transition-colors">How It Works</Link>
-                    <Link href="/about" className="hover:text-indigo-600 transition-colors">About Us</Link>
-                    <a href="https://x.com/BorderqAI" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-600 transition-colors">Follow on X</a>
-                    <Link href="/contact" className="hover:text-indigo-600 transition-colors">Contact</Link>
-                    <Link href="/terms" className="hover:text-indigo-600 transition-colors">Terms of Service</Link>
-                    <Link href="/privacy" className="hover:text-indigo-600 transition-colors">Privacy Policy</Link>
+                    <Link href="/vectors" className="hover:text-indigo-600 transition-colors">{t('links.howItWorks')}</Link>
+                    <Link href="/about" className="hover:text-indigo-600 transition-colors">{t('links.about')}</Link>
+                    <a href="https://x.com/BorderqAI" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-600 transition-colors">{t('links.followX')}</a>
+                    <Link href="/contact" className="hover:text-indigo-600 transition-colors">{t('links.contact')}</Link>
+                    <Link href="/terms" className="hover:text-indigo-600 transition-colors">{t('links.terms')}</Link>
+                    <Link href="/privacy" className="hover:text-indigo-600 transition-colors">{t('links.privacy')}</Link>
                 </div>
 
                 {/* Version & Copyright */}
                 <div className="flex flex-col items-center gap-1">
-                    <p className="text-xs text-slate-400">BorderQ AI v0.7.10 &copy; {new Date().getFullYear()}</p>
+                    <p className="text-xs text-slate-400">BorderQ AI v0.7.12 &copy; {new Date().getFullYear()}</p>
                 </div>
             </div>
         </footer>

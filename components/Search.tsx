@@ -2,6 +2,7 @@
 
 import { useState, ReactElement } from "react";
 import { Search as SearchIcon, Send, Loader2, Sparkles, Calendar, AlertTriangle } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 // --- 1. Helper: Render Markdown with Perfect Alignment ---
 // --- 1a. Helper: Render Tables ---
@@ -301,10 +302,13 @@ interface SearchProps {
   placeholderText?: string;
 }
 
-export function Search({ hints = [], placeholderText = "Ask AI... (e.g. 'Is Sunday busy?')" }: SearchProps) {
+export function Search({ hints = [], placeholderText }: SearchProps) {
+  const t = useTranslations('Search');
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [answer, setAnswer] = useState<any>(null);
+
+  const effectivePlaceholder = placeholderText || t('placeholder');
 
   const performSearch = async (q: string) => {
     if (!q.trim()) return;
@@ -319,7 +323,7 @@ export function Search({ hints = [], placeholderText = "Ask AI... (e.g. 'Is Sund
       const data = await res.json();
       setAnswer(data);
     } catch (err) {
-      setAnswer({ ai_answer: "Sorry, I couldn't reach the border agent right now." });
+      setAnswer({ ai_answer: t('error') });
     } finally {
       setLoading(false);
     }
@@ -344,7 +348,7 @@ export function Search({ hints = [], placeholderText = "Ask AI... (e.g. 'Is Sund
         <input
           type="text"
           className="block w-full pl-11 pr-14 py-4 bg-white border border-gray-200 rounded-2xl shadow-sm placeholder-gray-400 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition-all text-base"
-          placeholder={placeholderText}
+          placeholder={effectivePlaceholder}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
@@ -395,7 +399,7 @@ export function Search({ hints = [], placeholderText = "Ask AI... (e.g. 'Is Sund
                   bg: "bg-white",
                   icon: <Sparkles className="w-5 h-5 text-emerald-600" />,
                   titleColor: "text-emerald-900",
-                  badge: "Live Analysis"
+                  badge: t('liveAnalysis')
                 },
                 forecast: {
                   gradient: "from-amber-400 to-orange-500",
@@ -403,7 +407,7 @@ export function Search({ hints = [], placeholderText = "Ask AI... (e.g. 'Is Sund
                   bg: "bg-white",
                   icon: <Calendar className="w-5 h-5 text-amber-600" />,
                   titleColor: "text-amber-900",
-                  badge: "Historical Forecast"
+                  badge: t('historicalForecast')
                 },
                 warning: {
                   gradient: "from-red-400 to-rose-500",
@@ -411,7 +415,7 @@ export function Search({ hints = [], placeholderText = "Ask AI... (e.g. 'Is Sund
                   bg: "bg-white",
                   icon: <AlertTriangle className="w-5 h-5 text-red-600" />,
                   titleColor: "text-red-900",
-                  badge: "Traffic Alert"
+                  badge: t('trafficAlert')
                 }
               };
 
@@ -433,7 +437,7 @@ export function Search({ hints = [], placeholderText = "Ask AI... (e.g. 'Is Sund
                           {activeTheme.badge}
                         </div>
                         <h3 className={`font-bold text-2xl leading-tight ${activeTheme.titleColor} text-left tracking-tight`}>
-                          {title || "Traffic Analysis"}
+                          {title || t('trafficAnalysis')}
                         </h3>
                       </div>
                     </div>
@@ -449,7 +453,7 @@ export function Search({ hints = [], placeholderText = "Ask AI... (e.g. 'Is Sund
                       {theme === 'forecast' && (
                         <div className="flex items-center gap-2 text-[10px] text-gray-400 font-bold uppercase tracking-widest">
                           <Calendar className="w-3.5 h-3.5" />
-                          <span>Prediction based on historical averages</span>
+                          <span>{t('predictionDisclaimer')}</span>
                         </div>
                       )}
 
@@ -457,7 +461,7 @@ export function Search({ hints = [], placeholderText = "Ask AI... (e.g. 'Is Sund
                       {body.toLowerCase().includes("lynden") && (
                         <div className="flex items-center gap-2 text-[10px] text-rose-400 font-bold uppercase tracking-widest">
                           <span className="w-3.5 h-3.5 flex items-center justify-center bg-rose-100 rounded-full text-[8px]">+</span>
-                          <span>20m: Estimated highway detour time vs Peace Arch</span>
+                          <span>{t('detourPenalty')}</span>
                         </div>
                       )}
 
@@ -468,10 +472,10 @@ export function Search({ hints = [], placeholderText = "Ask AI... (e.g. 'Is Sund
                           className="w-full flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white py-3.5 rounded-xl font-bold transition-all shadow-lg shadow-slate-200 active:scale-95"
                         >
                           <Sparkles className="w-4 h-4 text-emerald-400" />
-                          <span>See Full AI Insight & Trends</span>
+                          <span>{t('seeFullInsight')}</span>
                         </button>
                         <p className="text-center text-[10px] text-gray-400 mt-2 font-medium">
-                          Detailed hourly breakdown available on full report
+                          {t('detailedBreakdown')}
                         </p>
                       </div>
                     </div>
