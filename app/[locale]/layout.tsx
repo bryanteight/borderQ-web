@@ -111,6 +111,28 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                if (typeof window !== 'undefined' && document.referrer) {
+                  var ref = document.referrer.toLowerCase();
+                  if (ref.includes('t.co') || ref.includes('twitter.com') || ref.includes('x.com') || ref.includes('android-app://com.twitter.android')) {
+                    var url = new URL(window.location.href);
+                    if (!url.searchParams.has('utm_source')) {
+                      url.searchParams.set('utm_source', 'twitter');
+                      url.searchParams.set('utm_medium', 'social');
+                      url.searchParams.set('utm_campaign', 'referral');
+                      window.history.replaceState({}, '', url.toString());
+                    }
+                  }
+                }
+              } catch(e) {}
+            `
+          }}
+        />
+      </head>
       <body
         className={`${fontClasses} antialiased`}
       >

@@ -1,9 +1,15 @@
-# Release Notes v0.7.13 (2026-03-05)
+# Release Notes v0.7.14 (2026-03-15)
 
 ## 🚀 New Features
-- feat(twitter): redesigned alerts to show comparative wait times across all 3 cascadia crossings (departures board style)
-- feat(twitter): implemented smart congestion checking; skips tweeting if all neighbor ports are also >20m
-- feat(twitter): implemented X.com API budget guardrails (max 2 tweets/day, 2-hour region cooldown) ensuring <$3/mo spend
+- feat(scheduler): add startup alert for missing twitter credentials
+- fix(docker): rebuild Dockerfile.scheduler with full COPY app/ to prevent drift, add Dockerfile Sync Guard skill
+- feat(twitter): show traffic spike context with (was X min) and dual US/CA port names
+- feat(twitter): persist daily tweet counter in Qdrant for deploy-safe budget tracking
 
-## 🐛 Bug Fixes
-- fix(release): run npm install in frontend to prevent package lock desync
+## 🔧 Maintenance
+- refactor(twitter): move tweet counter to dedicated system_settings collection
+
+## 📦 Other Changes
+- perf(memory): remove heavy static imports from camera package __init__.py to prevent ~100MB accidental memory leak in scheduler
+- perf: reduce health probe from 17 URLs/5min to 5 URLs/30min (95% fewer self-requests)
+
