@@ -34,6 +34,7 @@
         "loadingSummary": "載入總結中...",
         "loadingTiming": "載入最佳時間...",
         "aiLoading": "正在分析預測... 請稍候。",
+        "loadingAi": "AI預測載入中... 請稍後查看。",
         "seeDetail": "查看詳細圖表和 AI 分析"
     },
     "ForecastDetail": {

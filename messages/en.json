@@ -34,6 +34,7 @@
         "loadingSummary": "Loading summary...",
         "loadingTiming": "Loading best times...",
         "aiLoading": "Analyzing forecast... Please wait.",
+        "loadingAi": "AI forecast is loading... Check back shortly.",
         "seeDetail": "See Detail Chart and AI Analysis"
     },
     "ForecastDetail": {
