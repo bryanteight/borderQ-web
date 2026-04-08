@@ -7,6 +7,7 @@ import { getBorderData } from "@/lib/api";
 import { TrendingUp, TrendingDown, Clock, Sun, ArrowRight, Calendar, Star, Car, Activity } from "lucide-react";
 import Link from "next/link";
 import { PlanAheadWidget } from "@/components/PlanAheadWidget"; // [NEW]
+import { SpringBreakAlert } from "@/components/SpringBreakAlert";
 import { StatusCardCarousel } from "@/components/StatusCardCarousel";
 import { DirectionTabs } from "@/components/DirectionTabs";
 import { EventAlert } from "@/lib/types";
@@ -66,6 +67,8 @@ export default async function Home({ params, searchParams }: { params: Promise<{
         })()}
 
 
+
+        <SpringBreakAlert />
 
         {/* 2. Live Traffic Status (Compact) */}
         <div className="mb-4 md:mb-12">

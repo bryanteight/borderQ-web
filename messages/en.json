@@ -97,7 +97,9 @@
         "hint6": "Traffic prediction for Friday afternoon",
         "hint7": "Was it busy last weekend?",
         "hint8": "Best time to leave for Vancouver",
-        "hint9": "Compare Saturday vs Sunday traffic"
+        "hint9": "Compare Saturday vs Sunday traffic",
+        "springBreakAlert": "Washington Spring Break Alert",
+        "springBreakDetail": "Washington K-12 Spring Break is causing heavier-than-normal border traffic. Real-time wait times may significantly exceed our standard daily forecasts. Allow extra travel time!"
     },
     "Contact": {
         "title": "Contact Us",
